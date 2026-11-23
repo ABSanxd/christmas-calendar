@@ -7,7 +7,7 @@
  */
 
 import { CONFIG } from '../../data/configuration.js';
-import { readValue, writeValue, removeValue } from '../../services/storageService.js';
+import { readValue, writeValue } from '../../services/storageService.js';
 
 /**
  * @typedef {object} DayRecord
@@ -24,7 +24,7 @@ import { readValue, writeValue, removeValue } from '../../services/storageServic
  * @property {Record<string, DayRecord>} openedDays
  * @property {Record<string, {completedAt: string, data: object}>} activities
  * @property {Record<string, string>} seenSundayAnimations
- * @property {{sound: boolean, notifications: boolean, reducedMotion: string, lastVisit: string|null}} preferences
+ * @property {{sound: boolean, lastVisit: string|null}} preferences
  */
 
 /**
@@ -42,8 +42,6 @@ export function createDefaultState() {
     seenSundayAnimations: {},
     preferences: {
       sound: true,
-      notifications: false,
-      reducedMotion: 'system',
       lastVisit: null,
     },
   };
@@ -104,12 +102,6 @@ export function sanitizeState(raw) {
     if (typeof raw.preferences.sound === 'boolean') {
       state.preferences.sound = raw.preferences.sound;
     }
-    if (typeof raw.preferences.notifications === 'boolean') {
-      state.preferences.notifications = raw.preferences.notifications;
-    }
-    if (typeof raw.preferences.reducedMotion === 'string') {
-      state.preferences.reducedMotion = raw.preferences.reducedMotion;
-    }
     if (typeof raw.preferences.lastVisit === 'string') {
       state.preferences.lastVisit = raw.preferences.lastVisit;
     }
@@ -140,13 +132,6 @@ export function loadState() {
 export function persistState(state) {
   state.updatedAt = new Date().toISOString();
   return writeValue(CONFIG.storageKey, state);
-}
-
-/**
- * Borra por completo el progreso guardado.
- */
-export function clearState() {
-  removeValue(CONFIG.storageKey);
 }
 
 export default loadState;

@@ -14,7 +14,6 @@ import {
   isActivityCompleted,
   getProgressSummary,
   getProgressPercentage,
-  resetProgress,
 } from '../progress/progressTracker.js';
 import { PROGRESS_EVENT } from '../progress/progressController.js';
 import {
@@ -26,14 +25,8 @@ import {
   openDayActivity,
   registerMarkerProvider,
 } from '../activities/activityController.js';
-import { createSettingsPanel } from '../../components/interface/SettingsPanel.js';
 import { showToast } from '../../components/interface/Toast.js';
 import { toggleSound, isSoundEnabled, initAudioController } from '../audio/audioController.js';
-import {
-  toggleNotifications,
-  areNotificationsEnabled,
-  startReminderLoop,
-} from '../notifications/notificationController.js';
 import { animateSceneEntrance } from '../animations/calendarAnimations.js';
 import { CONFIG } from '../../data/configuration.js';
 
@@ -84,39 +77,6 @@ function goToToday() {
 }
 
 /**
- * Abre el panel de ajustes.
- */
-function openSettings() {
-  const { modal } = createSettingsPanel({
-    settings: {
-      sound: isSoundEnabled(),
-      notifications: areNotificationsEnabled(),
-      reducedMotion: document.documentElement.dataset.motion ?? 'system',
-    },
-    onPreferenceChange: (key, value) => {
-      if (key === 'sound') {
-        toggleSound(value);
-        updateSoundButton();
-      } else if (key === 'notifications') {
-        if (value) toggleNotifications();
-        else toggleNotifications();
-      } else if (key === 'reducedMotion') {
-        document.documentElement.dataset.motion = value;
-      }
-    },
-    onResetProgress: () => {
-      resetProgress();
-      refreshCalendar();
-      applyAdventForDate(getToday().dateKey);
-      showToast('Tu progreso se ha reiniciado.', { tone: 'info' });
-    },
-    onClose: () => modal.close(),
-  });
-
-  modal.open();
-}
-
-/**
  * Refleja el estado del sonido en el botón de la cabecera.
  */
 function updateSoundButton() {
@@ -160,18 +120,6 @@ export function initCalendarController() {
       toggleSound(!isSoundEnabled());
       updateSoundButton();
     },
-    onNotifications: async () => {
-      // Antes de pedir el permiso se explica para qué sirve, tal como pide el
-      // diseño del proyecto: nunca se solicita sin contexto.
-      if (!areNotificationsEnabled()) {
-        showToast(
-          'Los recordatorios te avisarán cuando haya una nueva casilla, mientras esta página esté abierta.',
-          { tone: 'info', duration: 5000 },
-        );
-      }
-      await toggleNotifications();
-    },
-    onSettings: openSettings,
     onProgress: refreshCalendar,
   });
 
@@ -184,7 +132,6 @@ export function initCalendarController() {
   animateSceneEntrance(scene);
 
   applyAdventForDate(dateKey);
-  startReminderLoop((day) => isDayOpened(day));
 
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) refreshCalendar();

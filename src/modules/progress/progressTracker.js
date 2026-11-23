@@ -9,7 +9,6 @@ import { CONFIG } from '../../data/configuration.js';
 import {
   loadState,
   persistState,
-  clearState,
   createDefaultState,
   sanitizeState,
 } from './progressStorage.js';
@@ -205,16 +204,6 @@ export function getProgressSummary() {
 }
 
 /**
- * Reinicia todo el progreso del calendario.
- */
-export function resetProgress() {
-  clearState();
-  state = createDefaultState();
-  persistState(state);
-  notify();
-}
-
-/**
  * Sustituye el estado completo (usado al recuperar datos validados).
  * @param {unknown} raw
  */
@@ -232,5 +221,4 @@ export default {
   isActivityCompleted,
   completeActivity,
   getProgressPercentage,
-  resetProgress,
 };

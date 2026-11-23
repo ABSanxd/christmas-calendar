@@ -36,11 +36,6 @@ export const CONFIG = {
   /** Versión del esquema de datos; permite migraciones futuras. */
   storageVersion: 1,
 
-  /** Umbral de días considered "hoy" para el recordatorio en la app. */
-  reminderHour: 8,
-  /** Minutos antes de medianoche en el que empieza el "día de adviento" local. */
-  dayStartHour: 0,
-
   /** Colores de las cuatro velas de la corona y de los acentos de la escena. */
   candleColors: {
     purple: '#78528d',

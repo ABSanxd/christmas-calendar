@@ -10,7 +10,6 @@ import gsap from 'gsap';
 import { lightCandle, setLitCandles, sparkleAroundCandle } from './candleAnimations.js';
 import { flyAngelTo } from './angelAnimations.js';
 import { prefersReducedMotion } from '../../services/deviceService.js';
-import { readPreference } from '../progress/progressController.js';
 
 /**
  * Envuelve un tween de GSAP en una promesa.
@@ -39,9 +38,6 @@ function wait(seconds) {
  * @returns {boolean}
  */
 export function shouldReduceMotion() {
-  const preference = readPreference('reducedMotion');
-  if (preference === 'reduced') return true;
-  if (preference === 'full') return false;
   return prefersReducedMotion();
 }
 

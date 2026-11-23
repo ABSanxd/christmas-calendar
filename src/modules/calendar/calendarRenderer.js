@@ -76,8 +76,6 @@ export function renderApplication(options) {
   const actionButtons = [
     { action: 'today', icon: 'sun', label: 'Ir al día de hoy' },
     { action: 'sound', icon: 'music', label: 'Activar o desactivar el sonido' },
-    { action: 'notifications', icon: 'mail', label: 'Configurar los recordatorios' },
-    { action: 'settings', icon: 'gear', label: 'Abrir los ajustes' },
   ];
 
   actionButtons.forEach(({ action, icon, label }) => {
@@ -153,9 +151,10 @@ export function renderApplication(options) {
   footer.innerHTML = `
     <div class="page-wrap">
       <p>Calendario de Adviento 2026 · Comunidad católica</p>
-      <p>
-        Tu progreso se guarda únicamente en este navegador. Si borras los datos
-        del sitio, empezará de nuevo.
+      <p class="app-footer__message">
+        Cada vela que enciendas y cada puerta que abras quedan guardadas en
+        este dispositivo, solo para ti. Vuelve cuando quieras: tu camino de
+        Adviento te estará esperando.
       </p>
       <p>Textos bíblicos: Biblia de Jerusalén (Reinaldo), edición de la RAE.</p>
     </div>`;

@@ -17,7 +17,6 @@ import {
   isActivityCompleted,
   getProgressSummary,
   getProgressPercentage,
-  resetProgress,
   setPreference,
   getPreference,
   hasSeenSundayAnimation,
@@ -75,13 +74,6 @@ export function requestCompleteActivity(day, data = {}) {
  */
 export function requestSaveInteraction(day, data) {
   saveInteraction(day, data);
-}
-
-/**
- * Reinicia el progreso completo.
- */
-export function requestResetProgress() {
-  resetProgress();
 }
 
 /**

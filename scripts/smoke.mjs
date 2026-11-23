@@ -119,17 +119,21 @@ if (SHOTS) await page.screenshot({ path: `${OUT}/08-completada.png` });
 const stored = await page.evaluate(() => window.localStorage.getItem('calendario-navideno-state'));
 console.log(`  progreso guardado: ${stored ? 'sí' : 'no'}`);
 
-// 11. Reiniciar el progreso desde los ajustes.
+// 11. La cabecera solo tiene los botones necesarios.
 await page.locator('.modal__close').click();
 await page.waitForTimeout(400);
-await page.locator('[data-action="settings"]').click();
-await page.waitForTimeout(500);
-await page.locator('.button--danger').click();
-await page.waitForTimeout(200);
-await page.locator('.button--danger').click();
-await page.waitForTimeout(600);
-const afterReset = await page.evaluate(() => window.localStorage.getItem('calendario-navideno-state'));
-console.log(`  reinicio: ${afterReset?.includes('"openedDays":{}') ? 'correcto' : 'revisar'}`);
+const headerButtons = await page
+  .locator('.app-header__actions button')
+  .evaluateAll((elements) => elements.map((element) => element.dataset.action));
+const hasSettings = await page.locator('[data-action="settings"]').count();
+const hasNotificationButton = await page.locator('[data-action="notifications"]').count();
+const hasFooterMessage = await page.locator('.app-footer__message').count();
+console.log(`  cabecera: ${headerButtons.join(', ')}`);
+console.log(
+  `  ajustes ${hasSettings ? 'sí' : 'no'}, recordatorios ${hasNotificationButton ? 'sí' : 'no'}, ` +
+    `mensaje del pie ${hasFooterMessage ? 'sí' : 'no'}`,
+);
+if (SHOTS) await page.screenshot({ path: `${OUT}/10-pie.png`, fullPage: true });
 
 console.log('\n--- Consola ---');
 if (errors.length === 0) {

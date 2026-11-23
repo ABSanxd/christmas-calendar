@@ -98,14 +98,4 @@ export function playChristmasEveScene(overlay, options = {}) {
   return timeline;
 }
 
-/**
- * Reinicia la secuencia desde el principio.
- * @param {HTMLElement} overlay
- */
-export function replayChristmasEveScene(overlay) {
-  if (!overlay) return;
-  const timeline = playChristmasEveScene(overlay);
-  return timeline;
-}
-
 export default playChristmasEveScene;

@@ -131,10 +131,14 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
 ### Comodidades
 
 - Indicador de progreso (casillas descubiertas y actividades realizadas).
-- Configuración de **sonido**, **recordatorios** y **movimiento reducido**.
+- Sonido con un solo botón en la cabecera, y un mensaje de Adviento en el pie
+  sobre el progreso guardado.
 - Reinicio del progreso con doble confirmación.
 - Funciona sin conexión (service worker) y se puede instalar como PWA.
 - Sin audio externo: todos los sonidos se sintetizan con la Web Audio API.
+- Respeta automáticamente la preferencia de **movimiento reducido** del sistema.
+- **Sin notificaciones**: GitHub Pages no puede avisar con el navegador cerrado,
+  así que la función se retiró en lugar de prometer algo que no ocurre.
 
 ## 4. Tecnologías utilizadas
 
@@ -143,7 +147,6 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
 - **GSAP 3** para animaciones y secuencias complejas.
 - **SVG** para toda la ilustración (sin imágenes de mapa de bits en la escena).
 - **localStorage** para el progreso individual.
-- **Notification API** para recordatorios opcionales.
 - **Web Audio API** para los efectos de sonido.
 - **Service Worker + Web App Manifest** para el funcionamiento sin conexión.
 
@@ -242,7 +245,7 @@ calendario-navideño/
 │   │   ├── calendar/             Calendario, casillas y progreso
 │   │   │   └── scene/            Capas de la ilustración de Belén
 │   │   ├── common/               Catálogo de iconos
-│   │   └── interface/            Modal, avisos, ajustes y escena de Nochebuena
+│   │   └── interface/            Modal, avisos y escena de Nochebuena
 │   ├── data/                     Contenido y configuración (editable sin tocar lógica)
 │   │   ├── activities.js         Metadatos de cada tipo de actividad
 │   │   ├── adventDates.js        Fechas de los domingos de Adviento
@@ -257,7 +260,6 @@ calendario-navideño/
 │   │   ├── animations/           GSAP: velas, ángel, casillas, Nochebuena
 │   │   ├── audio/                Síntesis y control del sonido
 │   │   ├── calendar/             Render, eventos y controlador del calendario
-│   │   ├── notifications/        Permiso y recordatorios
 │   │   └── progress/             Estado, persistencia y control del progreso
 │   ├── services/                 Acceso a servicios del navegador
 │   │   ├── dateService.js        Fecha en America/Lima y simulación de desarrollo
@@ -306,7 +308,7 @@ calendario-navideño/
 | --- | --- |
 | `dateService.js` | Obtiene la fecha de hoy en `America/Lima` con `Intl.DateTimeFormat`, compara claves `YYYY-MM-DD` y expone la simulación de desarrollo. |
 | `storageService.js` | Lectura y escritura segura de `localStorage`, con control de cuota y de modo privado. |
-| `deviceService.js` | Capacidades: notificaciones, movimiento reducido, tipo de dispositivo, vibración. |
+| `deviceService.js` | Capacidades: movimiento reducido, tipo de dispositivo, vibración. |
 
 ### `src/modules/`
 
@@ -317,7 +319,7 @@ calendario-navideño/
 | `progress/progressController.js` | Une el rastreador con la interfaz y difunde el evento `calendario:progress`. |
 | `calendar/calendarRenderer.js` | Construye la interfaz completa (cabecera, progreso, calendario, corona, pie). |
 | `calendar/calendarEvents.js` | Enlaza los botones de la cabecera y escucha los cambios de progreso. |
-| `calendar/calendarController.js` | Orquesta todo: calcula el estado de las casillas, la corona, los ajustes y el recordatorio. |
+| `calendar/calendarController.js` | Orquesta todo: calcula el estado de las casillas, la corona y el sonido. |
 | `advent/adventDates.js` | Devuelve el «plan de Adviento» de una fecha (domingo, velas antes y después, si toca animar). |
 | `advent/adventState.js` | Estado en memoria de la corona y sus suscriptores. |
 | `advent/adventController.js` | Decide si se reproduce la animación del domingo y mantiene la corona al día. |
@@ -331,8 +333,6 @@ calendario-navideño/
 | `animations/christmasEveAnimations.js` | Secuencia completa de Nochebuena. |
 | `audio/audioService.js` | Síntesis con la Web Audio API: campanillas, destellos y melodía. |
 | `audio/audioController.js` | Preferencias de sonido y catálogo de efectos. |
-| `notifications/notificationService.js` | Permiso, aviso y condiciones para recordar. |
-| `notifications/notificationController.js` | Recordatorio diario mientras la página está abierta. |
 
 ### `src/components/`
 
@@ -347,7 +347,6 @@ calendario-navideño/
 | `advent/AdventAngel.js` | El angelito que vuela por la pantalla. |
 | `activities/*` | Una pieza por tipo de actividad, más `activityParts.js` (bloques compartidos) y `ActivityModal.js`. |
 | `interface/Modal.js` | Modal con foco atrapado, Escape y clic en el fondo. |
-| `interface/SettingsPanel.js` | Sonido, recordatorios, movimiento y reinicio. |
 | `interface/Toast.js` | Avisos efímeros. |
 | `interface/ChristmasEveScene.js` | Escena especial del 24 de diciembre. |
 | `common/Icon.js` | Catálogo de iconos SVG. |
@@ -422,8 +421,6 @@ Estructura versionada:
   },
   "preferences": {
     "sound": true,
-    "notifications": false,
-    "reducedMotion": "system",
     "lastVisit": "2026-12-13T18:30:00.000Z"
   }
 }
@@ -435,8 +432,9 @@ Estructura versionada:
   corruptos o preferencias con tipos inesperados.
 - `storageService.js` captura los errores de lectura y escritura (cuota
   agotada, modo privado) para que la aplicación siga funcionando.
-- El reinicio se hace desde **Ajustes → Reiniciar mi progreso** y exige una
-  **doble confirmación**.
+- No hay botón de reinicio: el progreso es un recuerdo del Adviento y nunca
+  se borra por accidente. Para reutilizar el calendario en otro año basta con
+  cambiar `CONFIG.storageKey`.
 
 ### Limitaciones que conviene conocer
 
@@ -509,15 +507,19 @@ el pesebre que se ilumina y el texto que llega al final.
 
 ### Movimiento reducido
 
-Se respeta en tres niveles:
+El proyecto **respeta automáticamente** la preferencia de movimiento reducido
+del sistema operativo (`prefers-reduced-motion`), sin necesidad de tocar nada
+en la aplicación:
 
-- La preferencia del sistema (`prefers-reduced-motion`).
-- La opción de **Ajustes → Movimiento** (`system`, `full`, `reduced`).
-- Una regla CSS global que anula animaciones y transiciones.
+- En Windows: **Configuración → Accesibilidad → Efectos visuales → animaciones**.
+- En iOS/macOS: **Ajustes → Accesibilidad → Mostrar → Reducir movimiento**.
+- En Android: **Accesibilidad → Eliminar animaciones**.
 
-Con movimiento reducido, `playAdventAnimation` **aplica el estado final
+Cuando el sistema lo pide, `playAdventAnimation` **aplica el estado final
 directamente** (velas encendidas y mensaje visible) sin reproducir la
-secuencia.
+secuencia, y una regla CSS global anula animaciones y transiciones.
+
+Para el resto de los visitantes, las animaciones se muestran tal cual.
 
 ## 15. Cómo agregar o modificar actividades
 
@@ -632,34 +634,35 @@ export const CONFIG = {
 Los domingos de Adviento están en `src/data/adventDates.js` y las posiciones
 de las casillas en `src/data/sceneLayout.js`.
 
-## 17. Configuración de las notificaciones
+## 17. Notificaciones: por qué no las hay
 
-Las notificaciones son **opcionales** y nunca se activan solas.
+**El proyecto no incluye notificaciones, y es una decisión deliberada.**
 
-1. El botón de recordatorios de la cabecera explica para qué sirven antes de
-   pedir el permiso. El permiso **solo** se solicita cuando el visitante pulsa
-   ese botón.
-2. Si acepta, se guarda `preferences.notifications = true` y se muestra un
-   aviso de prueba.
-3. Se puede desactivar en cualquier momento desde **Ajustes**.
-4. Mientras la página está abierta, un temporizador comprueba cada minuto si
-   hay una casilla nueva sin abrir y, en ese caso, muestra un aviso.
+La Notification API del navegador solo puede mostrar avisos **mientras una
+página está abierta**. GitHub Pages es un hosting estático: no hay servidor
+que pueda programar un aviso ni enviar nada con el navegador cerrado.
 
-### Lo que **no** puede hacer este proyecto
+Eso significa que un "recordatorio diario" solo funcionaría si la persona
+tuviera el calendario abierto... justo cuando no lo necesita. Es decir: la
+función no cumpliría su propósito.
 
-- **No hay notificaciones push reales.** GitHub Pages es un hosting estático:
-  no hay servidor que pueda programar avisos ni enviar nada cuando el
-  navegador está cerrado.
-- Por eso el calendario **no promete** avisos con la aplicación cerrada. Solo
-  funciona con la pestaña abierta.
-- Si el usuario deniega el permiso, la aplicación sigue funcionando igual:
-  los recordatorios son un extra, nunca un requisito.
+Por eso, en lugar de incluir una función que no puede avisar, **se retiró
+completamente**:
+
+- No hay botón de recordatorios en la cabecera.
+- No hay ninguna opción de notificaciones en la interfaz.
+- No queda código de notificaciones en el proyecto.
+
+Si en el futuro el calendario se publicara en un alojamiento con backend
+(por ejemplo, una función serverless), el aviso "hay una casilla nueva" se
+podría implementar de verdad.
 
 ## 18. Limitaciones técnicas
 
 - **Sin backend.** No hay sincronización, ni cuentas, ni estadísticas globales.
   El progreso es local del navegador.
-- **Notificaciones solo con la pestaña abierta** (ver el apartado anterior).
+- **Sin notificaciones**, porque no se pueden enviar con el navegador
+  cerrado (ver el apartado 17).
 - **Sin audio protegido.** Todos los efectos se sintetizan en el navegador, de
   modo que no hay grabaciones de terceros ni problemas de licencia. La
   melodía de *Noche de paz* (canon de dominio público) se reproduce sintetizada
@@ -787,9 +790,7 @@ El sonido no se reproduce automáticamente: hace falta un primer clic o
 pulsación en la página (los navegadores lo exigen). Comprueba también que el
 icono de la cabecera no esté apagado y que el sistema no esté en silencio.
 
-**No llegan las notificaciones.**
-Revisa que el permiso esté concedido en los ajustes del navegador. Recuerda
-que **solo funcionan con la página abierta**.
+
 
 **He borrado los datos del navegador y he perdido el progreso.**
 No hay forma de recuperarlo: el progreso solo vivía en ese navegador. Se
@@ -804,8 +805,9 @@ Comprueba que `base` siga siendo `'./'` en `vite.config.js` y que no haya
 rutas absolutas (`/assets/...`) añadidas a mano.
 
 **Las animaciones se ven entrecortadas o son muy largas.**
-Ajusta **Ajustes → Movimiento → Movimiento reducido**. El proyecto respeta
-también la preferencia del sistema.
+El proyecto respeta ya la preferencia de movimiento reducido de tu sistema
+operativo. Actívala en **Configuración → Accesibilidad → Efectos visuales →
+animaciones** (Windows) o en el apartado equivalente de iOS o Android.
 
 **Quiero cambiar el número de días o las fechas.**
 Todo está en `src/data/configuration.js` (fechas y `totalDays`) y en
@@ -848,7 +850,7 @@ La prueba recorre la aplicación y comprueba:
 - La escena de Nochebuena y su cierre.
 - La resolución de un acertijo y el marcado de la actividad como realizada.
 - La persistencia del progreso en `localStorage`.
-- El reinicio del progreso desde Ajustes.
+- La ausencia del panel de Ajustes (el sonido se controla desde la cabecera).
 - **Que no haya ningún error ni aviso en la consola.**
 
 ### Capturas para revisión visual

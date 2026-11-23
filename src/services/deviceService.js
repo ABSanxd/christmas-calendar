@@ -7,31 +7,6 @@
  */
 
 /**
- * Indica si el navegador soporta la Notification API.
- * @returns {boolean}
- */
-export function supportsNotifications() {
-  return typeof window !== 'undefined' && 'Notification' in window;
-}
-
-/**
- * Devuelve el permiso actual de notificaciones.
- * @returns {'granted' | 'denied' | 'default' | 'unsupported'}
- */
-export function getNotificationPermission() {
-  if (!supportsNotifications()) return 'unsupported';
-  return window.Notification.permission;
-}
-
-/**
- * Indica si la página está visible para el usuario.
- * @returns {boolean}
- */
-export function isPageVisible() {
-  return typeof document !== 'undefined' && document.visibilityState === 'visible';
-}
-
-/**
  * Indica si el usuario pidió menos movimiento a nivel de sistema.
  * @returns {boolean}
  */

@@ -93,19 +93,4 @@ export function pulseMarker(marker) {
   );
 }
 
-/**
- * Latido de la estrella de Belén.
- * @param {SVGElement} star
- */
-export function twinkleStar(star) {
-  if (!star) return;
-  gsap.to(star, {
-    opacity: 0.82,
-    duration: 2.4,
-    repeat: -1,
-    yoyo: true,
-    ease: 'sine.inOut',
-  });
-}
-
 export default animateDayDiscovery;

@@ -2,8 +2,6 @@
  * Conexión de eventos de la interfaz del calendario.
  */
 
-import { showToast } from '../../components/interface/Toast.js';
-
 /**
  * Enlaza los botones de la cabecera y los eventos globales.
  *
@@ -11,13 +9,11 @@ import { showToast } from '../../components/interface/Toast.js';
  * @param {HTMLElement} options.actions
  * @param {() => void} options.onToday
  * @param {() => void} options.onToggleSound
- * @param {() => void} options.onNotifications
- * @param {() => void} options.onSettings
  * @param {(detail: object) => void} [options.onProgress]
  * @returns {() => void} Función para quitar los escuchas.
  */
 export function bindCalendarEvents(options) {
-  const { actions, onToday, onToggleSound, onNotifications, onSettings, onProgress } = options;
+  const { actions, onToday, onToggleSound, onProgress } = options;
   const cleanups = [];
 
   function bind(selector, handler) {
@@ -29,8 +25,6 @@ export function bindCalendarEvents(options) {
 
   bind('[data-action="today"]', onToday);
   bind('[data-action="sound"]', onToggleSound);
-  bind('[data-action="notifications"]', onNotifications);
-  bind('[data-action="settings"]', onSettings);
 
   if (onProgress) {
     const listener = (event) => onProgress(event.detail);
@@ -39,14 +33,6 @@ export function bindCalendarEvents(options) {
   }
 
   return () => cleanups.forEach((cleanup) => cleanup());
-}
-
-/**
- * Muestra un aviso cuando el navegador no permite notificaciones.
- * @param {string} message
- */
-export function notifyUnsupported(message) {
-  showToast(message, { tone: 'error' });
 }
 
 export default bindCalendarEvents;

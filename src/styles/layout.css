@@ -116,6 +116,21 @@
   margin-top: var(--space-2);
 }
 
+.app-footer__message {
+  max-width: 34rem;
+  margin-inline: auto;
+  margin-top: var(--space-4) !important;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-soft);
+  background: radial-gradient(circle at 50% 0%, rgba(221, 163, 184, 0.12), transparent 65%),
+    rgba(217, 199, 157, 0.05);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-soft);
+}
+
 .app-footer a {
   color: var(--color-gold-soft);
 }
