@@ -9,6 +9,39 @@
 import { SCENE_COLORS, drawSpark } from './shapes.js';
 
 /**
+ * Cúmulo nocturno: varias elipses agrupadas con un tono más claro que el
+ * cielo, que dan profundidad al fondo.
+ *
+ * @param {number} x
+ * @param {number} y
+ * @param {number} scale
+ * @param {number} opacity
+ * @param {string} color
+ * @returns {string}
+ */
+function drawCloud(x, y, scale, opacity, color) {
+  const puffs = [
+    [-52, 6, 26],
+    [-28, -6, 30],
+    [0, -12, 34],
+    [30, -4, 28],
+    [54, 8, 22],
+    [-8, 8, 26],
+    [22, 10, 24],
+  ]
+    .map(
+      ([px, py, r]) =>
+        `<ellipse cx="${px}" cy="${py}" rx="${r}" ry="${r * 0.72}" fill="${color}"/>`,
+    )
+    .join('');
+
+  return `<g transform="translate(${x} ${y}) scale(${scale})" opacity="${opacity}">
+    ${puffs}
+    <ellipse cx="0" cy="14" rx="78" ry="16" fill="${color}" opacity="0.7"/>
+  </g>`;
+}
+
+/**
  * Generador pseudoaleatorio determinista (mulberry32).
  * @param {number} seed
  * @returns {() => number}
@@ -71,6 +104,16 @@ export function renderSky(viewBox) {
       <ellipse cx="800" cy="300" rx="620" ry="420" fill="url(#sky-halo)"/>
       ${beams}
       <g id="scene-stars" data-layer="stars">${stars.join('')}</g>
+
+      <!-- Nubes nocturnas: dan profundidad al cielo -->
+      <g id="scene-clouds" data-layer="clouds">
+        ${drawCloud(210, 300, 1.15, 0.34, '#3b3f74')}
+        ${drawCloud(560, 236, 0.82, 0.26, '#454a83')}
+        ${drawCloud(1010, 292, 1.05, 0.3, '#3b3f74')}
+        ${drawCloud(1400, 226, 0.78, 0.24, '#454a83')}
+        ${drawCloud(880, 402, 1.3, 0.2, '#3d4176')}
+        ${drawCloud(120, 430, 1.1, 0.18, '#3d4176')}
+      </g>
     </g>
   `;
 }

@@ -224,17 +224,11 @@ calendario-navideño/
 │   │   ├── fonts/                (sin archivos: tipografías del sistema)
 │   │   ├── images/
 │   │   │   └── og-calendario.jpg Imagen para redes sociales
-│   │   └── illustrations/        Ilustraciones exportadas en SVG suelto
-│   │       ├── advent-wreath/corona-adviento.svg
-│   │       ├── angels/angel-trompetista.svg
-│   │       ├── bethlehem/escena-belen.svg
-│   │       └── holy-family/pesebre.svg
 │   ├── favicon.svg
 │   ├── manifest.webmanifest      Datos de la PWA
 │   └── sw.js                     Service worker (caché sin conexión)
 ├── scripts/
 │   ├── check-config.mjs          Valida CONFIG y SCENE_COLORS
-│   ├── export-illustrations.mjs  Exporta las ilustraciones a public/
 │   ├── export-og.mjs             Genera la imagen para redes sociales
 │   ├── smoke.mjs                 Prueba funcional en un navegador real
 │   └── shots.mjs                 Capturas de pantalla para revisión visual
@@ -244,6 +238,7 @@ calendario-navideño/
 │   │   ├── advent/               Corona, vela y angelito
 │   │   ├── calendar/             Calendario, casillas y progreso
 │   │   │   └── scene/            Capas de la ilustración de Belén
+│   │   │       └── characters/     Un archivo por personaje
 │   │   ├── common/               Catálogo de iconos
 │   │   └── interface/            Modal, avisos y escena de Nochebuena
 │   ├── data/                     Contenido y configuración (editable sin tocar lógica)
@@ -285,8 +280,8 @@ calendario-navideño/
 - `modules/advent/adventDates.js` no duplica `data/adventDates.js`: el módulo
   combina los datos con el estado de la visita y devuelve el «plan del día».
 - Las ilustraciones viven como **componentes SVG en código** (para poder
-  animarlas con GSAP) y además se exportan a `public/assets/illustrations/`
-  con `npm run illustrations`.
+  animarlas con GSAP) y se recolocan personaje a personaje. No hay copias
+  estáticas en `public/` que se puedan quedar desactualizadas.
 
 ## 10. Descripción de cada módulo
 
@@ -342,6 +337,7 @@ calendario-navideño/
 | `calendar/CalendarDay.js` | Una casilla: botón real, foco, estados y tooltip. |
 | `calendar/CalendarProgress.js` | Barra de progreso. |
 | `calendar/scene/*` | Capas de la ilustración: `SkyLayer`, `VillageLayer`, `NativityLayer`, `AngelsLayer`, `CharactersLayer`, `DayDoors` y `shapes.js` (formas reutilizables). |
+| `calendar/scene/characters/*` | Cada personaje es un componente independiente: `Angel`, `Mary`, `Joseph`, `BabyJesus`, `Magus`, `Camel`, `Shepherd`, `Sheep` y `Tree`. Se dibujan con el origen en su base, de modo que se pueden colocar y escalar con libertad. |
 | `advent/AdventWreath.js` | La corona completa y su texto explicativo. |
 | `advent/AdventCandle.js` | Una vela, con la llama como elemento animable independiente. |
 | `advent/AdventAngel.js` | El angelito que vuela por la pantalla. |
@@ -769,9 +765,11 @@ hay que tocar ningún componente.
 
 - Las formas reutilizables están en `src/components/calendar/scene/shapes.js`.
 - Cada capa es un archivo independiente en `src/components/calendar/scene/`.
+- Cada personaje se puede ajustar por separado en
+  `src/components/calendar/scene/characters/`: cambia su dibujo sin tocar el
+  resto de la escena.
 - Si cambias la composición, revisa las posiciones de las casillas en
   `src/data/sceneLayout.js`.
-- Para volver a exportar los SVG sueltos: `npm run illustrations`.
 
 ## 21. Solución de problemas frecuentes
 

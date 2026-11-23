@@ -20,7 +20,6 @@
     "check": "node scripts/check-config.mjs",
     "check:production": "node scripts/check-production.mjs",
     "check:sundays": "node scripts/check-sundays.mjs",
-    "illustrations": "node scripts/export-illustrations.mjs",
     "smoke": "node scripts/smoke.mjs"
   },
   "dependencies": {
