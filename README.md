@@ -13,6 +13,17 @@ navegador del visitante.
 
 ---
 
+## 🌐 Versión publicada
+
+**https://absanxd.github.io/christmas-calendar/**
+
+Repositorio: https://github.com/ABSanxd/christmas-calendar
+
+Cada `git push` a `main` recompila y vuelve a publicar el sitio
+automáticamente mediante GitHub Actions.
+
+---
+
 ## Índice
 
 1. [Descripción general](#1-descripción-general)
