@@ -23,7 +23,6 @@ import {
   hasSeenSundayAnimation,
   markSundayAnimationSeen,
 } from './progressTracker.js';
-import { stateWasCreated } from './progressStorage.js';
 
 /** Nombre del evento emitido cuando cambia el progreso. */
 export const PROGRESS_EVENT = 'calendario:progress';
@@ -100,14 +99,6 @@ export function updatePreference(key, value) {
  */
 export function readPreference(key) {
   return getPreference(key);
-}
-
-/**
- * Indica si esta es la primera visita del usuario (no había progreso guardado).
- * @returns {boolean}
- */
-export function isFirstVisit() {
-  return stateWasCreated;
 }
 
 /**

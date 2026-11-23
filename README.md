@@ -242,7 +242,7 @@ calendario-navideño/
 │   │   ├── calendar/             Calendario, casillas y progreso
 │   │   │   └── scene/            Capas de la ilustración de Belén
 │   │   ├── common/               Catálogo de iconos
-│   │   └── interface/            Modal, avisos, ajustes, bienvenida, Nochebuena
+│   │   └── interface/            Modal, avisos, ajustes y escena de Nochebuena
 │   ├── data/                     Contenido y configuración (editable sin tocar lógica)
 │   │   ├── activities.js         Metadatos de cada tipo de actividad
 │   │   ├── adventDates.js        Fechas de los domingos de Adviento
@@ -347,7 +347,6 @@ calendario-navideño/
 | `advent/AdventAngel.js` | El angelito que vuela por la pantalla. |
 | `activities/*` | Una pieza por tipo de actividad, más `activityParts.js` (bloques compartidos) y `ActivityModal.js`. |
 | `interface/Modal.js` | Modal con foco atrapado, Escape y clic en el fondo. |
-| `interface/WelcomeScreen.js` | Bienvenida de la primera visita e invitación a los recordatorios. |
 | `interface/SettingsPanel.js` | Sonido, recordatorios, movimiento y reinicio. |
 | `interface/Toast.js` | Avisos efímeros. |
 | `interface/ChristmasEveScene.js` | Escena especial del 24 de diciembre. |
@@ -489,7 +488,7 @@ await playAdventAnimation({
   candleColor: 'pink', // color de esa vela
   wreath,              // contenedor de la corona
   messageElement,      // dónde se escribe el mensaje
-  message,             // texto de bienvenida
+  message,             // mensaje del domingo
 });
 ```
 
@@ -637,9 +636,9 @@ de las casillas en `src/data/sceneLayout.js`.
 
 Las notificaciones son **opcionales** y nunca se activan solas.
 
-1. En la primera visita, la pantalla de bienvenida explica para qué sirven y
-   ofrece activarlas. El permiso **solo** se pide cuando el visitante pulsa el
-   botón.
+1. El botón de recordatorios de la cabecera explica para qué sirven antes de
+   pedir el permiso. El permiso **solo** se solicita cuando el visitante pulsa
+   ese botón.
 2. Si acepta, se guarda `preferences.notifications = true` y se muestra un
    aviso de prueba.
 3. Se puede desactivar en cualquier momento desde **Ajustes**.
@@ -842,6 +841,7 @@ npm run smoke
 La prueba recorre la aplicación y comprueba:
 
 - La pantalla de bienvenida de la primera visita.
+- La entrada directa al calendario, sin pantallas intermedias.
 - El estado del calendario antes del Adviento y en un domingo de Gaudete.
 - La versión de móvil (390 × 844).
 - La apertura de una casilla y la aparición del modal.

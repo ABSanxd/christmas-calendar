@@ -119,12 +119,6 @@ export function sanitizeState(raw) {
 }
 
 /**
- * Indica si el estado se acaba de crear en esta visita (primera visita).
- * @type {boolean}
- */
-export let stateWasCreated = false;
-
-/**
  * Lee el estado persistido.
  * @returns {ProgressState}
  */
@@ -133,7 +127,6 @@ export function loadState() {
   const state = sanitizeState(raw);
   if (!raw) {
     // Primera visita: se crea el estado y se persiste de inmediato.
-    stateWasCreated = true;
     persistState(state);
   }
   return state;

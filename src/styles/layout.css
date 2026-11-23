@@ -22,16 +22,6 @@
   display: none;
 }
 
-.welcome-root {
-  position: fixed;
-  inset: 0;
-  z-index: var(--z-welcome);
-}
-
-.welcome-root:empty {
-  display: none;
-}
-
 /* --- Contenedor principal --- */
 .page-wrap {
   width: 100%;

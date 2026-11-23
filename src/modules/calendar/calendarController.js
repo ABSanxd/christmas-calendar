@@ -16,7 +16,7 @@ import {
   getProgressPercentage,
   resetProgress,
 } from '../progress/progressTracker.js';
-import { PROGRESS_EVENT, isFirstVisit } from '../progress/progressController.js';
+import { PROGRESS_EVENT } from '../progress/progressController.js';
 import {
   registerAdventElements,
   applyAdventForDate,
@@ -27,7 +27,6 @@ import {
   registerMarkerProvider,
 } from '../activities/activityController.js';
 import { createSettingsPanel } from '../../components/interface/SettingsPanel.js';
-import { createWelcomeScreen } from '../../components/interface/WelcomeScreen.js';
 import { showToast } from '../../components/interface/Toast.js';
 import { toggleSound, isSoundEnabled, initAudioController } from '../audio/audioController.js';
 import {
@@ -35,7 +34,6 @@ import {
   areNotificationsEnabled,
   startReminderLoop,
 } from '../notifications/notificationController.js';
-import { supportsNotifications } from '../../services/deviceService.js';
 import { animateSceneEntrance } from '../animations/calendarAnimations.js';
 import { CONFIG } from '../../data/configuration.js';
 
@@ -130,29 +128,6 @@ function updateSoundButton() {
 }
 
 /**
- * Muestra la pantalla de bienvenida. Solo aparece en la primera visita: en las
- * siguientes el calendario se abre directamente.
- */
-function showWelcomeScreen() {
-  const root = document.getElementById('welcome-root');
-  if (!root) return;
-  if (!isFirstVisit()) return;
-
-  const welcome = createWelcomeScreen({
-    canNotify: supportsNotifications(),
-    onStart: () => {
-      welcome.destroy();
-      ui?.main?.focus?.();
-    },
-    onEnableNotifications: async () => {
-      await toggleNotifications();
-    },
-  });
-
-  root.appendChild(welcome.element);
-}
-
-/**
  * Inicializa el calendario.
  */
 export function initCalendarController() {
@@ -185,7 +160,17 @@ export function initCalendarController() {
       toggleSound(!isSoundEnabled());
       updateSoundButton();
     },
-    onNotifications: () => toggleNotifications(),
+    onNotifications: async () => {
+      // Antes de pedir el permiso se explica para qué sirve, tal como pide el
+      // diseño del proyecto: nunca se solicita sin contexto.
+      if (!areNotificationsEnabled()) {
+        showToast(
+          'Los recordatorios te avisarán cuando haya una nueva casilla, mientras esta página esté abierta.',
+          { tone: 'info', duration: 5000 },
+        );
+      }
+      await toggleNotifications();
+    },
     onSettings: openSettings,
     onProgress: refreshCalendar,
   });
@@ -208,8 +193,6 @@ export function initCalendarController() {
   if (isDateSimulationActive()) {
     showToast('Modo simulación de fecha activo (solo en desarrollo).', { tone: 'info' });
   }
-
-  showWelcomeScreen();
 }
 
 export default initCalendarController;

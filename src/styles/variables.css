@@ -96,7 +96,6 @@
   --z-toast: 60;
   --z-modal: 70;
   --z-overlay: 80;
-  --z-welcome: 90;
 
   /* --- Movimiento --- */
   --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
