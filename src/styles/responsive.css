@@ -1,0 +1,188 @@
+/* ==========================================================================
+   Adaptaciones responsive
+   El proyecto está pensado primero para el móvil: en pantallas pequeñas las
+   casillas de la ilustración serían demasiado diminutas, así que se muestra la
+   versión alternativa en forma de puertas.
+   ========================================================================== */
+
+/* ---hasta 900px: la ilustración se mantiene, la corona reduce--- */
+@media (max-width: 900px) {
+  .hero__title {
+    font-size: var(--text-xl);
+  }
+
+  .advent-wreath__figure {
+    width: 100%;
+  }
+}
+
+/* --- Móvil y pequeñas tablets --- */
+@media (max-width: 720px) {
+  :root {
+    --header-height: 3.6rem;
+  }
+
+  .app-header {
+    min-height: var(--header-height);
+  }
+
+  .app-header__title {
+    font-size: var(--text-base);
+  }
+
+  .app-header__title-full {
+    display: none;
+  }
+
+  .app-header__title-short {
+    display: inline;
+  }
+
+  .app-header__subtitle {
+    display: none;
+  }
+
+  .app-header__mark {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .icon-button {
+    width: 2.1rem;
+    height: 2.1rem;
+    font-size: 0.95rem;
+  }
+
+  .hero {
+    padding-block: var(--space-5) var(--space-3);
+    text-align: left;
+  }
+
+  .hero__title {
+    font-size: var(--text-lg);
+  }
+
+  .hero__text {
+    font-size: var(--text-sm);
+  }
+
+  .progress-card {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .progress-card__title {
+    font-size: var(--text-base);
+  }
+
+  /* La escena conserva su proporción: se ve completa, sin recortarla. */
+  .calendar__scene {
+    aspect-ratio: 4 / 3;
+  }
+
+  .calendar__markers {
+    display: none;
+  }
+
+  .calendar__mobile {
+    display: block;
+    margin-top: var(--space-5);
+  }
+
+  .calendar__mobile-grid {
+    grid-template-columns: repeat(auto-fill, minmax(5.4rem, 1fr));
+    gap: var(--space-2);
+  }
+
+  .calendar-door {
+    min-height: 5.8rem;
+    padding: var(--space-2) var(--space-1);
+  }
+
+  .calendar-door__label {
+    font-size: 0.66rem;
+  }
+
+  .calendar-door__type {
+    font-size: 0.56rem;
+  }
+
+  .advent-section {
+    padding: var(--space-4) var(--space-2);
+  }
+
+  .advent-wreath__figure {
+    width: 100%;
+  }
+
+  .modal {
+    width: 100%;
+    max-height: 92dvh;
+    border-radius: var(--radius-lg);
+  }
+
+  .modal__header {
+    padding: var(--space-4) var(--space-4) var(--space-2);
+  }
+
+  .modal__content {
+    padding: var(--space-4);
+  }
+
+  .activity-modal__footer {
+    flex-direction: column-reverse;
+  }
+
+  .activity-modal__footer .button {
+    width: 100%;
+  }
+
+  .wordsearch__board {
+    max-width: 100%;
+  }
+
+  .christmas-eve__panel {
+    padding: var(--space-3);
+    border-radius: var(--radius-lg);
+  }
+
+  .christmas-eve__title {
+    font-size: var(--text-xl);
+  }
+
+  .eve-banner__text {
+    font-size: 34px;
+  }
+}
+
+/* --- Teléfonos muy pequeños --- */
+@media (max-width: 380px) {
+  .calendar__mobile-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .calendar-door__label {
+    font-size: 0.6rem;
+  }
+}
+
+/* --- Pantallas grandes --- */
+@media (min-width: 1400px) {
+  :root {
+    --max-width: 1320px;
+  }
+}
+
+/* --- Impresión --- */
+@media print {
+  .app-header__actions,
+  .advent-wreath__replay,
+  .calendar__mobile,
+  .toast-root {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #111;
+  }
+}

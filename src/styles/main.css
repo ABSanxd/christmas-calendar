@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Calendario Navideño 2026 - Hoja principal
+   El orden de importación define la cascada: variables, reset, layout,
+   componentes y finalmente las adaptaciones responsive.
+   ========================================================================== */
+
+@import './variables.css';
+@import './reset.css';
+@import './layout.css';
+@import './components/interface.css';
+@import './components/calendar.css';
+@import './components/advent.css';
+@import './components/activities.css';
+@import './components/modals.css';
+@import './animations.css';
+@import './responsive.css';

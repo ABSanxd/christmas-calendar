@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#16224a" />
+    <meta
+      name="description"
+      content="Calendario de Adviento 2026: 24 días de reflexiones, oraciones, retos y juegos para preparar el corazón y recibir a Jesús."
+    />
+    <meta name="author" content="Comunidad católica" />
+    <meta name="color-scheme" content="dark light" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Calendario de Adviento 2026" />
+    <meta
+      property="og:description"
+      content="24 días de Adviento para preparar el corazón y recibir a Jesús."
+    />
+    <meta property="og:image" content="./assets/images/og-calendario.jpg" />
+
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./favicon.svg" />
+
+    <title>Calendario de Adviento 2026</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido-principal">Saltar al calendario</a>
+
+    <div id="app" class="app-shell">
+      <!-- La pantalla de bienvenida se monta desde JavaScript -->
+      <div id="welcome-root" class="welcome-root"></div>
+
+      <!-- Interfaz principal -->
+      <div id="app-root" class="app-root" hidden></div>
+
+      <!-- Capas globales: modal, avisos y escena de Nochebuena -->
+      <div id="modal-root" class="modal-root"></div>
+      <div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+      <div id="overlay-root" class="overlay-root"></div>
+    </div>
+
+    <noscript>
+      <div class="noscript-banner">
+        <h1>Calendario de Adviento 2026</h1>
+        <p>
+          Este calendario necesita JavaScript para mostrar las casillas, guardar tu progreso y
+          animar la corona de Adviento. Actívalo en tu navegador para continuar.
+        </p>
+      </div>
+    </noscript>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

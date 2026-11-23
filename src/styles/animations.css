@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Animaciones y efectos
+   ========================================================================== */
+
+/* --- Destellos --- */
+.sparkle {
+  position: fixed;
+  z-index: 88;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: -0.35rem 0 0 -0.35rem;
+  border-radius: 50%;
+  background: var(--spark-color, var(--color-gold-light));
+  box-shadow: 0 0 10px var(--spark-color, var(--color-gold-light));
+  pointer-events: none;
+}
+
+.sparkle--celebration {
+  width: 0.9rem;
+  height: 0.9rem;
+  margin: -0.45rem 0 0 -0.45rem;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  border-radius: 0;
+}
+
+/* --- Keyframes --- */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes welcome-in {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translate(-50%, -50%);
+  }
+  20% {
+    transform: translate(calc(-50% - 4px), -50%);
+  }
+  40% {
+    transform: translate(calc(-50% + 4px), -50%);
+  }
+  60% {
+    transform: translate(calc(-50% - 3px), -50%);
+  }
+  80% {
+    transform: translate(calc(-50% + 3px), -50%);
+  }
+}
+
+@keyframes highlight-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(240, 220, 166, 0.65);
+  }
+  70% {
+    box-shadow: 0 0 0 18px rgba(240, 220, 166, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(240, 220, 166, 0);
+  }
+}
+
+/* --- preference de movimiento reducido --- */
+@media (prefers-reduced-motion: reduce) {
+  .sparkle,
+  .calendar-door,
+  .calendar-day,
+  .button {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}

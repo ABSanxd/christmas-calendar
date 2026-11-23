@@ -1,0 +1,36 @@
+{
+  "name": "calendario-navideño",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Calendario de Adviento y Navidad 2026: experiencia interactiva, illustrated and Catholic-themed.",
+  "keywords": [
+    "advent",
+    "navidad",
+    "calendario",
+    "catolico",
+    "vite",
+    "static-site"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run check && vite build",
+    "preview": "vite preview",
+    "check": "node scripts/check-config.mjs",
+    "check:production": "node scripts/check-production.mjs",
+    "check:sundays": "node scripts/check-sundays.mjs",
+    "illustrations": "node scripts/export-illustrations.mjs",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.65.1",
+    "vite": "^5.4.10"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

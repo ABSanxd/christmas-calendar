@@ -1,0 +1,22 @@
+{
+  "name": "Calendario de Adviento 2026",
+  "short_name": "Adviento 2026",
+  "description": "24 días de reflexiones, oraciones, retos y juegos para preparar el corazón y recibir a Jesús.",
+  "lang": "es",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0d1531",
+  "theme_color": "#16224a",
+  "categories": ["education", "lifestyle", "religion"],
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+/* ==========================================================================
+   Layout global de la aplicación
+   ========================================================================== */
+
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.app-root[hidden] {
+  display: none;
+}
+
+.welcome-root {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-welcome);
+}
+
+.welcome-root:empty {
+  display: none;
+}
+
+/* --- Contenedor principal --- */
+.page-wrap {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+}
+
+/* --- Encabezado --- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: var(--header-height);
+  padding-block: var(--space-2);
+  background: linear-gradient(
+    180deg,
+    rgba(13, 21, 49, 0.94) 0%,
+    rgba(13, 21, 49, 0.78) 70%,
+    rgba(13, 21, 49, 0) 100%
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.app-header__mark {
+  flex: 0 0 auto;
+  width: 2.5rem;
+  height: 2.5rem;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+}
+
+.app-header__titles {
+  min-width: 0;
+}
+
+.app-header__title {
+  font-size: var(--text-lg);
+  letter-spacing: 0.01em;
+  color: var(--color-gold-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-header__title-short {
+  display: none;
+}
+
+.app-header__subtitle {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.app-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 0 0 auto;
+}
+
+/* --- Cuerpo --- */
+.app-main {
+  flex: 1;
+  padding-bottom: var(--space-8);
+}
+
+/* --- Pie --- */
+.app-footer {
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--border-soft);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  background: rgba(8, 12, 30, 0.5);
+}
+
+.app-footer p + p {
+  margin-top: var(--space-2);
+}
+
+.app-footer a {
+  color: var(--color-gold-soft);
+}
+
+/* --- Capa de superposiciones ---
+   `pointer-events: none` evita bloquear la página, pero se hereda: por eso
+   cada contenido interactivo vuelve a activarlo explícitamente. */
+.modal-root,
+.overlay-root,
+.toast-root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.modal-overlay,
+.christmas-eve {
+  pointer-events: auto;
+}
+
+.modal-root {
+  z-index: var(--z-modal);
+}
+
+.overlay-root {
+  z-index: var(--z-overlay);
+}
+
+.toast-root {
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-2);
+  padding-top: calc(var(--header-height) + var(--space-3));
+}

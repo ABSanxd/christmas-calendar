@@ -1,0 +1,106 @@
+/* ==========================================================================
+   Corona de Adviento
+   ========================================================================== */
+
+.advent-section {
+  margin-block: var(--space-7) var(--space-6);
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(circle at 50% 18%, rgba(120, 82, 141, 0.22), transparent 62%),
+    var(--surface-panel);
+  box-shadow: var(--shadow-soft);
+}
+
+.advent-section__title {
+  font-size: var(--text-lg);
+  color: var(--color-gold-light);
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-2);
+}
+
+.advent-section__message {
+  min-height: 1.4rem;
+  max-width: 38rem;
+  margin: 0 auto var(--space-3);
+  color: var(--color-gold-light);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+.advent-wreath {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  width: min(30rem, 100%);
+}
+
+.advent-wreath__figure {
+  width: 100%;
+}
+
+.advent-wreath__svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.advent-wreath__caption {
+  font-size: var(--text-sm);
+  color: var(--color-text-soft);
+  max-width: 26rem;
+}
+
+.advent-wreath__replay {
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  color: var(--color-gold-soft);
+  border-bottom: 1px solid transparent;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.advent-wreath__replay:hover {
+  color: var(--color-gold-bright);
+  border-bottom-color: currentColor;
+}
+
+.wreath-center__label {
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.28em;
+  fill: rgba(240, 220, 166, 0.7);
+}
+
+/* --- Velas --- */
+.advent-candle {
+  --candle-glow: 0;
+}
+
+.advent-candle[data-lit='true'] .advent-candle__flame {
+  filter: drop-shadow(0 0 8px rgba(240, 220, 166, 0.75));
+}
+
+.advent-candle[data-lit='true'] {
+  filter: drop-shadow(0 0 calc(var(--candle-glow) * 14px) rgba(240, 220, 166, 0.55));
+}
+
+/* --- Angelito --- */
+.advent-angel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 85;
+  width: 6.5rem;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 18px rgba(4, 8, 20, 0.55));
+}
+
+.advent-angel__svg {
+  width: 100%;
+  height: auto;
+}

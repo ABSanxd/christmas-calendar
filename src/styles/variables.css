@@ -1,0 +1,111 @@
+/* ==========================================================================
+   Variables de diseño - Calendario Navideño 2026
+   Paleta nocturna de Belén: azul noche, oro de estrella, arena y marfil.
+   ========================================================================== */
+
+:root {
+  /* --- Azules de la noche --- */
+  --color-night-deep: #0d1531;
+  --color-night: #17264a;
+  --color-night-soft: #26345d;
+  --color-night-lift: #33447a;
+
+  /* --- Dorados --- */
+  --color-gold: #c6a568;
+  --color-gold-soft: #d9c79d;
+  --color-gold-light: #f0dca6;
+  --color-gold-bright: #ffeec2;
+
+  /* --- Tierras --- */
+  --color-sand: #d9c79d;
+  --color-sand-light: #eadcbb;
+  --color-ivory: #f6f0e5;
+  --color-terracotta: #b8785c;
+  --color-terracotta-dark: #8c5540;
+
+  /* --- Adviento --- */
+  --color-violet: #78528d;
+  --color-violet-deep: #5b3f6d;
+  --color-violet-light: #9a76ad;
+  --color-gaudete: #dda3b8;
+  --color-gaudete-light: #f0c4d3;
+
+  /* --- Texto --- */
+  --color-ink: #1c2340;
+  --color-ink-soft: #4a5273;
+  --color-text: #f6f0e5;
+  --color-text-soft: #d9c79d;
+  --color-text-muted: #b9bdd4;
+
+  /* --- Superficies --- */
+  --surface-panel: rgba(13, 21, 49, 0.88);
+  --surface-panel-solid: #101a3c;
+  --surface-raised: rgba(38, 52, 93, 0.72);
+  --surface-paper: #f9f5ec;
+  --surface-paper-alt: #efe7d6;
+
+  /* --- Bordes y sombras --- */
+  --border-soft: rgba(217, 199, 157, 0.22);
+  --border-gold: rgba(198, 165, 104, 0.55);
+  --shadow-soft: 0 10px 30px rgba(5, 9, 24, 0.45);
+  --shadow-deep: 0 24px 60px rgba(3, 6, 18, 0.62);
+  --shadow-glow-gold: 0 0 24px rgba(240, 220, 166, 0.4);
+  --shadow-glow-pink: 0 0 26px rgba(221, 163, 184, 0.45);
+
+  /* --- Radios --- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+
+  /* --- Espaciado (escala de 4) --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* --- Tipografía --- */
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia,
+    'Times New Roman', serif;
+  --font-body: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-hand: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+
+  --text-xs: 0.72rem;
+  --text-sm: 0.84rem;
+  --text-base: 1rem;
+  --text-md: 1.1rem;
+  --text-lg: 1.35rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.25rem;
+  --text-3xl: clamp(2.2rem, 7vw, 3.6rem);
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  /* --- Capas (z-index) --- */
+  --z-scene: 1;
+  --z-markers: 2;
+  --z-header: 20;
+  --z-wreath: 30;
+  --z-toast: 60;
+  --z-modal: 70;
+  --z-overlay: 80;
+  --z-welcome: 90;
+
+  /* --- Movimiento --- */
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 180ms;
+  --duration-base: 320ms;
+  --duration-slow: 720ms;
+
+  /* --- Capas de layout --- */
+  --header-height: 4.25rem;
+  --max-width: 1180px;
+}
