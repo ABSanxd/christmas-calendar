@@ -38,16 +38,21 @@ export function drawBabyJesus(options) {
   const hair = '#a87a4e';
   const hairLight = '#c39463';
   const gold = '#e2bb59';
+  const goldLight = '#f8e3a6';
+  const goldDeep = '#b48f3d';
   const blush = '#ee9aa4';
   const ink = '#3a2b3f';
+
+  // Patas del pesebre: el cuenco va por encima, sobre ellas.
+  const legs = showManger
+    ? `
+    <path d="M -27 -23 C -28 -14 -28 -5 -27 0 L -18 0 C -19 -6 -19 -15 -18 -23 Z" fill="${woodDark}"/>
+    <path d="M 30 -23 C 31 -14 31 -5 30 0 L 19 0 C 20 -6 20 -15 19 -23 Z" fill="${woodDark}"/>`
+    : '';
 
   // Cuenco bajo y abierto: el Niño se asoma por encima.
   const manger = showManger
     ? `
-    <!-- Patas del pesebre -->
-    <path d="M -27 -13 C -28 -7 -28 -4 -27 0 L -18 0 C -19 -4 -19 -9 -18 -13 Z" fill="${woodDark}"/>
-    <path d="M 27 -13 C 28 -7 28 -4 27 0 L 18 0 C 19 -4 19 -9 18 -13 Z" fill="${woodDark}"/>
-
     <!-- Paja del fondo -->
     <ellipse cx="0" cy="-46" rx="44" ry="11" fill="${straw}"/>
     <ellipse cx="0" cy="-48" rx="37" ry="8" fill="${strawDark}" opacity="0.5"/>
@@ -67,68 +72,60 @@ export function drawBabyJesus(options) {
   // Paja del borde delantero: se dibuja después del Niño para que looya.
   const strawFront = showManger
     ? `
-    <!-- Briznas de paja, cortas y agrupadas -->
-    <path d="M -41 -47 C -40 -53 -37 -56 -34 -54 C -35 -51 -36 -48 -36 -46 Z" fill="${strawLight}"/>
-    <path d="M -34 -48 C -32 -55 -29 -58 -26 -55 C -28 -52 -29 -49 -29 -47 Z" fill="${strawLight}"/>
-    <path d="M -26 -49 C -24 -56 -21 -59 -18 -56 C -20 -53 -21 -50 -21 -48 Z" fill="${strawLight}"/>
-    <path d="M -18 -50 C -16 -57 -12 -60 -9 -57 C -12 -54 -13 -51 -13 -49 Z" fill="${strawLight}"/>
-    <path d="M 18 -50 C 20 -57 24 -60 27 -57 C 24 -54 23 -51 23 -49 Z" fill="${strawLight}"/>
-    <path d="M 26 -49 C 28 -56 31 -59 34 -56 C 32 -53 31 -50 31 -48 Z" fill="${strawLight}"/>
-    <path d="M 34 -48 C 36 -55 39 -58 42 -55 C 40 -52 39 -49 39 -47 Z" fill="${strawLight}"/>
-    <path d="M 41 -47 C 42 -53 45 -56 48 -54 C 47 -51 46 -48 46 -46 Z" fill="${strawLight}" opacity="0.8"/>
+    <!-- Briznas de paja, caidas hacia abajo -->
+    <path d="M -40 -47 C -45 -43 -46 -38 -43 -35 C -45 -39 -43 -43 -38 -46 Z" fill="${strawLight}"/>
+    <path d="M -32 -49 C -36 -46 -37 -41 -35 -38 C -37 -41 -35 -45 -30 -48 Z" fill="${strawLight}"/>
+    <path d="M -24 -50 C -27 -47 -28 -43 -26 -40 C -28 -43 -26 -46 -21 -49 Z" fill="${strawLight}"/>
+    <path d="M 24 -50 C 27 -47 28 -43 26 -40 C 28 -43 26 -46 21 -49 Z" fill="${strawLight}"/>
+    <path d="M 32 -49 C 36 -46 37 -41 35 -38 C 37 -41 35 -45 30 -48 Z" fill="${strawLight}"/>
+    <path d="M 40 -47 C 45 -43 46 -38 43 -35 C 45 -39 43 -43 38 -46 Z" fill="${strawLight}" opacity="0.85"/>
     <!-- Mata de paja delante del Niño -->
-    <path d="M -28 -45 C -22 -51 -13 -53 -5 -49 C -11 -46 -19 -43 -28 -45 Z" fill="${straw}"/>
-    <path d="M 28 -45 C 22 -51 13 -53 5 -49 C 11 -46 19 -43 28 -45 Z" fill="${straw}"/>`
+    <path d="M -28 -44 C -22 -50 -13 -52 -5 -48 C -11 -45 -19 -42 -28 -44 Z" fill="${straw}"/>
+    <path d="M 28 -44 C 22 -50 13 -52 5 -48 C 11 -45 19 -42 28 -44 Z" fill="${straw}"/>`
     : '';
 
   const baby = `
-    <!-- === AURELA CON ESTRELLA === -->
-    <ellipse cx="0" cy="-79" rx="18" ry="18" fill="none" stroke="${gold}" stroke-width="2.4" opacity="0.85"/>
-    <ellipse cx="0" cy="-79" rx="18" ry="18" fill="none" stroke="${SCENE_COLORS.goldBright}" stroke-width="1" opacity="0.5"/>
-    <path d="M 0 -106 L 3 -97 L 12 -94 L 3 -91 L 0 -82 L -3 -91 L -12 -94 L -3 -97 Z"
-          fill="${SCENE_COLORS.goldBright}"/>
-    <path d="M 0 -106 L 3 -97 L 12 -94 L 3 -91 L 0 -82 L -3 -91 L -12 -94 L -3 -97 Z"
-          fill="none" stroke="${gold}" stroke-width="1" opacity="0.7"/>
+    <!-- === AURELA (igual que la de los angeles) === -->
+    <ellipse cx="0" cy="-96" rx="19" ry="8" fill="${goldLight}" opacity="0.05"/>
+    <ellipse cx="0" cy="-96" rx="16" ry="6.5" fill="${goldLight}" opacity="0.05"/>
+    <ellipse cx="0" cy="-96" rx="13.5" ry="5.5" fill="${goldLight}" opacity="0.07"/>
+    <g transform="rotate(-7 0 -96)">
+      <ellipse cx="0" cy="-96" rx="12.5" ry="4.8" fill="none" stroke="${goldDeep}" stroke-width="3.6" opacity="0.45"/>
+      <ellipse cx="0" cy="-96" rx="12.5" ry="4.8" fill="none" stroke="${gold}" stroke-width="2.5"/>
+      <ellipse cx="0" cy="-96.9" rx="12.5" ry="4.8" fill="none" stroke="${goldLight}" stroke-width="1" opacity="0.85"/>
+    </g>
 
     <!-- === SÁBANA Y PAÑALES === -->
-    <path d="M -18 -52 C -18 -64 -11 -70 0 -70 C 11 -70 18 -64 18 -52
-             Q 0 -46 -18 -52 Z" fill="${SCENE_COLORS.ivory}"/>
-    <path d="M 5 -70 C 12 -67 18 -61 18 -52 Q 10 -48 3 -49 Z" fill="#e3dac8" opacity="0.8"/>
-    <!-- Brazos envueltos en la sábana -->
-    <ellipse cx="-16" cy="-58" rx="5" ry="3.8" fill="${SCENE_COLORS.ivory}" transform="rotate(-24 -16 -58)"/>
-    <ellipse cx="16" cy="-58" rx="5" ry="3.8" fill="${SCENE_COLORS.ivory}" transform="rotate(24 16 -58)"/>
-    <ellipse cx="-17" cy="-57" rx="3.2" ry="2.4" fill="${skin}" transform="rotate(-24 -17 -57)"/>
-    <ellipse cx="17" cy="-57" rx="3.2" ry="2.4" fill="${skin}" transform="rotate(24 17 -57)"/>
+    <path d="M -19 -50 C -20 -63 -11 -70 0 -70 C 11 -70 20 -63 19 -50
+             Q 0 -44 -19 -50 Z" fill="${SCENE_COLORS.ivory}"/>
+    <path d="M 5 -70 C 12 -67 19 -62 19 -50 Q 10 -46 3 -47 Z" fill="#e3dac8" opacity="0.8"/>
 
     <!-- === CARA (cabeza pequeña) === -->
-    <path d="M 0 -92 C 7 -92 13 -86 13 -79 C 13 -72 7 -67 0 -67
-             C -7 -67 -13 -72 -13 -79 C -13 -86 -7 -92 0 -92 Z"
+    <path d="M 0 -90 C 6.5 -90 11.5 -85 11.5 -78.5 C 11.5 -72 6.5 -67 0 -67
+             C -6.5 -67 -11.5 -72 -11.5 -78.5 C -11.5 -85 -6.5 -90 0 -90 Z"
           fill="${skin}"/>
     <!-- Mejillas -->
-    <ellipse cx="-7.5" cy="-75" rx="3.4" ry="2.3" fill="${blush}" opacity="0.45"/>
-    <ellipse cx="7.5" cy="-75" rx="3.4" ry="2.3" fill="${blush}" opacity="0.45"/>
+    <ellipse cx="-6.5" cy="-74.5" rx="3" ry="2" fill="${blush}" opacity="0.45"/>
+    <ellipse cx="6.5" cy="-74.5" rx="3" ry="2" fill="${blush}" opacity="0.45"/>
     <!-- Cejas diminutas -->
-    <path d="M -7.5 -85 Q -4.8 -86.6 -2.2 -85" stroke="${hair}" stroke-width="1.1" fill="none" opacity="0.55" stroke-linecap="round"/>
-    <path d="M 2.2 -85 Q 4.8 -86.6 7.5 -85" stroke="${hair}" stroke-width="1.1" fill="none" opacity="0.55" stroke-linecap="round"/>
+    <path d="M -6.5 -84 Q -4.3 -85.4 -2 -84" stroke="${hair}" stroke-width="1" fill="none" opacity="0.5" stroke-linecap="round"/>
+    <path d="M 2 -84 Q 4.3 -85.4 6.5 -84" stroke="${hair}" stroke-width="1" fill="none" opacity="0.5" stroke-linecap="round"/>
     <!-- Ojos cerraditos -->
-    <path d="M -8 -79.5 Q -5 -76 -2 -79.5" stroke="${ink}" stroke-width="1.7" fill="none" stroke-linecap="round"/>
-    <path d="M 2 -79.5 Q 5 -76 8 -79.5" stroke="${ink}" stroke-width="1.7" fill="none" stroke-linecap="round"/>
-    <!-- Sonrisa, muy cerca de los ojos (sin nariz) -->
-    <path d="M -2.8 -74 Q 0 -71.8 2.8 -74" stroke="#9c5f5a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M -7 -78.5 Q -4.5 -76 -2 -78.5" stroke="${ink}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <path d="M 2 -78.5 Q 4.5 -76 7 -78.5" stroke="${ink}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <!-- Boquita muy cerca de los ojos (sin nariz) -->
+    <path d="M -2.2 -73.5 Q 0 -72 2.2 -73.5" stroke="#9c5f5a" stroke-width="1.4" fill="none" stroke-linecap="round"/>
 
-    <!-- === PELLO CASTÁÑO CLARO === -->
-    <path d="M -13 -80 C -14.5 -89 -8 -94 0 -94 C 8 -94 14.5 -89 13 -80
-             C 12.4 -75 11.8 -72 11 -69
-             C 10 -73 9.4 -76 8.6 -79
-             C 7 -83 4 -84.6 0 -84.6 C -4 -84.6 -7 -83 -8.6 -79
-             C -9.4 -76 -10 -73 -11 -69
-             C -11.8 -72 -12.4 -75 -13 -80 Z"
+    <!-- === CABELLO: menos de la mitad, para que se vean los ojitos === -->
+    <path d="M -11.5 -78.5 C -11.5 -85 -6.5 -90 0 -90
+             C 6.5 -90 11.5 -85 11.5 -78.5
+             Q 0 -83.5 -11.5 -78.5 Z"
           fill="${hair}"/>
-    <path d="M -10 -83 C -8 -89.5 -3.5 -92.5 1 -92 C -4 -90.5 -7.5 -87.5 -8.8 -83 Z"
+    <path d="M -8 -83 C -6.5 -87.5 -3 -89.5 1 -89 C -4 -88 -6 -86 -7 -83 Z"
           fill="${hairLight}" opacity="0.55"/>
   `;
 
-  return `<g transform="translate(${x} ${y}) scale(${scale})">${manger}${baby}${strawFront}</g>`;
+  return `<g transform="translate(${x} ${y}) scale(${scale})">${legs}${manger}${baby}${strawFront}</g>`;
 }
 
 export default drawBabyJesus;

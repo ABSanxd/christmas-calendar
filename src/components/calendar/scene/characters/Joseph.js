@@ -1,17 +1,20 @@
 /**
  * San José, de pie junto al pesebre.
  *
- * Comparte con el ángel y con María el mismo sistema de proporciones: cabeza
- * ancha y baja, ojos grandes con brillo, mejillas sonrosadas y una sonrisa
- * corta. Todo está construido con curvas Bézier.
+ * Comparte con el ángel y con María el mismo sistema de proporciones y el
+ * mismo tipo de manto, pero más **recto**: al ser hombre, la silueta no se
+ * abre en campana como la de María, sino que cae casi recta.
  *
- * Lectura del personaje:
- * - manto terracota largo con pliegues y un forro más oscuro en el lateral;
- * - capa oscura echada sobre un hombro;
- * - capucha clara sobre la cabeza (como el velo de María, para que el grupo
- *   se lea como una familia);
- * - barba y bigote castaños que le framing la cara;
- * - cayado en la mano exterior y la otra mano abierta hacia el Niño.
+ * Vestuario: manto naranja largo con banda crema y filete dorado en el bajo,
+ * y encima un **chaleco verde** que cubre las mangas y el torso hasta
+ * media figura, dejando el naranja solo en la parte de abajo.
+ *
+ * Cabeza: **sin velo**; pelo corto y ondulado en el mismo marrón de la
+ * barba, construido con un casquete y una fila de círculos que forman el
+ * flequillo. La cara es más recta que ovalada y la barba va en punta,
+ * dejando la boca dentro de la piel y no sobre la barba.
+ *
+ * El cayado se mantiene tal cual.
  *
  * El origen está en el suelo, para poder colocarlo con libertad.
  */
@@ -33,91 +36,119 @@ export function drawJoseph(options) {
   const skinShade = '#d6ab88';
   const robe = '#c08552';
   const robeDark = '#9c6540';
-  const cloak = '#a56a45';
-  const hood = '#f7f2e8';
-  const hoodShade = '#ddd3c0';
+  const vest = '#4c7f52';
+  const vestDark = '#38603d';
+  const cream = '#f7f2e8';
   const hair = '#5a4029';
+  const hairLight = '#74573a';
   const gold = '#e2bb59';
+  const goldLight = '#f8e3a6';
   const blush = '#ee9aa4';
   const ink = '#3a2b3f';
 
   const joseph = `
-    <!-- === CAYADO === -->
-    <path d="M -30 -162 L -30 -4" stroke="${SCENE_COLORS.sandDark}" stroke-width="4.2" stroke-linecap="round"/>
-    <path d="M -30 -162 C -30 -174 -21 -175 -19 -166" stroke="${SCENE_COLORS.sandDark}" stroke-width="4.2" fill="none" stroke-linecap="round"/>
-    <path d="M -30 -162 L -30 -4" stroke="${SCENE_COLORS.gold}" stroke-width="1.4" stroke-linecap="round" opacity="0.4"/>
+    <!-- === CUELLO (detrás del manto, como el de María) === -->
+    <path d="M -5 -126 L -11 -101 Q 0 -98 11 -101 L 5 -126 Z" fill="${skinShade}"/>
 
-    <!-- === MANTO LARGO === -->
-    <path d="M -22 -128 C -26 -96 -26 -52 -25 0 Q 0 10 25 0
-             C 26 -52 26 -96 22 -128 Q 0 -140 -22 -128 Z" fill="${robe}"/>
+    <!-- === MANTO NARANJA (recto, con el cuerpo igual que María) === -->
+    <path d="M -18 -114 C -21 -84 -25 -42 -28 -3 Q 0 5 28 -3
+             C 25 -42 21 -84 18 -114 Q 0 -104 -18 -114 Z"
+          fill="${robe}" stroke="${robeDark}" stroke-width="1" stroke-opacity="0.35"/>
     <!-- Pliegues -->
-    <path d="M -10 -130 C -14 -96 -15 -48 -14 2" stroke="${robeDark}" stroke-width="2.4" fill="none" opacity="0.32"/>
-    <path d="M 8 -132 C 12 -96 13 -48 12 2" stroke="${robeDark}" stroke-width="2.4" fill="none" opacity="0.32"/>
-    <path d="M 0 -134 C -1 -96 -1 -48 0 4" stroke="${robeDark}" stroke-width="2" fill="none" opacity="0.22"/>
+    <path d="M -9 -114 C -11 -84 -13 -42 -13 -1" stroke="${robeDark}" stroke-width="2.2" fill="none" opacity="0.3"/>
+    <path d="M 8 -114 C 10 -84 12 -42 12 -1" stroke="${robeDark}" stroke-width="2.2" fill="none" opacity="0.3"/>
+    <path d="M 0 -116 C -1 -84 -1 -42 -1 2" stroke="${robeDark}" stroke-width="2" fill="none" opacity="0.22"/>
     <!-- Luz central -->
-    <path d="M -3 -134 C -5 -96 -5 -48 -4 4 L 4 4
-             C 5 -48 5 -96 3 -134 Z" fill="${gold}" opacity="0.1"/>
-    <!-- Forro oscuro en el lateral -->
-    <path d="M 14 -132 C 19 -98 21 -50 20 2 L 25 0
-             C 26 -52 26 -96 22 -128 Z" fill="${robeDark}" opacity="0.45"/>
-    <!-- Dobladillo del bajo -->
-    <path d="M -25 -8 Q 0 2 25 -8 L 25 0 Q 0 10 -25 0 Z" fill="${robeDark}" opacity="0.5"/>
+    <path d="M -3 -115 C -5 -84 -5 -42 -5 2 L 5 2 C 5 -42 5 -84 3 -115 Z"
+          fill="${goldLight}" opacity="0.13"/>
+    <!-- Sombra en los bordes -->
+    <path d="M -18 -114 C -20 -86 -23 -42 -25 -6 Q -21 -3 -18 -5
+             C -15 -42 -12 -84 -10 -113 Z" fill="${robeDark}" opacity="0.22"/>
+    <path d="M 18 -114 C 20 -86 23 -42 25 -6 Q 21 -3 18 -5
+             C 15 -42 12 -84 10 -113 Z" fill="${robeDark}" opacity="0.22"/>
+    <!-- Banda crema del bajo y filete dorado -->
+    <path d="M -27 -16 Q 0 -4 27 -16 L 28 -3 Q 0 5 -28 -3 Z" fill="${cream}"/>
+    <path d="M -27 -18 Q 0 -6 27 -18" stroke="${gold}" stroke-width="1.4" fill="none" opacity="0.8"/>
 
-    <!-- === CAPA SOBRE EL HOMBRO === -->
-    <path d="M -20 -126 C -26 -138 -13 -148 5 -144
-             C 13 -141 18 -134 17 -127
-             C 7 -132 -6 -130 -13 -123 C -17 -119 -19 -121 -20 -126 Z"
-          fill="${cloak}"/>
-    <path d="M -19 -124 C -24 -110 -26 -90 -24 -72 C -20 -86 -18 -104 -16 -118 Z"
-          fill="${cloak}" opacity="0.9"/>
+    <!-- === CHALECO VERDE ABIERTO (solo a los lados, el centro va naranja) === -->
+    <path d="M -17 -114 C -19 -92 -20 -70 -20 -48 L -7 -44
+             C -8 -70 -9 -92 -9 -114 Q -13 -120 -17 -114 Z"
+          fill="${vest}" stroke="${vestDark}" stroke-width="1" stroke-opacity="0.4"/>
+    <path d="M 17 -114 C 19 -92 20 -70 20 -48 L 7 -44
+             C 8 -70 9 -92 9 -114 Q 13 -120 17 -114 Z"
+          fill="${vest}" stroke="${vestDark}" stroke-width="1" stroke-opacity="0.4"/>
+    <!-- Dobladillo de cada faldón -->
+    <path d="M -20 -50 L -7 -46 L -7 -41 L -20 -45 Z" fill="${vestDark}" opacity="0.5"/>
+    <path d="M 20 -50 L 7 -46 L 7 -41 L 20 -45 Z" fill="${vestDark}" opacity="0.5"/>
 
-    <!-- === BRAZO QUE SOSTIENE EL CAYADO === -->
-    <path d="M -17 -116 C -25 -108 -29 -98 -29 -88" stroke="${robe}" stroke-width="11" fill="none" stroke-linecap="round"/>
-    <ellipse cx="-29" cy="-85" rx="5" ry="4.2" fill="${skin}" transform="rotate(14 -29 -85)"/>
+    <!-- === MANGAS VERDES: a la misma distancia que las de María === -->
+    <!-- Brazo del cayado -->
+    <g transform="translate(-12 -105) rotate(14)">
+      <path d="M -7 0 C -10.5 10 -11.5 25 -8.5 35 C -4.5 42 4.5 42 8.5 35
+               C 11.5 25 10.5 10 7 0 C 2.5 -3 -2.5 -3 -7 0 Z"
+            fill="${vest}" stroke="${vestDark}" stroke-width="1.1" stroke-opacity="0.45"/>
+      <path d="M -7 0 C -10.5 10 -11.5 25 -8.5 35 C -6 39 -2 40 0 40
+               C -4 32 -5 17 -3 0 Z" fill="${vestDark}" opacity="0.28"/>
+    </g>
+    <ellipse cx="-22" cy="-66" rx="4.4" ry="3.4" fill="${skin}" transform="rotate(14 -22 -66)"/>
+    <!-- Brazo abierto hacia el Niño -->
+    <g transform="translate(13 -105) rotate(-9)">
+      <path d="M -7 0 C -10.5 10 -11.5 25 -8.5 35 C -4.5 42 4.5 42 8.5 35
+               C 11.5 25 10.5 10 7 0 C 2.5 -3 -2.5 -3 -7 0 Z"
+            fill="${vest}" stroke="${vestDark}" stroke-width="1.1" stroke-opacity="0.45"/>
+      <path d="M -7 0 C -10.5 10 -11.5 25 -8.5 35 C -6 39 -2 40 0 40
+               C -4 32 -5 17 -3 0 Z" fill="${vestDark}" opacity="0.28"/>
+    </g>
+    <ellipse cx="19" cy="-66" rx="4.4" ry="3.6" fill="${skin}" transform="rotate(-14 19 -66)"/>
 
-    <!-- === BRAZO ABIERTO HACIA EL NIÑO === -->
-    <path d="M 15 -116 C 25 -110 32 -102 36 -94" stroke="${robe}" stroke-width="10.5" fill="none" stroke-linecap="round"/>
-    <path d="M 15 -116 C 25 -110 32 -102 36 -94" stroke="${robeDark}" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.4"/>
-    <ellipse cx="39" cy="-91" rx="4.8" ry="3.8" fill="${skin}" transform="rotate(-18 39 -91)"/>
-
-    <!-- === CAPUCHA (detrás) === -->
-    <path d="M 0 -158 C -23 -158 -31 -140 -30 -122 C -29 -110 -27 -100 -26 -92
-             C -16 -102 -8 -107 0 -107 C 8 -107 16 -102 26 -92
-             C 27 -100 29 -110 30 -122 C 31 -140 23 -158 0 -158 Z" fill="${hoodShade}"/>
-
-    <!-- === CARA === -->
-    <path d="M 0 -146 C 11 -146 20 -140 20 -129 C 19 -121 11 -116 0 -114
-             C -11 -116 -19 -121 -20 -129 C -20 -140 -11 -146 0 -146 Z"
+    <!-- === CARA (recta, no ovalada) === -->
+    <path d="M 0 -146 C 12 -146 21 -138 21 -128
+             C 21 -119 17 -113 11 -111 L -11 -111
+             C -17 -113 -21 -119 -21 -128 C -21 -138 -12 -146 0 -146 Z"
           fill="${skin}"/>
     <!-- Mejillas -->
-    <ellipse cx="-12" cy="-122" rx="4.6" ry="3" fill="${blush}" opacity="0.4"/>
-    <ellipse cx="12" cy="-122" rx="4.6" ry="3" fill="${blush}" opacity="0.4"/>
+    <ellipse cx="-12" cy="-122" rx="4.4" ry="2.9" fill="${blush}" opacity="0.38"/>
+    <ellipse cx="12" cy="-122" rx="4.4" ry="2.9" fill="${blush}" opacity="0.38"/>
     <!-- Cejas -->
-    <path d="M -12 -138 Q -7 -141 -2 -138" stroke="${hair}" stroke-width="1.8" fill="none" opacity="0.75" stroke-linecap="round"/>
-    <path d="M 2 -138 Q 7 -141 12 -138" stroke="${hair}" stroke-width="1.8" fill="none" opacity="0.75" stroke-linecap="round"/>
-    <!-- Ojos -->
+    <path d="M -12 -138 Q -7 -141 -2 -138" stroke="${hair}" stroke-width="1.8" fill="none" opacity="0.8" stroke-linecap="round"/>
+    <path d="M 2 -138 Q 7 -141 12 -138" stroke="${hair}" stroke-width="1.8" fill="none" opacity="0.8" stroke-linecap="round"/>
+    <!-- Ojos (se mantienen) -->
     <ellipse cx="-7" cy="-131" rx="3.9" ry="4.8" fill="${ink}"/>
     <ellipse cx="7" cy="-131" rx="3.9" ry="4.8" fill="${ink}"/>
     <circle cx="-8.2" cy="-133" r="1.5" fill="#ffffff"/>
     <circle cx="5.8" cy="-133" r="1.5" fill="#ffffff"/>
+    <!-- Naricilla -->
+    <ellipse cx="0" cy="-126" rx="1.6" ry="1.1" fill="${skinShade}" opacity="0.7"/>
 
-    <!-- === BARBA Y BIGOTE === -->
-    <path d="M -12 -127 C -13 -113 -8 -104 0 -103 C 8 -104 13 -113 12 -127
-             C 9 -122 5 -120 0 -120 C -5 -120 -9 -122 -12 -127 Z" fill="${hair}"/>
-    <path d="M -8 -125 Q 0 -119 8 -125 Q 6 -118 0 -118 Q -6 -118 -8 -125 Z" fill="${hair}"/>
-    <!-- Naricilla y sonrisa (sobre la barba) -->
-    <ellipse cx="0" cy="-127" rx="1.5" ry="1.1" fill="${skinShade}" opacity="0.7"/>
-    <path d="M -3.6 -113 Q 0 -110 3.6 -113" stroke="#f0cdb4" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+    <!-- === BARBA: desde debajo de la nariz hacia abajo, como el pelo del Niño === -->
+    <path d="M -16 -124
+             C -18 -117 -16 -111 -13 -106 C -10 -102 -5 -100 0 -99
+             C 5 -100 10 -102 13 -106 C 16 -111 18 -117 16 -124
+             Q 0 -127 -16 -124 Z"
+          fill="${hair}"/>
+    <path d="M -11 -121 C -7 -118 -7 -112 -10 -108" stroke="${hairLight}" stroke-width="1.6" fill="none" opacity="0.45" stroke-linecap="round"/>
 
-    <!-- === CAPUCHA DELANTERA (enmarca la cara) === -->
-    <path d="M -25 -126 C -29 -147 -17 -160 0 -160 C 17 -160 29 -147 25 -126
-             C 25 -116 26 -108 26 -100 C 21 -106 19 -114 18 -123
-             C 16 -139 10 -148 0 -148 C -10 -148 -16 -139 -18 -123
-             C -19 -114 -21 -106 -26 -100 C -26 -108 -25 -116 -25 -126 Z"
-          fill="${hood}"/>
-    <!-- Paños estrechos de la capucha sobre los hombros -->
-    <path d="M -25 -124 C -28 -112 -28 -96 -26 -80 C -23 -94 -22 -108 -21 -116 Z" fill="${hood}"/>
-    <path d="M 25 -124 C 28 -112 28 -96 26 -80 C 23 -94 22 -108 21 -116 Z" fill="${hood}"/>
+    <!-- Boca: encima de la barba, en su sitio -->
+    <path d="M -4.2 -121 Q 0 -117.8 4.2 -121" stroke="#f0c9ad" stroke-width="1.9" fill="none" stroke-linecap="round"/>
+
+    <!-- === CABELLO ONDULADO CORTO (casquete + círculos) === -->
+    <path d="M 0 -148 C -14 -148 -21 -140 -21 -130
+             C -21 -134 -19 -138 -17 -141 C -12 -144 -6 -145 0 -145
+             C 6 -145 12 -144 17 -141 C 19 -138 21 -134 21 -130
+             C 21 -140 14 -148 0 -148 Z" fill="${hair}"/>
+    <circle cx="-16" cy="-138" r="4.3" fill="${hair}"/>
+    <circle cx="-10.5" cy="-142" r="4.3" fill="${hair}"/>
+    <circle cx="-5" cy="-144" r="4.3" fill="${hair}"/>
+    <circle cx="0" cy="-145" r="4.3" fill="${hair}"/>
+    <circle cx="5" cy="-144" r="4.3" fill="${hair}"/>
+    <circle cx="10.5" cy="-142" r="4.3" fill="${hair}"/>
+    <circle cx="16" cy="-138" r="4.3" fill="${hair}"/>
+    <path d="M -15 -142 C -11 -145 -6 -146 0 -146" stroke="${hairLight}" stroke-width="1.6" fill="none" opacity="0.5" stroke-linecap="round"/>
+
+    <!-- === CAYADO (encima de todo, para que no se pierda tras la cabeza) === -->
+    <path d="M -22 -162 L -22 -4" stroke="${SCENE_COLORS.sandDark}" stroke-width="4.2" stroke-linecap="round"/>
+    <path d="M -22 -162 C -22 -174 -13 -175 -11 -166" stroke="${SCENE_COLORS.sandDark}" stroke-width="4.2" fill="none" stroke-linecap="round"/>
+    <path d="M -22 -162 L -22 -4" stroke="${SCENE_COLORS.gold}" stroke-width="1.4" stroke-linecap="round" opacity="0.4"/>
   `;
 
   return `<g transform="translate(${x} ${y}) scale(${flip ? -scale : scale} ${scale})">${joseph}</g>`;

@@ -82,30 +82,39 @@ export function renderNativity() {
         <ellipse cx="${cx}" cy="${FLOOR + 16}" rx="150" ry="22" fill="#8a7647"/>
       </g>
 
-      <!-- Establo: choza de techo alto, para que quepa toda la familia -->
+      <!-- Establo: casa con dos postes laterales y techo de dos vigas -->
       <g id="nativity-stable" data-layer="stable">
-        <path d="M ${cx - 132} ${FLOOR + 8} L ${cx} ${FLOOR - 172} L ${cx + 132} ${FLOOR + 8} Z"
-              fill="${SCENE_COLORS.roseDeep}" opacity="0.95"/>
-        <path d="M ${cx - 132} ${FLOOR + 8} L ${cx} ${FLOOR - 172} L ${cx + 132} ${FLOOR + 8}"
-              fill="none" stroke="${SCENE_COLORS.gold}" stroke-width="3" opacity="0.8"/>
-        <path d="M ${cx - 132} ${FLOOR + 8} L ${cx + 132} ${FLOOR + 8}" stroke="${SCENE_COLORS.sandDark}" stroke-width="5" opacity="0.7"/>
-        <rect x="${cx - 136}" y="${FLOOR - 4}" width="9" height="36" rx="4" fill="${SCENE_COLORS.roseDeep}"/>
-        <rect x="${cx + 127}" y="${FLOOR - 4}" width="9" height="36" rx="4" fill="${SCENE_COLORS.roseDeep}"/>
-        <!-- Vigas del tejado -->
-        <path d="M ${cx - 108} ${FLOOR + 8} L ${cx - 6} ${FLOOR - 142}" stroke="${SCENE_COLORS.goldDeep}" stroke-width="2" opacity="0.45"/>
-        <path d="M ${cx + 108} ${FLOOR + 8} L ${cx + 6} ${FLOOR - 142}" stroke="${SCENE_COLORS.goldDeep}" stroke-width="2" opacity="0.45"/>
-        <path d="M ${cx - 76} ${FLOOR + 8} L ${cx - 3} ${FLOOR - 72}" stroke="${SCENE_COLORS.goldDeep}" stroke-width="1.8" opacity="0.3"/>
-        <path d="M ${cx + 76} ${FLOOR + 8} L ${cx + 3} ${FLOOR - 72}" stroke="${SCENE_COLORS.goldDeep}" stroke-width="1.8" opacity="0.3"/>
+        <!-- Postes (muros) que sostienen el tejado -->
+        <rect x="${cx - 148}" y="${FLOOR - 100}" width="16" height="110" rx="4" fill="${SCENE_COLORS.roseDeep}"/>
+        <rect x="${cx + 132}" y="${FLOOR - 100}" width="16" height="110" rx="4" fill="${SCENE_COLORS.roseDeep}"/>
+        <rect x="${cx - 148}" y="${FLOOR - 100}" width="16" height="110" rx="4" fill="none" stroke="${SCENE_COLORS.gold}" stroke-width="2" opacity="0.7"/>
+        <rect x="${cx + 132}" y="${FLOOR - 100}" width="16" height="110" rx="4" fill="none" stroke="${SCENE_COLORS.gold}" stroke-width="2" opacity="0.7"/>
+        <!-- Techo: dos vigas que juntas forman el triángulo, sin relleno -->
+        <path d="M ${cx - 140} ${FLOOR - 100} L ${cx} ${FLOOR - 232}"
+              stroke="${SCENE_COLORS.roseDeep}" stroke-width="22" stroke-linecap="round"/>
+        <path d="M ${cx} ${FLOOR - 232} L ${cx + 140} ${FLOOR - 100}"
+              stroke="${SCENE_COLORS.roseDeep}" stroke-width="22" stroke-linecap="round"/>
+        <!-- Canto dorado de las vigas -->
+        <path d="M ${cx - 140} ${FLOOR - 100} L ${cx} ${FLOOR - 232}"
+              stroke="${SCENE_COLORS.gold}" stroke-width="3.4" opacity="0.9" stroke-linecap="round"/>
+        <path d="M ${cx} ${FLOOR - 232} L ${cx + 140} ${FLOOR - 100}"
+              stroke="${SCENE_COLORS.gold}" stroke-width="3.4" opacity="0.9" stroke-linecap="round"/>
+        <!-- Travesaño que une los postes -->
+        <path d="M ${cx - 140} ${FLOOR - 100} L ${cx + 140} ${FLOOR - 100}"
+              stroke="${SCENE_COLORS.sandDark}" stroke-width="6" opacity="0.75"/>
+        <!-- Vigas internas del tejado -->
+        <path d="M ${cx - 96} ${FLOOR - 100} L ${cx - 6} ${FLOOR - 192}" stroke="${SCENE_COLORS.goldDeep}" stroke-width="2" opacity="0.32"/>
+        <path d="M ${cx + 96} ${FLOOR - 100} L ${cx + 6} ${FLOOR - 192}" stroke="${SCENE_COLORS.goldDeep}" stroke-width="2" opacity="0.32"/>
       </g>
 
-      <!-- María, de pie a la izquierda -->
-      ${drawMary({ x: cx - 84, y: FLOOR + 6, scale: 0.9 })}
+      <!-- María, arrodillada a la izquierda (junto al Niño, dentro del claro) -->
+      ${drawMary({ x: cx - 62, y: FLOOR + 6, scale: 0.84 })}
 
-      <!-- José, de pie a la derecha -->
-      ${drawJoseph({ x: cx + 88, y: FLOOR + 6, scale: 0.9, flip: true })}
+      <!-- José, de pie a la derecha (junto al Niño, dentro del claro) -->
+      ${drawJoseph({ x: cx + 60, y: FLOOR + 6, scale: 0.9, flip: true })}
 
       <!-- El Niño en el pesebre, al frente -->
-      ${drawBabyJesus({ x: cx, y: FLOOR + 26, scale: 1 })}
+      ${drawBabyJesus({ x: cx, y: FLOOR + 14, scale: 1 })}
 
       <!-- Buey y asno junto al pesebre -->
       <g id="scene-animals" data-layer="characters">

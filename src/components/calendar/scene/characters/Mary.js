@@ -46,16 +46,21 @@ export function drawMary(options) {
 
   const mary = `
     <!-- === VELO DETRÁS (cae por los hombros) === -->
-    <path d="M -26 -66 C -30 -94 -29 -114 -27 -132
-             C -30 -152 -15 -172 0 -172 C 15 -172 30 -152 27 -132
-             C 29 -114 30 -94 26 -66
-             C 22 -86 21 -104 20 -120 C 20 -136 12 -150 0 -150
-             C -12 -150 -20 -136 -20 -120 C -21 -104 -22 -86 -26 -66 Z"
-          fill="${cream}"/>
+    <g transform="translate(0 4)">
+      <path d="M -26 -66 C -30 -94 -29 -114 -27 -132
+               C -30 -152 -15 -172 0 -172 C 15 -172 30 -152 27 -132
+               C 29 -114 30 -94 26 -66
+               C 22 -86 21 -104 20 -120 C 20 -136 12 -150 0 -150
+               C -12 -150 -20 -136 -20 -120 C -21 -104 -22 -86 -26 -66 Z"
+            fill="${cream}"/>
+    </g>
+
+    <!-- === CUELLO (detrás del manto: lo recorta el escote) === -->
+    <path d="M -5 -124 L -11 -101 Q 0 -98 11 -101 L 5 -124 Z" fill="${skinShade}"/>
 
     <!-- === MANTO (igual que el del ángel) === -->
     <path d="M -17 -114 C -22 -84 -29 -42 -34 -3 Q 0 5 34 -3
-             C 29 -42 22 -84 17 -114 Q 0 -122 -17 -114 Z"
+             C 29 -42 22 -84 17 -114 Q 0 -104 -17 -114 Z"
           fill="${robe}" stroke="${robeDark}" stroke-width="1" stroke-opacity="0.3"/>
     <!-- Pliegues del faldón -->
     <path d="M -8 -114 C -13 -84 -15 -42 -13 -1" stroke="${robeDark}" stroke-width="2.2" fill="none" opacity="0.28"/>
@@ -92,7 +97,6 @@ export function drawMary(options) {
     <ellipse cx="19" cy="-73" rx="4.4" ry="3.4" fill="${skin}" transform="rotate(-14 19 -73)"/>
 
     <!-- === CUELLO === -->
-    <path d="M -5 -120 L -5 -106 Q 0 -103 5 -106 L 5 -120 Z" fill="${skinShade}"/>
 
     <!-- === CARA === -->
     <path d="M 0 -148 C 11 -148 20 -140 20 -130 C 19 -122 11 -116 0 -114
@@ -108,36 +112,36 @@ export function drawMary(options) {
     <path d="M -11.5 -130 Q -7.5 -125.2 -3.5 -130" stroke="${ink}" stroke-width="2.1" fill="none" stroke-linecap="round"/>
     <path d="M 3.5 -130 Q 7.5 -125.2 11.5 -130" stroke="${ink}" stroke-width="2.1" fill="none" stroke-linecap="round"/>
     <!-- Naricilla y sonrisa -->
-    <ellipse cx="0" cy="-124" rx="1.4" ry="1" fill="${skinShade}" opacity="0.6"/>
-    <path d="M -3.4 -119 Q 0 -116 3.4 -119" stroke="#9c5f5a" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+    <ellipse cx="0" cy="-125" rx="1.4" ry="1" fill="${skinShade}" opacity="0.6"/>
+    <path d="M -3.4 -121 Q 0 -118 3.4 -121" stroke="#9c5f5a" stroke-width="1.7" fill="none" stroke-linecap="round"/>
 
     <!-- === VELO (capa exterior blanca) === -->
-    <path d="M -27 -66
-             C -29 -92 -27 -112 -26 -130
-             C -29 -149 -15 -170 0 -170
-             C 15 -170 29 -149 26 -130
-             C 27 -112 29 -92 27 -66
-             C 24 -82 22 -102 21 -118
-             C 21 -124 20 -130 20 -130
-             C 23 -144 12 -162 0 -162
-             C -12 -162 -23 -144 -20 -130
-             C -20 -130 -21 -124 -21 -118
-             C -22 -102 -24 -82 -27 -66 Z"
-          fill="${cream}"/>
+    <g transform="translate(0 4)">
+      <path d="M -27 -66
+               C -29 -92 -27 -112 -26 -130
+               C -29 -149 -15 -170 0 -170
+               C 15 -170 29 -149 26 -130
+               C 27 -112 29 -92 27 -66
+               C 24 -82 22 -102 21 -118
+               C 21 -124 20 -130 20 -130
+               C 23 -144 12 -162 0 -162
+               C -12 -162 -23 -144 -20 -130
+               C -20 -130 -21 -124 -21 -118
+               C -22 -102 -24 -82 -27 -66 Z"
+            fill="${cream}"/>
+    </g>
 
     <!-- === MELENA (capa interior marrón, junto a la cara) === -->
     <path d="M -20 -130
              C -23 -144 -12 -162 0 -162
              C 12 -162 23 -144 20 -130
-             C 20 -116 21 -104 20 -94
-             C 17 -88 13 -90 16 -95
-             C 17 -110 17 -123 18 -132
-             C 16 -141 9 -147 3 -147
+             C 21 -116 24 -107 24 -101
+             C 19 -95 18 -113 18 -132
+             C 16 -141 8 -147 3 -147
              C 1 -149 -1 -149 -3 -147
              C -9 -147 -16 -141 -18 -132
-             C -17 -123 -17 -110 -16 -95
-             C -13 -90 -17 -88 -20 -94
-             C -21 -104 -20 -116 -20 -130 Z"
+             C -18 -113 -19 -95 -24 -101
+             C -24 -107 -23 -116 -20 -130 Z"
           fill="${hair}"/>
     <!-- Brillo del pelo -->
     <path d="M -17 -140 C -19 -152 -11 -159 -2 -160 C -10 -156 -14 -149 -15 -141 Z"
@@ -146,11 +150,6 @@ export function drawMary(options) {
           fill="${hairLight}" opacity="0.55"/>
     <!-- Raya al centro -->
     <path d="M 0 -160 C -1 -157 -1 -154 0 -151" stroke="#4e3826" stroke-width="1.4" fill="none" opacity="0.5" stroke-linecap="round"/>
-
-    <!-- === MEDALLÓN === -->
-    <path d="M -8 -110 Q 0 -115 8 -110" stroke="${gold}" stroke-width="1.6" fill="none" opacity="0.85"/>
-    <circle cx="0" cy="-109" r="2.6" fill="${gold}"/>
-    <circle cx="-0.6" cy="-110" r="1" fill="${SCENE_COLORS.goldBright}" opacity="0.9"/>
   `;
 
   return `<g transform="translate(${x} ${y}) scale(${flip ? -scale : scale} ${scale})">${mary}</g>`;
