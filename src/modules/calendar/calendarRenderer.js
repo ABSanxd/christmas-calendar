@@ -150,13 +150,7 @@ export function renderApplication(options) {
   const footer = createElement('footer', { class: 'app-footer' });
   footer.innerHTML = `
     <div class="page-wrap">
-      <p>Calendario de Adviento 2026 · Comunidad católica</p>
-      <p class="app-footer__message">
-        Cada vela que enciendas y cada puerta que abras quedan guardadas en
-        este dispositivo, solo para ti. Vuelve cuando quieras: tu camino de
-        Adviento te estará esperando.
-      </p>
-      <p>Textos bíblicos: Biblia de Jerusalén (Reinaldo), edición de la RAE.</p>
+      <p>Calendario de Adviento 2026 · Comunidad Magnificat</p>
     </div>`;
   container.appendChild(footer);
 
