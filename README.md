@@ -231,7 +231,8 @@ calendario-navideño/
 │   ├── check-config.mjs          Valida CONFIG y SCENE_COLORS
 │   ├── export-og.mjs             Genera la imagen para redes sociales
 │   ├── smoke.mjs                 Prueba funcional en un navegador real
-│   └── shots.mjs                 Capturas de pantalla para revisión visual
+│   ├── shots.mjs                 Capturas de pantalla para revisión visual
+│   └── shot-shepherds.mjs        Recortes de los pastores para revisar el dibujo
 ├── src/
 │   ├── components/               Elementos visuales reutilizables
 │   │   ├── activities/           Una pieza por tipo de actividad
@@ -337,7 +338,7 @@ calendario-navideño/
 | `calendar/CalendarDay.js` | Una casilla: botón real, foco, estados y tooltip. |
 | `calendar/CalendarProgress.js` | Barra de progreso. |
 | `calendar/scene/*` | Capas de la ilustración: `SkyLayer`, `VillageLayer`, `NativityLayer`, `AngelsLayer`, `CharactersLayer`, `DayDoors` y `shapes.js` (formas reutilizables). |
-| `calendar/scene/characters/*` | Cada personaje es un componente independiente: `Angel`, `Mary`, `Joseph`, `BabyJesus`, `Magus`, `Camel`, `Shepherd`, `Sheep` y `Tree`. Se dibujan con el origen en su base, de modo que se pueden colocar y escalar con libertad. |
+| `calendar/scene/characters/*` | Cada personaje es un componente independiente: `Angel`, `Mary`, `Joseph`, `BabyJesus`, `Magus`, `Camel`, `Shepherd`, `Sheep` y `Tree`. Se dibujan con el origen en su base, de modo que se pueden colocar y escalar con libertad. Los **pastores** siguen el mismo sistema de proporciones que María y José (cabeza ancha, ojos con brillo, túnica con pliegues, banda clara en el bajo y filete dorado), pero son **jóvenes y sin barba**, llevan la **manta echada sobre la cabeza** y un **cinturón con hebilla dorada**. El segundo pastor es el mismo dibujo en espejo con otra paleta. |
 | `advent/AdventWreath.js` | La corona completa y su texto explicativo. |
 | `advent/AdventCandle.js` | Una vela, con la llama como elemento animable independiente. |
 | `advent/AdventAngel.js` | El angelito que vuela por la pantalla. |

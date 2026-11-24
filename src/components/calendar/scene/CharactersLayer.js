@@ -36,10 +36,36 @@ export function renderCharacters() {
     </g>`;
 
   // --- Pastores ---
+  // Ambos son jóvenes, llevan la manta sobre la cabeza y el cinturón ceñido.
   const shepherds = `
     <g id="scene-shepherds" data-layer="characters">
-      ${drawShepherd({ x: 1156, y: 768, scale: 0.92 })}
-      ${drawShepherd({ x: 1222, y: 792, scale: 0.82, flip: true, robe: SCENE_COLORS.violetLight })}
+      ${drawShepherd({
+        x: 1150,
+        y: 806,
+        scale: 0.87,
+        robe: '#b8824e',
+        robeDark: '#8b5a2e',
+        hem: '#dcb488',
+        mantle: '#6f8b5c',
+        mantleDark: '#526b41',
+        belt: '#7a4b2a',
+        beltDark: '#54331c',
+      })}
+      ${drawShepherd({
+        x: 1216,
+        y: 844,
+        scale: 0.79,
+        flip: true,
+        robe: '#8a76b0',
+        robeDark: '#5f4e85',
+        hem: '#b3a3d0',
+        mantle: '#c47f52',
+        mantleDark: '#96593a',
+        belt: '#6b4324',
+        beltDark: '#4a2e17',
+        skin: '#eac3a0',
+        hair: '#3f2f21',
+      })}
     </g>`;
 
   // --- Rebaño: disperso, como un rebaño de verdad ---
