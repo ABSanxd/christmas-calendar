@@ -58,7 +58,7 @@ export const CONFIG = {
   /** Mensajes de los domingos de Adviento. */
   sundayMessages: {
     1: 'Comienza nuestro camino hacia la Navidad. Preparemos nuestro corazón para recibir a Jesús.',
-    2: 'La primera vela ya está encendida. Seguimos caminando, paso a paso, hacia Belén.',
+    2: 'La segunda vela ya está encendida. Seguimos caminando, paso a paso, hacia Belén.',
     3: 'La alegría de Gaudete resuena en el camino. ¡Cuánto falta para encontrar a Jesús!',
     4: 'La luz se acerca. Preparad el camino: el Señor está a punto de llegar.',
   },
