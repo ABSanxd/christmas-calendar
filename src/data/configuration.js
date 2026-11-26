@@ -72,6 +72,10 @@ export const CONFIG = {
     'Señor Jesús, gracias por haber nacido entre nosotros y por quedarte en nuestros hogares. ' +
     'Bendice a mi familia, a mis amigos y a toda la comunidad. Que esta Navidad nos encuentre ' +
     'unidos, alegres y con el corazón preparado para seguirte. Amén.',
+
+  /** Último reto del calendario, al cerrar la Nochebuena. */
+  christmasEveChallenge:
+    'Tómate una foto en la misa de Nochebuena y compártela con los demás en tus redes sociales.',
 };
 
 export default CONFIG;

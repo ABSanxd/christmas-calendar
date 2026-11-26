@@ -119,7 +119,8 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas: 'head wreath';
-  align-items: start;
+  /* La corona queda centrada con respecto al bloque de texto. */
+  align-items: center;
   gap: var(--space-5);
   padding-block: var(--space-6) var(--space-4);
   text-align: center;

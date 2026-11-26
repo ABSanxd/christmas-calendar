@@ -162,6 +162,11 @@ export function drawWaterCarrier(options) {
     <path d="M 14 -70 C 21 -62 25 -50 25 -40" stroke="${robeDark}" stroke-width="2.4" fill="none" opacity="0.3"/>
     <ellipse cx="25" cy="-36" rx="5" ry="3.6" fill="${skin}" transform="rotate(20 25 -36)"/>
 
+    <!-- === OTRO BRAZO, CAIDO JUNTO AL CUERPO === -->
+    <path d="M -14 -70 C -19 -60 -21 -48 -21 -36" stroke="${robe}" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path d="M -14 -70 C -19 -60 -21 -48 -21 -36" stroke="${robeDark}" stroke-width="2.4" fill="none" opacity="0.3"/>
+    <ellipse cx="-21" cy="-32" rx="4.6" ry="3.4" fill="${skin}" transform="rotate(-12 -21 -32)"/>
+
     <!-- === BALDE === -->
     <path d="M 25 -38 L 17 -14 L 33 -14 L 25 -38 Z" fill="${wood}"/>
     <path d="M 25 -38 L 25 -14 L 33 -14 L 25 -38 Z" fill="${woodDark}" opacity="0.45"/>

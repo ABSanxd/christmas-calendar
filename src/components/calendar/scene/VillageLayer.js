@@ -281,8 +281,8 @@ export function renderVillage(viewBox) {
   // estaban tapados por el arco de la ciudad y no se veían.
   const villageWell = `
     <g id="scene-village-well" data-layer="characters">
-      ${drawWell({ x: 1000, y: 880, scale: 0.9 })}
-      ${drawWaterCarrier({ x: 932, y: 876, scale: 0.85 })}
+      ${drawWell({ x: 1000, y: 902, scale: 0.9 })}
+      ${drawWaterCarrier({ x: 932, y: 898, scale: 0.85 })}
     </g>`;
 
   // --- Puerta de la ciudad -------------------------------------------------

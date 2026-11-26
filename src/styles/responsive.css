@@ -68,7 +68,7 @@
 
   /* La corona se mantiene en la esquina superior derecha, junto a la fecha. */
   .hero__wreath {
-    width: clamp(4.5rem, 17vw, 7rem);
+    width: clamp(5rem, 19vw, 8rem);
   }
 
   /* La franja de progreso se parte en dos líneas: la barrita arriba y el

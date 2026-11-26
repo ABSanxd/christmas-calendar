@@ -115,9 +115,9 @@ export function renderApplication(options) {
       <p class="hero__date" data-current-date></p>
       <h2 class="hero__title">Camina con nosotros hacia Belén</h2>
       <p class="hero__text">
-        Cada día escondemos una sorpresa: una reflexión, una oración, un reto y
-        pequeños juegos para preparar el corazón. Ábrelas a medida que llega su
-        fecha y deja que la luz de Adviento entre en tu casa.
+        Cada día, este calendario te acompaña con una reflexión, una oración, un
+        reto y pequeños juegos para preparar el corazón. Ábrelas a medida que
+        llega su fecha y deja que la luz de Adviento entre en tu casa.
       </p>
     </div>`;
 

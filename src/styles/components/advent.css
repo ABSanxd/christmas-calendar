@@ -6,7 +6,7 @@
 .hero__wreath {
   grid-area: wreath;
   flex: 0 0 auto;
-  width: clamp(7.5rem, 16vw, 12rem);
+  width: clamp(8.5rem, 19vw, 13.5rem);
   position: relative;
 }
 

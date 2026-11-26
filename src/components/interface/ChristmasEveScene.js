@@ -51,6 +51,10 @@ export function createChristmasEveScene(options = {}) {
           <cite>${verse.reference}</cite>
         </blockquote>
         <p class="christmas-eve__prayer">${CONFIG.christmasEvePrayer}</p>
+        <aside class="christmas-eve__challenge">
+          <strong class="christmas-eve__challenge-label">Reto final: </strong>
+          <span class="christmas-eve__challenge-text">${CONFIG.christmasEveChallenge}</span>
+        </aside>
       </div>
       <div class="christmas-eve__actions">
         <button type="button" class="button" data-eve-close>Cerrar</button>
