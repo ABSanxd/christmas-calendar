@@ -9,6 +9,7 @@
 
 import { createElement } from '../../utils/domUtils.js';
 import { verseBlock, introBlock, setFeedback } from './activityParts.js';
+import { createYouTubePlayer } from './YouTubePlayer.js';
 import { playMelody, playChime } from '../../modules/audio/audioService.js';
 
 /**
@@ -97,6 +98,17 @@ function renderSingMode(content, saved) {
     fragment.appendChild(subtitle);
   }
 
+  // Si el día trae un vídeo, se ofrece la canción real antes que la
+  // melodía sintetizada, que queda como alternativa sin conexión.
+  if (content.videoId) {
+    const { element: player } = createYouTubePlayer({
+      videoId: content.videoId,
+      title: content.videoTitle ?? content.title ?? 'Villancico en YouTube',
+      author: content.videoAuthor ?? '',
+    });
+    fragment.appendChild(player);
+  }
+
   const stanzas = createElement('div', { class: 'music__stanzas' });
   (content.stanzas ?? []).forEach((stanza) => {
     const block = createElement('p', { class: 'music__stanza' });
@@ -113,7 +125,10 @@ function renderSingMode(content, saved) {
 
   // --- Botón de escucha ---
   const playButton = createElement('button', { type: 'button', class: 'button music__play' });
-  playButton.innerHTML = '<span aria-hidden="true">♪</span> Escuchar la melodía';
+  const playLabel = content.videoId
+    ? '<span aria-hidden="true">♪</span> Escuchar la melodía con la campanita'
+    : '<span aria-hidden="true">♪</span> Escuchar la melodía';
+  playButton.innerHTML = playLabel;
 
   const feedback = createElement('p', { class: 'activity__feedback' });
   feedback.hidden = true;
@@ -136,7 +151,9 @@ function renderSingMode(content, saved) {
 
     lines.forEach((line) => line.classList.remove('is-singing'));
     playButton.disabled = false;
-    playButton.innerHTML = '<span aria-hidden="true">♪</span> Escuchar de nuevo';
+    playButton.innerHTML = content.videoId
+      ? '<span aria-hidden="true">♪</span> Escuchar de nuevo con la campanita'
+      : '<span aria-hidden="true">♪</span> Escuchar de nuevo';
     heard = true;
     setFeedback(feedback, '¡Qué bien! Ahora canta tú con la familia.', 'success');
   });

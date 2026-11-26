@@ -70,6 +70,10 @@ export function stepsBlock(steps = []) {
  * opción ya marcada la deja sin elegir. Un botón de radio por sí solo no
  * permite eso, así que aquí se controla a mano.
  *
+ * Para saber si una opción ya estaba marcada se usa el atributo
+ * `data-selected`, que se actualiza con cada cambio. Así funciona igual con
+ * un clic real, con el teclado o desde el código.
+ *
  * @param {string[]} options
  * @param {object} [config]
  * @param {boolean} [config.multiple]
@@ -107,26 +111,32 @@ export function optionList(options = [], config = {}) {
   const readSelected = () =>
     Array.from(element.querySelectorAll('input:checked')).map((input) => input.value);
 
-  if (onChange) {
-    // Estado anterior de la opción que se está pulsando: sirve para saber si
-    // venía ya marcada (y entonces hay que deseleccionarla).
-    let wasChecked = false;
+  /**
+   * Anota (o desanota) una opción como seleccionada.
+   * @param {HTMLInputElement} input
+   * @param {boolean} selected
+   */
+  const markSelected = (input, selected) => {
+    if (selected) input.dataset.selected = 'true';
+    else delete input.dataset.selected;
+  };
 
-    element.addEventListener('pointerdown', (event) => {
+  if (onChange) {
+    element.addEventListener('change', (event) => {
       const input = event.target.closest('.option-list__input');
-      wasChecked = Boolean(input?.checked);
+      if (input) markSelected(input, input.checked);
+      onChange(readSelected());
     });
 
     element.addEventListener('click', (event) => {
       const input = event.target.closest('.option-list__input');
       if (!input) return;
-      if (!multiple && wasChecked) input.checked = false;
-      wasChecked = false;
-      onChange(readSelected());
-    });
-
-    element.addEventListener('change', () => {
-      onChange(readSelected());
+      // Si la opción ya estaba marcada, se desmarca.
+      if (!multiple && input.dataset.selected === 'true') {
+        input.checked = false;
+        markSelected(input, false);
+        onChange(readSelected());
+      }
     });
 
     // Con el teclado también se puede quitar la selección.
@@ -137,11 +147,28 @@ export function optionList(options = [], config = {}) {
       if (!input || !input.checked) return;
       event.preventDefault();
       input.checked = false;
+      markSelected(input, false);
       onChange(readSelected());
     });
   }
 
   return element;
+}
+
+/**
+ * Marca una opción como ya seleccionada (al recuperar lo guardado).
+ *
+ * Se despacha un cambio para que la lista se entere y anote la selección.
+ *
+ * @param {HTMLElement} list
+ * @param {string} value
+ */
+export function preselectOption(list, value) {
+  if (!list || !value) return;
+  const input = list.querySelector(`input[value="${CSS.escape(value)}"]`);
+  if (!input) return;
+  input.checked = true;
+  input.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
 /**

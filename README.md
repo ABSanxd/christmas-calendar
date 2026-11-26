@@ -136,7 +136,7 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
 | `riddle` | Acertijo con pistas progresivas. |
 | `wordsearch` | Sopa de letras generada al azar. |
 | `quiz` / `trivia` | Preguntas con explicación por respuesta. |
-| `music` | Villancico con melodía y juego de ritmo, o acróstico para componer uno. |
+| `music` | Villancico con melodía y juego de ritmo, o acróstico para componer uno. El villancico del día 7 se puede además ver y escuchar en YouTube. |
 | `purpose` | Compromisos espirituales marcables. |
 
 ### Comodidades
@@ -748,6 +748,10 @@ podría implementar de verdad.
   modo que no hay grabaciones de terceros ni problemas de licencia. La
   melodía de *Noche de paz* (canon de dominio público) se reproduce sintetizada
   y con la letra a la vista.
+- **Una única excepción: el villancico del día 7** se puede escuchar en YouTube
+  (Athenas, «Noche de paz»), con el reproductor incrustado. Es el único punto
+  del proyecto que carga algo de un tercero: si no hay conexión, el
+  reproductor avisa y queda la melodía sintetizada, que funciona sin internet.
 - **Fuentes del sistema.** No hay tipografías descargadas: el proyecto no
   depende de la red para verse bien.
 - **Service worker.** Solo se registra en producción. Si publicas una versión
@@ -1024,3 +1028,5 @@ ningún error en consola.
 - *Noche de paz*: canon tradicional de dominio público.
 - Ilustraciones: originales de este proyecto, dibujadas en SVG.
 - Sin recursos de terceros: no hay imágenes, audios ni tipografías externas.
+  La única excepción es el villancico del día 7, que se reproduce desde
+  YouTube y tiene alternativa sin conexión.

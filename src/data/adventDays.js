@@ -135,7 +135,7 @@ export const ADVENT_DAYS = [
       steps: [
         'Entreguen una caja de víveres, ropa o útiles en la puerta de una casa que lo necesite.',
         'Compartan una comida con una familia sola, con un enfermo o con alguien que no tiene con quién celebrar.',
-        'Regalen algo que para ustedes es fácil: su tiempo, una novella, un lugar en su mesa.',
+        'Ofrezcan como regalo algo que cueste desprender: unas horas de su tiempo, una parte de su dinero o un objeto al que tengan cariño.',
       ],
       duration: '30-45 minutos',
       encouragement:
@@ -156,8 +156,8 @@ export const ADVENT_DAYS = [
       paragraphs: [
         'María no entendió todo lo que le anunciaban, pero confió. Se quedó con una noticia ' +
           'que no cabía en su cabeza y, aun así, dijo que sí.',
-        'Antes de que el ángel llegara, María ya estaba en el Magnificat: "Magnificat anima mea ' +
-          'Dominum". Su primera reacción no fue la duda, sino la alabanza.',
+        'Antes de que el ángel llegara, María ya estaba en el Magnificat: "Proclama mi alma ' +
+          'la grandeza del Señor". Su primera reacción no fue la duda, sino la alabanza.',
       ],
       question: {
         prompt: '¿En qué momento de tu vida te ha costado decir que sí?',
@@ -166,10 +166,11 @@ export const ADVENT_DAYS = [
           'Cuando tuve que cambiar de planes',
           'Cuando no entendía lo que pasaba',
           'Cuando algo me parecía imposible',
+          'Otro (reflexiona de manera personal)',
         ],
       },
       closing:
-        'María no lo tenía todo resuelto: lo tenía confiado. Hoy puedes copiarle.',
+        'María no lo tenía todo resuelto: lo tenía confiado. Hoy puedes seguir su ejemplo.',
     },
   },
   {
@@ -184,11 +185,14 @@ export const ADVENT_DAYS = [
     completionEnabled: true,
     content: {
       mode: 'sing',
+      videoId: '1zNKFPGIFxU',
+      videoTitle: 'Athenas · Noche de paz',
+      videoAuthor: 'Athenas',
       title: 'Noche de paz',
       subtitle: 'Canon tradicional · dominio público',
       intro:
-        'Pulsa "Escuchar" y deja que la campanita marque la melodía. Después, toca las notas ' +
-        'que se encienden para cantar juntos.',
+        'Pulsa "Ver y escuchar el villancico" y deja que la música entre en casa. ' +
+        'Si no tienes conexión, puedes escucharla con la campanita y cantarla juntos.',
       stanzas: [
         [
           'Noche de paz, noche de amor,',

@@ -3,7 +3,7 @@
  */
 
 import { createElement } from '../../utils/domUtils.js';
-import { verseBlock, introBlock, optionList } from './activityParts.js';
+import { verseBlock, introBlock, optionList, preselectOption } from './activityParts.js';
 
 /**
  * Crea la reflexión de un día.
@@ -45,8 +45,7 @@ export function createReflection(options) {
       },
     });
     if (selectedAnswer) {
-      const input = options.querySelector(`input[value="${CSS.escape(selectedAnswer)}"]`);
-      if (input) input.checked = true;
+      preselectOption(options, selectedAnswer);
     }
     question.appendChild(options);
     element.appendChild(question);

@@ -3,7 +3,7 @@
  */
 
 import { createElement } from '../../utils/domUtils.js';
-import { verseBlock, introBlock, optionList } from './activityParts.js';
+import { verseBlock, introBlock, optionList, preselectOption } from './activityParts.js';
 
 /**
  * Crea la actividad de propósito.
@@ -35,7 +35,7 @@ export function createPurpose(options) {
   });
 
   list.querySelectorAll('input').forEach((input) => {
-    if (selected.has(input.value)) input.checked = true;
+    if (selected.has(input.value)) preselectOption(list, input.value);
   });
 
   element.appendChild(list);

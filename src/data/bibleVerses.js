@@ -19,7 +19,7 @@ export const VERSES = {
   },
   Gloria: {
     reference: 'Lc 2,14',
-    text: 'Gloria a Dios en las alturas y en la tierra paz a los hombres de buena voluntad.',
+    text: '«Gloria a Dios en lo más alto del cielo y en la tierra paz a los hombres: ésta es la hora de su gracia.»',
     theme: 'El cántico de los ángeles',
   },
   Pastores: {
@@ -34,7 +34,7 @@ export const VERSES = {
   },
   Magnificat: {
     reference: 'Lc 1,46-47',
-    text: 'Magnificat anima mea Dominum, et exsultavit spiritus meus in Deo salutari meo.',
+    text: 'María dijo entonces: Proclama mi alma la grandeza del Señor, y mi espíritu se alegra en Dios mi Salvador.',
     theme: 'El cántico de María',
   },
   Luz: {
