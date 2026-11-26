@@ -47,11 +47,13 @@ export const SUNDAY_REFLECTIONS = [
       'repente y los encuentre dormidos. […] Lo que les digo a ustedes se lo digo a todos: ' +
       'Estén despiertos.»',
     reflection:
-      'Jesús no dice cuándo volverá: dice cómo estar de guardia. En los días de Noé la gente ' +
-      'comía, bebía y se casaba sin advertir que el diluvio estaba cerca. La advertencia ' +
-      'llega siempre tarde para quien no la escucha. El Adviento es ese tiempo en que el mundo ' +
-      'sigue a lo suyo y, sin embargo, el Señor ya está a la puerta. Estar despiertos no es ' +
-      'estar inquietos: es tener el corazón preparado para que la luz no nos encuentre a oscuras.',
+      'Jesús no dice cuándo volverá: dice cómo estar de guardia. En su parábola, el dueño ' +
+      'de la casa deja a su familia y se marcha; a sus sirvientes les deja un trabajo y ' +
+      'al portero le exige que esté vigilante, porque no sabe a qué hora regresará. La ' +
+      'advertencia llega siempre tarde para quien no la escucha. El Adviento es ese tiempo ' +
+      'en que el mundo sigue a lo suyo y, sin embargo, el Señor ya está a la puerta. Estar ' +
+      'despiertos no es estar inquietos: es tener el corazón preparado para que la luz no ' +
+      'nos encuentre a oscuras.',
     candleName: 'La vela del arrepentimiento',
     candle:
       'Se enciende la primera vela, que es la vela del arrepentimiento. El color de la vela ' +
