@@ -23,15 +23,40 @@ export function lightCandle(candleIndex, options = {}) {
 
   candle.dataset.lit = 'true';
 
+  // El latido anterior se cancela: así la llama no se acumula de una vela a
+  // otra cuando la corona se redibuja.
+  if (flame.__heartbeat) {
+    flame.__heartbeat.kill();
+    flame.__heartbeat = null;
+  }
+
+  let tween = null;
+
   if (instant) {
     gsap.set(flame, { opacity: 1, scale: 1 });
     gsap.set(candle, { '--candle-glow': 1 });
-    return null;
-  }
-
-  const tween = timeline
-    ? timeline.add(
-        gsap.fromTo(
+  } else {
+    tween = timeline
+      ? timeline.add(
+          gsap.fromTo(
+            flame,
+            { opacity: 0, scale: 0.2, transformOrigin: '50% 90%' },
+            {
+              opacity: 1,
+              scale: 1,
+              duration: 0.55,
+              ease: 'back.out(2.2)',
+              onUpdate: () => {
+                candle.style.setProperty('--candle-glow', '0.55');
+              },
+              onComplete: () => {
+                candle.style.setProperty('--candle-glow', '1');
+              },
+            },
+          ),
+          '<',
+        )
+      : gsap.fromTo(
           flame,
           { opacity: 0, scale: 0.2, transformOrigin: '50% 90%' },
           {
@@ -46,22 +71,11 @@ export function lightCandle(candleIndex, options = {}) {
               candle.style.setProperty('--candle-glow', '1');
             },
           },
-        ),
-        '<',
-      )
-    : gsap.fromTo(
-        flame,
-        { opacity: 0, scale: 0.2, transformOrigin: '50% 90%' },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 0.55,
-          ease: 'back.out(2.2)',
-        },
-      );
+        );
+  }
 
   // Latido suave y perpetuo de la llama.
-  gsap.to(flame, {
+  flame.__heartbeat = gsap.to(flame, {
     scaleY: 1.08,
     scaleX: 0.94,
     duration: 1.15,
@@ -69,7 +83,7 @@ export function lightCandle(candleIndex, options = {}) {
     yoyo: true,
     ease: 'sine.inOut',
     transformOrigin: '50% 90%',
-    delay: 0.6,
+    delay: instant ? 0 : 0.6,
   });
 
   return tween;
@@ -84,7 +98,13 @@ export function extinguishCandles(wreath) {
   for (let index = 1; index <= 4; index += 1) {
     const flame = wreath.querySelector(`#candle-flame-${index}`);
     const candle = wreath.querySelector(`[data-candle="${index}"]`);
-    if (flame) gsap.set(flame, { opacity: 0, scale: 0.2 });
+    if (flame) {
+      if (flame.__heartbeat) {
+        flame.__heartbeat.kill();
+        flame.__heartbeat = null;
+      }
+      gsap.set(flame, { opacity: 0, scale: 0.2 });
+    }
     if (candle) {
       candle.dataset.lit = 'false';
       candle.style.setProperty('--candle-glow', '0');

@@ -9,6 +9,42 @@ import { createElement } from '../../utils/domUtils.js';
 import { getActivityType } from '../../data/activities.js';
 
 /**
+ * Candado de las casillas que todavía no se pueden abrir.
+ * @type {string}
+ */
+export const LOCK_ICON =
+  '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">' +
+  '<path d="M7.5 10.5V7.8a4.5 4.5 0 0 1 9 0v2.7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>' +
+  '<rect x="4.8" y="10.2" width="14.4" height="10.2" rx="2.4" fill="currentColor"/></svg>';
+
+/**
+ * Pinta el distintivo de estado de una casilla.
+ *
+ * - **Bloqueada**: un candado, para que se entienda que aún no es su día.
+ * - **Disponible**: una estrella que late, para saber qué hay que pulsar.
+ * - **Abierta**: una estrella discreta.
+ * - **Realizada**: un ✓.
+ *
+ * @param {HTMLElement} badge
+ * @param {{locked: boolean, opened: boolean, completed: boolean}} state
+ */
+export function applyDayStateBadge(badge, state) {
+  if (!badge) return;
+  const { locked, opened, completed } = state;
+
+  badge.classList.toggle('is-locked', locked);
+  badge.classList.toggle('is-available', !locked && !opened && !completed);
+
+  if (locked) {
+    badge.innerHTML = LOCK_ICON;
+  } else if (completed) {
+    badge.textContent = '✓';
+  } else {
+    badge.textContent = '✧';
+  }
+}
+
+/**
  * Crea el botón de una casilla.
  *
  * @param {object} options
@@ -71,9 +107,7 @@ export function updateCalendarDay(button, state) {
   button.setAttribute('aria-disabled', locked ? 'true' : 'false');
 
   const stateIcon = button.querySelector('.calendar-day__state');
-  if (stateIcon) {
-    stateIcon.textContent = locked ? '·' : completed ? '✓' : opened ? '✧' : '';
-  }
+  applyDayStateBadge(stateIcon, { locked, opened, completed });
 
   const tip = button.querySelector('.calendar-day__tip');
   if (tip) {

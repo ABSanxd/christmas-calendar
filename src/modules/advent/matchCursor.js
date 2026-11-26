@@ -1,0 +1,78 @@
+/**
+ * Cursor de fósforo.
+ *
+ * Durante la ceremonia del domingo el puntero del mouse se convierte en un
+ * fósforo: es el propio usuario quien trae la llama hasta la vela. En el
+ * teléfono no hay puntero, así que basta con tocar la vela; el cursor solo
+ * se activa en dispositivos con ratón.
+ *
+ * El cursor se define en JavaScript (y no en CSS) porque hay que dibujar dos
+ * versiones —fósforo apagado y fósforo encendido— y porque el SVG se codifica
+ * como data URI en cada momento.
+ */
+
+/** Punto caliente: la cabeza del fósforo, donde está la llama. */
+const HOTSPOT = { x: 23, y: 12 };
+
+/**
+ * Dibuja el fósforo.
+ *
+ * @param {boolean} lit Si la cabeza ya está encendida.
+ * @returns {string}
+ */
+function buildMatchSvg(lit) {
+  const flame = lit
+    ? `<path d="M23 0 C 29 7 30 14 25 18 C 20 22 16 15 18.5 9.5 C 19.8 6.5 21.5 3.5 23 0 Z" fill="#ffd27a"/>
+       <path d="M23 6 C 25.4 9.4 25.4 13.4 23 15.6 C 20.8 17.4 20 13.4 21 10.4 Z" fill="#fff6d2"/>`
+    : '';
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="48" viewBox="0 0 32 48">
+    ${flame}
+    <path d="M9 45 L21 20" stroke="#c8a06a" stroke-width="5" stroke-linecap="round"/>
+    <path d="M9 45 L21 20" stroke="#8d6a3f" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>
+    <ellipse cx="23" cy="13" rx="7" ry="8" fill="#b8492f"/>
+    <ellipse cx="20.8" cy="10" rx="3" ry="3.4" fill="#d9684a" opacity="0.75"/>
+  </svg>`;
+}
+
+/**
+ * Comprueba si el dispositivo tiene un puntero real.
+ * @returns {boolean}
+ */
+function hasPointer() {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia?.('(pointer: fine)')?.matches ?? true;
+}
+
+/**
+ * Activa el cursor de fósforo en todo el documento.
+ *
+ * @param {boolean} [lit] Si el fósforo ya aparece encendido.
+ */
+export function setMatchCursor(lit = false) {
+  if (typeof document === 'undefined') return;
+  if (!hasPointer()) return;
+
+  const svg = buildMatchSvg(lit);
+  const url = `url("data:image/svg+xml,${encodeURIComponent(svg)}") ${HOTSPOT.x} ${HOTSPOT.y}, auto`;
+  document.documentElement.style.cursor = url;
+}
+
+/**
+ * Enciende (o apaga) la cabeza del fósforo sin quitarlo de la pantalla.
+ *
+ * @param {boolean} lit
+ */
+export function igniteMatchCursor(lit = true) {
+  setMatchCursor(lit);
+}
+
+/**
+ * Devuelve el cursor normal del sistema.
+ */
+export function clearMatchCursor() {
+  if (typeof document === 'undefined') return;
+  document.documentElement.style.cursor = '';
+}
+
+export default setMatchCursor;

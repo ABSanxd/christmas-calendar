@@ -2,43 +2,41 @@
  * Controlador de la corona de Adviento.
  *
  * Decide qué hacer con la corona según la fecha de hoy y el progreso guardado:
- *   - Si hoy es domingo de Adviento y el visitante no ha visto la animación,
- *     se reproduce la secuencia completa.
- *   - Si el visitante ya la vio, la corona se muestra con las velas ya
- *     encendidas y se ofrece un botón para volver a contemplarla.
+ *   - Si hoy es domingo de Adviento y el visitante no ha visto la ceremonia,
+ *     la corona salta al centro de la pantalla y el usuario enciende la vela
+ *     pendiente con el puntero en forma de fósforo.
+ *   - Si el visitante ya la hizo, la corona se queda en su esquina con las
+ *     velas ya encendidas.
  *   - Si el visitante entra después de varios domingos, se muestran encendidas
- *     las velas de los domingos anteriores sin reproducir sus animaciones.
+ *     las velas de los domingos anteriores sin repetir la ceremonia.
  */
 
-import { playAdventAnimation } from '../animations/animationController.js';
 import { setLitCandles } from '../animations/candleAnimations.js';
 import { getAdventPlanForDate } from './adventDates.js';
 import { setAdventState, getAdventState } from './adventState.js';
+import { runLightingCeremony } from './adventCeremony.js';
 import {
   checkSundayAnimationSeen,
   registerSundayAnimationSeen,
 } from '../progress/progressController.js';
-import { updateAdventWreath, updateWreathCaption, getWreathCaption } from '../../components/advent/AdventWreath.js';
+import { updateAdventWreath } from '../../components/advent/AdventWreath.js';
 
 /** Contenedor de la corona dentro de la interfaz. */
 let wreathElement = null;
-/** Elemento donde se escribe el mensaje del domingo. */
-let messageElement = null;
-/** Si la animación de hoy ya se está reproduciendo. */
+/** Si la ceremonia de hoy ya se está reproduciendo. */
 let playing = false;
 
 /**
  * Registra los elementos de la corona.
- * @param {{wreath: HTMLElement, message: HTMLElement}} elements
+ * @param {{wreath: HTMLElement}} elements
  */
 export function registerAdventElements(elements) {
   wreathElement = elements.wreath;
-  messageElement = elements.message;
 }
 
 /**
  * Aplica el plan de Adviento del día: enciende velas y, si corresponde,
- * reproduce la animación del domingo.
+ * celebra la ceremonia del domingo.
  *
  * @param {string} dateKey
  * @returns {Promise<void>}
@@ -65,62 +63,37 @@ export async function applyAdventForDate(dateKey) {
       sundayIndex: plan.sunday?.index ?? 0,
       animating: false,
     });
-
-    if (plan.sunday) {
-      updateWreathCaption(wreathElement, plan.candlesAfter);
-    }
     return;
   }
 
-  // Domingo de Adviento: se reproduce la secuencia.
+  // Domingo de Adviento: la corona salta al centro y espera al usuario.
   playing = true;
   setAdventState({ animating: true });
 
-  await playAdventAnimation({
-    candlesLit: plan.candlesBefore,
-    newCandle: plan.newCandle,
-    candleColor: plan.candleColor,
-    wreath: wreathElement,
-    messageElement,
-    message: plan.message,
-    fromLeft: plan.newCandle % 2 === 1,
-    onFinish: () => {
-      registerSundayAnimationSeen(dateKey);
-      updateWreathCaption(wreathElement, plan.candlesAfter);
-      setAdventState({
-        litCount: plan.candlesAfter,
-        sundayIndex: plan.sunday?.index ?? 0,
-        animating: false,
-      });
-      playing = false;
-    },
+  // Antes de salir, la esquina se queda con las velas de los domingos
+  // anteriores: así el estado de la corona es correcto desde el primer
+  // fotograma, aunque el visitante mire el fondo oscurecido.
+  updateAdventWreath(wreathElement, plan.candlesBefore);
+  setLitCandles(wreathElement, plan.candlesBefore);
+
+  const originRect = wreathElement.getBoundingClientRect();
+
+  try {
+    await runLightingCeremony({ plan, originRect });
+    registerSundayAnimationSeen(dateKey);
+  } catch (error) {
+    console.warn('[calendario] La ceremonia de Adviento no pudo completarse:', error);
+  }
+
+  // La esquina queda con la vela ya encendida.
+  updateAdventWreath(wreathElement, plan.candlesAfter);
+  setLitCandles(wreathElement, plan.candlesAfter);
+  setAdventState({
+    litCount: plan.candlesAfter,
+    sundayIndex: plan.sunday?.index ?? 0,
+    animating: false,
   });
-}
-
-/**
- * Vuelve a reproducir la animación de la corona a petición del usuario.
- * @param {string} dateKey
- */
-export async function replayAdventAnimation(dateKey) {
-  if (!wreathElement || playing) return;
-
-  const plan = getAdventPlanForDate(dateKey, false);
-  playing = true;
-  setAdventState({ animating: true });
-
-  await playAdventAnimation({
-    candlesLit: plan.candlesBefore,
-    newCandle: plan.newCandle || 1,
-    candleColor: plan.candleColor,
-    wreath: wreathElement,
-    messageElement,
-    message: plan.message,
-    fromLeft: (plan.newCandle || 1) % 2 === 1,
-    onFinish: () => {
-      setAdventState({ litCount: plan.candlesAfter, animating: false });
-      playing = false;
-    },
-  });
+  playing = false;
 }
 
 /**

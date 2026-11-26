@@ -99,13 +99,24 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
 
 ### Corona de Adviento
 
-- Corona SVG permanente en la parte inferior del calendario, con cuatro velas:
-  morada, morada, **rosa (Gaudete)** y morada.
-- Secuencia animada reutilizable para los cuatro domingos: aparece la corona,
-  gira suavemente, entra un angelito, enciende la vela nueva con destellos y
-  se retira con un mensaje.
-- Si el visitante ya vio la animación, la corona se muestra con las velas
-  correctas y ofrece un botón para volver a contemplarla.
+- Corona SVG permanente en la **esquina superior derecha**, junto a la fecha y
+  al título, con cuatro velas: morada, morada, **rosa (Gaudete)** y morada.
+- El domingo de Adviento la corona **salta al centro de la pantalla**, el
+  fondo se oscurece y el puntero del mouse se convierte en un **fósforo**.
+- La vela pendiente late suavemente, con un halo dorado y el mensaje «✧ Toca
+  para encender la *n* velita». **El usuario es quien la enciende**: en
+  ordenador, acercando el fósforo y haciendo clic; en el teléfono, con un
+  toque.
+- Al encenderla aparece el mensaje del domingo y la ceremonia **espera a que
+  el usuario la cierre** (botón «Leer la reflexión de este domingo»).
+- Al cerrarla, la corona **regresa a su esquina** y se abre la **reflexión del
+  domingo**: el Evangelio del día, una reflexión breve y el significado de la
+  vela.
+- Las reflexiones se pueden volver a leer desde el botón de la cabecera (junto
+  al del sonido). Se habilitan por domingo: en el segundo domingo de Adviento
+  se leen la del primero y la del propio segundo.
+- Si el visitante ya hizo la ceremonia, la corona se queda en su esquina con
+  las velas correctas y no se repite.
 
 ### Nochebuena
 
@@ -130,7 +141,9 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
 
 ### Comodidades
 
-- Indicador de progreso (casillas descubiertas y actividades realizadas).
+- Indicador de progreso: una franja fina justo debajo de la cabecera con la
+  barrita, el recuento de casillas descubiertas y actividades realizadas, y el
+  porcentaje.
 - Sonido con un solo botón en la cabecera, y un mensaje de Adviento en el pie
   sobre el progreso guardado.
 - Reinicio del progreso con doble confirmación.
@@ -192,6 +205,27 @@ El parámetro se lee dentro de `import.meta.env.DEV`. **En la compilación de
 producción el bloque entero se elimina**, de modo que un visitante final no
 puede desbloquear casillas cambiando la fecha.
 
+**Para volver a ver la ceremonia de un domingo** hay que borrar la marca de
+«ya celebrada»: el progreso se guarda en `localStorage`, bajo la clave
+`calendario-navideno-state`, en el apartado `seenSundayAnimations`. Desde la
+consola del navegador:
+
+```js
+// Ver la ceremonia del domingo simulado otra vez:
+const clave = 'calendario-navideno-state';
+const estado = JSON.parse(localStorage.getItem(clave));
+delete estado.seenSundayAnimations['2026-12-13'];
+localStorage.setItem(clave, JSON.stringify(estado));
+location.reload();
+```
+
+Para empezar de cero (sin casillas abiertas ni actividades):
+
+```js
+localStorage.removeItem('calendario-navideno-state');
+location.reload();
+```
+
 ## 8. Compilación para producción
 
 ```bash
@@ -229,14 +263,17 @@ calendario-navideño/
 │   └── sw.js                     Service worker (caché sin conexión)
 ├── scripts/
 │   ├── check-config.mjs          Valida CONFIG y SCENE_COLORS
+│   ├── check-sundays.mjs         Comprueba las velas de los cuatro domingos
+│   ├── check-reflections.mjs     Comprueba las reflexiones por domingo
 │   ├── export-og.mjs             Genera la imagen para redes sociales
 │   ├── smoke.mjs                 Prueba funcional en un navegador real
+│   ├── verify-advent.mjs         Capturas de la ceremonia de Adviento
 │   ├── shots.mjs                 Capturas de pantalla para revisión visual
 │   └── shot-shepherds.mjs        Recortes de los pastores para revisar el dibujo
 ├── src/
 │   ├── components/               Elementos visuales reutilizables
 │   │   ├── activities/           Una pieza por tipo de actividad
-│   │   ├── advent/               Corona, vela y angelito
+│   │   ├── advent/               Corona, vela y ceremonia de encendido
 │   │   ├── calendar/             Calendario, casillas y progreso
 │   │   │   └── scene/            Capas de la ilustración de Belén
 │   │   │       └── characters/     Un archivo por personaje
@@ -246,14 +283,15 @@ calendario-navideño/
 │   │   ├── activities.js         Metadatos de cada tipo de actividad
 │   │   ├── adventDates.js        Fechas de los domingos de Adviento
 │   │   ├── adventDays.js         Contenido de los 24 días
+│   │   ├── adventReflections.js  Reflexión, Evangelio y vela de cada domingo
 │   │   ├── bibleVerses.js        Versículos con su referencia
 │   │   ├── configuration.js      Fechas, paleta, mensajes y claves
 │   │   ├── prayers.js            Oraciones
 │   │   └── sceneLayout.js        Posición de las 24 casillas en la escena
 │   ├── modules/                  Lógica funcional de cada sección
 │   │   ├── activities/           Registro, validación y controlador
-│   │   ├── advent/               Estado y plan de la corona
-│   │   ├── animations/           GSAP: velas, ángel, casillas, Nochebuena
+│   │   ├── advent/               Estado, plan, ceremonia y cursor de fósforo
+│   │   ├── animations/           GSAP: velas, ceremonia, casillas, Nochebuena
 │   │   ├── audio/                Síntesis y control del sonido
 │   │   ├── calendar/             Render, eventos y controlador del calendario
 │   │   └── progress/             Estado, persistencia y control del progreso
@@ -316,15 +354,18 @@ calendario-navideño/
 | `calendar/calendarRenderer.js` | Construye la interfaz completa (cabecera, progreso, calendario, corona, pie). |
 | `calendar/calendarEvents.js` | Enlaza los botones de la cabecera y escucha los cambios de progreso. |
 | `calendar/calendarController.js` | Orquesta todo: calcula el estado de las casillas, la corona y el sonido. |
-| `advent/adventDates.js` | Devuelve el «plan de Adviento» de una fecha (domingo, velas antes y después, si toca animar). |
+| `advent/adventDates.js` | Devuelve el «plan de Adviento» de una fecha (domingo, velas antes y después, si toca celebrar). |
 | `advent/adventState.js` | Estado en memoria de la corona y sus suscriptores. |
-| `advent/adventController.js` | Decide si se reproduce la animación del domingo y mantiene la corona al día. |
+| `advent/adventController.js` | Decide si se celebra la ceremonia del domingo y mantiene la corona al día. |
+| `advent/adventCeremony.js` | Orquesta la ceremonia: la corona salta al centro, el usuario enciende la vela, la cierra y se abre la reflexión. |
+| `advent/matchCursor.js` | Sustituye el puntero del mouse por un fósforo (apagado y encendido). |
+| `advent/reflectionsController.js` | Habilita las reflexiones por domingo y abre su lista desde la cabecera. |
 | `activities/activityRegistry.js` | Mapa `tipo → componente`. |
 | `activities/activityValidator.js` | Valida la definición de un día y los datos que produce una actividad. |
 | `activities/activityController.js` | Abre la casilla, comprueba el bloqueo en JavaScript, registra el progreso y celebra. |
-| `animations/animationController.js` | Sistema reutilizable `playAdventAnimation({ candlesLit, newCandle, candleColor })`. |
+| `animations/animationController.js` | Animaciones reutilizables del calendario (descubrimiento de casillas). |
 | `animations/candleAnimations.js` | Encendido progresivo de las velas y destellos. |
-| `animations/angelAnimations.js` | Vuelo del angelito hasta la vela. |
+| `animations/adventCeremonyAnimations.js` | Viaje de la corona al centro y de vuelta (FLIP) y latido de la vela pendiente. |
 | `animations/calendarAnimations.js` | Entrada de la escena, apertura de casillas y confeti de estrellas. |
 | `animations/christmasEveAnimations.js` | Secuencia completa de Nochebuena. |
 | `audio/audioService.js` | Síntesis con la Web Audio API: campanillas, destellos y melodía. |
@@ -338,10 +379,11 @@ calendario-navideño/
 | `calendar/CalendarDay.js` | Una casilla: botón real, foco, estados y tooltip. |
 | `calendar/CalendarProgress.js` | Barra de progreso. |
 | `calendar/scene/*` | Capas de la ilustración: `SkyLayer`, `VillageLayer`, `NativityLayer`, `AngelsLayer`, `CharactersLayer`, `DayDoors` y `shapes.js` (formas reutilizables). |
-| `calendar/scene/characters/*` | Cada personaje es un componente independiente: `Angel`, `Mary`, `Joseph`, `BabyJesus`, `Magus`, `Camel`, `Shepherd`, `Sheep` y `Tree`. Se dibujan con el origen en su base, de modo que se pueden colocar y escalar con libertad. Los **pastores** siguen el mismo sistema de proporciones que María y José (cabeza ancha, ojos con brillo, túnica con pliegues, banda clara en el bajo y filete dorado), pero son **jóvenes y sin barba**, llevan la **manta echada sobre la cabeza** y un **cinturón con hebilla dorada**. El segundo pastor es el mismo dibujo en espejo con otra paleta. |
-| `advent/AdventWreath.js` | La corona completa y su texto explicativo. |
+| `calendar/scene/characters/*` | Cada personaje es un componente independiente: `Angel`, `Mary`, `Joseph`, `BabyJesus`, `Magus`, `Camel`, `Shepherd`, `Sheep` y `Tree`. Se dibujan con el origen en su base, de modo que se pueden colocar y escalarlo con libertad. Los **pastores** siguen el mismo sistema de proporciones que María y José (cabeza ancha, ojos con brillo, túnica con pliegues, banda clara en el bajo y filete dorado), pero son **jóvenes y sin barba**, llevan la **manta echada sobre la cabeza** y un **cinturón con hebilla dorada**. El segundo pastor es el mismo dibujo en espejo con otra paleta. Los **Reyes Magos** van **de pie, en grupo** (verde, amarillo y rojo), con corona y barba, y llevan su regalo en las dos manos: un **cofre con oro**, una **copa de incienso** y una **copa de mirra**. Sus **camellos** van en fila, uno detrás de otro, con la **carga sobre la joroba**. |
+| `advent/AdventWreath.js` | La corona completa, con sus variantes (esquina y ceremonia) y la vela pendiente resaltada. |
 | `advent/AdventCandle.js` | Una vela, con la llama como elemento animable independiente. |
-| `advent/AdventAngel.js` | El angelito que vuela por la pantalla. |
+| `advent/AdventCeremony.js` | La capa de la ceremonia: corona grande, mensaje y vela que hay que encender. |
+| `advent/AdventReflection.js` | El modal de la reflexión de cada domingo y la lista de las ya disponibles. |
 | `activities/*` | Una pieza por tipo de actividad, más `activityParts.js` (bloques compartidos) y `ActivityModal.js`. |
 | `interface/Modal.js` | Modal con foco atrapado, Escape y clic en el fondo. |
 | `interface/Toast.js` | Avisos efímeros. |
@@ -443,8 +485,9 @@ Estructura versionada:
 
 ## 13. Funcionamiento de la corona de Adviento
 
-La corona está siempre presente en la parte inferior del calendario, con sus
-cuatro velas en el orden litúrgico:
+La corona vive en la **esquina superior derecha** del saludo (junto a la fecha
+y al título), en versión compacta, y comparte ilustración con la versión
+grande de la ceremonia. Sus cuatro velas siguen el orden litúrgico:
 
 | Vela | Color | Cuándo se enciende |
 | --- | --- | --- |
@@ -460,43 +503,82 @@ partir del **plan del día**:
 const plan = getAdventPlanForDate(dateKey, animationAlreadySeen);
 ```
 
-- **Domingo de Adviento y animación no vista** → se reproduce la secuencia y
-  la animación queda registrada en `seenSundayAnimations`.
-- **Domingo de Adviento y animación ya vista** → la corona aparece con las
-  velas correctas y se ofrece el botón «Ver la animación de la corona».
+- **Domingo de Adviento y ceremonia no vista** → la corona salta al centro y
+  espera a que el usuario encienda la vela; al terminar, la ceremonia queda
+  registrada en `seenSundayAnimations`.
+- **Domingo de Adviento y ceremonia ya vista** → la corona se queda en su
+  esquina con las velas correctas.
 - **Otro día dentro del Adviento** → se muestran encendidas las velas de los
-  domingos anteriores, **sin** reproducir sus animaciones.
+  domingos anteriores, **sin** reproducir sus ceremonias.
 - **Antes del Adviento** → todas las velas apagadas.
 
 Así, quien entra por primera vez el 15 de diciembre ve las tres primeras
-velas encendidas de golpe, sin tener que ver las animaciones perdidas.
+velas encendidas de golpe, sin tener que ver las ceremonias perdidas.
+
+### La ceremonia del domingo
+
+La rutina es **la misma para los cuatro domingos**: solo cambia cuál es la
+vela pendiente (la primera el 29 de noviembre, la segunda el 6 de diciembre,
+la tercera el 13 —la de Gaudete— y la cuarta el 20). Al empezar, las velas de
+los domingos anteriores ya aparecen encendidas.
+
+Se ejecuta en `modules/advent/adventCeremony.js`:
+
+1. Se crea la capa de ceremonia (`components/advent/AdventCeremony.js`) con
+   la corona grande, el fondo oscurecido y el mensaje «✧ Toca para encender la
+   *n* velita».
+2. El puntero del mouse se sustituye por un **fósforo**
+   (`modules/advent/matchCursor.js`), que se enciende al tocar la vela. En
+   pantallas táctiles no hace falta: basta con tocar la vela.
+3. La vela pendiente late (`animations/adventCeremonyAnimations.js`) y tiene un
+   halo dorado detrás.
+4. Al tocarla, la llama crece, saltan chispas, el fósforo se enciende y
+   aparece el mensaje del domingo.
+5. **La ceremonia no se cierra sola**: espera a que el visitante pulse «Leer
+   la reflexión de este domingo» para poder leer el mensaje a su ritmo.
+6. La corona **vuelve a su esquina** (técnica FLIP: se mide el hueco y el
+   centro de pantalla y se anima el desplazamiento y la escala que los unen)
+   y se abre la reflexión del domingo.
+
+La vela también es activable con el teclado (Enter o espacio) y con el botón
+del mensaje, de modo que la ceremonia nunca deja el calendario bloqueado.
+
+### La reflexión de cada domingo
+
+El contenido vive en `src/data/adventReflections.js`. Cada domingo tiene tres
+partes:
+
+1. **El Evangelio**: el texto litúrgico del día, con su referencia.
+2. **La reflexión**: una lectura breve del pasaje.
+3. **La vela**: qué significa la vela que se enciende ese domingo.
+
+| Domingo | Evangelio | Vela |
+| --- | --- | --- |
+| 1.º (29 nov) | Mc 13,33-37 | La vela del arrepentimiento |
+| 2.º (6 dic) | Mc 1,1-8 | La vela de la promesa de Navidad |
+| 3.º (13 dic) | Jn 1,6-8.19-28 | La vela del amor (rosa, Gaudete) |
+| 4.º (20 dic) | Lc 1,26-38 | La vela de la alegría: el gran día se acerca |
 
 ## 14. Configuración de las animaciones
 
-Todo se apoya en **un único sistema reutilizable**, no en cuatro animaciones
-independientes:
+La ceremonia se apoya en un único sistema reutilizable para los cuatro
+domingos:
 
 ```js
-await playAdventAnimation({
-  candlesLit: 2,       // velas ya encendidas
-  newCandle: 3,        // vela que se enciende ahora
-  candleColor: 'pink', // color de esa vela
-  wreath,              // contenedor de la corona
-  messageElement,      // dónde se escribe el mensaje
-  message,             // mensaje del domingo
+await runLightingCeremony({
+  plan,        // plan de Adviento del día (candlesBefore, newCandle, message)
+  originRect,  // dónde está la corona en la esquina
 });
 ```
 
 Secuencia:
 
-1. La corona aparece en primer plano (`opacity` y `y`).
-2. Gira unos grados y se detiene.
-3. Las velas anteriores quedan encendidas; la nueva, apagada.
-4. Entra el angelito y vuela hasta la llama.
-5. La llama crece desde cero (`back.out`) y queda latiendo.
-6. Salen destellos alrededor de la vela.
-7. El ángel se retira con suavidad.
-8. Aparece el mensaje del domingo.
+1. La corona grande aparece en el centro mientras el fondo se oscurece.
+2. Las velas de los domingos anteriores quedan encendidas; la nueva, apagada
+   y latiendo.
+3. El usuario enciende la vela pendiente: la llama crece desde cero
+   (`back.out`), quedan chispas alrededor y aparece el mensaje del domingo.
+4. La corona regresa a su esquina con la vela ya encendida.
 
 La escena de Nochebuena (`christmasEveAnimations.js`) sigue el mismo criterio:
 noches que se aclaran, estrellas que brillan, ángeles que despliegan el cartel,
@@ -512,9 +594,10 @@ en la aplicación:
 - En iOS/macOS: **Ajustes → Accesibilidad → Mostrar → Reducir movimiento**.
 - En Android: **Accesibilidad → Eliminar animaciones**.
 
-Cuando el sistema lo pide, `playAdventAnimation` **aplica el estado final
-directamente** (velas encendidas y mensaje visible) sin reproducir la
-secuencia, y una regla CSS global anula animaciones y transiciones.
+Cuando el sistema lo pide, la ceremonia de Adviento **aplica el estado final
+directamente** (sin el viaje al centro ni el regreso) y una regla CSS global
+anula animaciones y transiciones. El resto de la experiencia —incluido el
+fósforo y el mensaje para tocar la vela— se mantiene igual.
 
 Para el resto de los visitantes, las animaciones se muestran tal cual.
 
@@ -784,6 +867,11 @@ Por debajo de 720 px se oculta la capa de casillas de la ilustración y se
 muestra la retícula de puertas. Si ves las casillas pequeñas, comprueba que
 la ventana no está en modo escritorio con un ancho de móvil.
 
+**La ceremonia del domingo no vuelve a aparecer.**
+Cada domingo se recuerda en `localStorage` (`seenSundayAnimations`). Para
+volver a verla, borra esa fecha del apartado y recarga la página (ver
+«Simular una fecha»).
+
 **No suena nada.**
 El sonido no se reproduce automáticamente: hace falta un primer clic o
 pulsación en la página (los navegadores lo exigen). Comprueba también que el
@@ -869,8 +957,31 @@ npm run check:sundays
 ```
 
 Recorre el 29 de noviembre, el 6, el 13 y el 20 de diciembre, además del 24
-y de un día anterior al Adviento, y comprueba que la corona tiene
-exactamente 1, 2, 3 y 4 velas encendidas en su momento.
+y de un día anterior al Adviento. En cada domingo **enciende la vela como lo
+haría el visitante** y comprueba que la corona de la esquina queda con
+exactamente 1, 2, 3 y 4 velas encendidas.
+
+### Comprobación de la ceremonia de Adviento
+
+```bash
+npm run dev
+node scripts/verify-advent.mjs
+```
+
+Abre los cuatro domingos, comprueba que la ceremonia aparece con la vela
+correcta pendiente y que el puntero se convierte en fósforo, enciende la vela,
+comprueba que la corona vuelve a su esquina con la llama encendida y deja
+capturas de cada paso en la carpeta temporal del sistema.
+
+### Comprobación de las reflexiones de los domingos
+
+```bash
+npm run dev
+node scripts/check-reflections.mjs
+```
+
+Recorre las fechas clave y comprueba que el botón de la cabecera aparece a
+partir del primer domingo y que va habilitando una reflexión cada semana.
 
 ### Comprobación de la compilación de producción
 
@@ -892,6 +1003,9 @@ ningún error en consola.
 - [x] `localStorage` guarda, recupera y reinicia el progreso.
 - [x] Días bloqueados, días disponibles y reapertura de casillas descubiertas.
 - [x] Los cuatro domingos de Adviento y los cuatro estados de las velas.
+- [x] La ceremonia de encendido: la corona salta al centro, el puntero se
+      convierte en fósforo, el usuario enciende la vela y la corona regresa a
+      su esquina.
 - [x] La experiencia del 24 de diciembre.
 - [x] Diseño en celular (390 px) y escritorio (1440 px) sin desbordamientos.
 - [x] El audio no se reproduce automáticamente.

@@ -19,8 +19,12 @@ import { PROGRESS_EVENT } from '../progress/progressController.js';
 import {
   registerAdventElements,
   applyAdventForDate,
-  replayAdventAnimation,
 } from '../advent/adventController.js';
+import {
+  registerReflectionsButton,
+  refreshReflectionsButton,
+  openReflectionsList,
+} from '../advent/reflectionsController.js';
 import {
   openDayActivity,
   registerMarkerProvider,
@@ -102,7 +106,6 @@ export function initCalendarController() {
     isLocked,
     isOpened: (day) => isDayOpened(day),
     isCompleted: (day) => isActivityCompleted(day),
-    onReplayWreath: () => replayAdventAnimation(getToday().dateKey),
   });
 
   container.hidden = false;
@@ -110,7 +113,9 @@ export function initCalendarController() {
   const { dateKey } = getToday();
   updateCurrentDate(ui.currentDate, dateKey);
 
-  registerAdventElements({ wreath: ui.wreath, message: ui.adventMessage });
+  registerAdventElements({ wreath: ui.wreath });
+  registerReflectionsButton(ui.reflectionsButton);
+  refreshReflectionsButton(dateKey);
   registerMarkerProvider((day) => ui.calendar.getMarker(day));
 
   bindCalendarEvents({
@@ -120,6 +125,7 @@ export function initCalendarController() {
       toggleSound(!isSoundEnabled());
       updateSoundButton();
     },
+    onReflections: () => openReflectionsList(),
     onProgress: refreshCalendar,
   });
 

@@ -1,3 +1,11 @@
+/**
+ * Comprobación de las velas de la corona en los cuatro domingos de Adviento.
+ *
+ * En cada domingo el visitante tiene que ENCENDER la vela: la corona sale de
+ * su esquina, se abre la ceremonia y la llama aparece cuando el usuario
+ * toca la vela pendiente. El script hace lo mismo que el visitante.
+ */
+
 import { chromium } from 'playwright-core';
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
@@ -15,6 +23,8 @@ const cases = [
   { date: '2026-11-20', expected: 0, name: 'Antes del Adviento' },
 ];
 
+let failures = 0;
+
 for (const testCase of cases) {
   // Cada caso necesita un navegador limpio: el progreso se guarda.
   const page = await context.newPage();
@@ -22,28 +32,46 @@ for (const testCase of cases) {
   page.on('pageerror', (e) => errors.push(e.message));
 
   await page.goto(`${BASE}?fecha=${testCase.date}`, { waitUntil: 'networkidle' });
-  await page.waitForTimeout(9000);
+  await page.waitForTimeout(2600);
+
+  // Si hay ceremonia, el visitante enciende la vela y cierra la ceremonia.
+  const pending = page.locator('.advent-ceremony [data-target="true"]');
+  let hint = '';
+  if (await pending.count()) {
+    hint = (await page.locator('[data-ceremony-hint-text]').textContent())?.trim() ?? '';
+    await pending.click({ force: true });
+    const continueButton = page.locator('[data-ceremony-continue]');
+    await continueButton.waitFor({ state: 'visible', timeout: 15000 });
+    await continueButton.click();
+    await page.waitForTimeout(1200);
+    // La reflexión del domingo se abre al cerrar la ceremonia.
+    await page.locator('.sunday-reflection__footer .button').click();
+    await page.waitForTimeout(500);
+  }
 
   const result = await page.evaluate(() => {
-    const lit = Array.from(document.querySelectorAll('[data-candle]')).filter(
-      (candle) => candle.dataset.lit === 'true',
+    const lit = Array.from(
+      document.querySelectorAll('.hero__wreath [data-candle][data-lit="true"]'),
     ).length;
     return {
       lit,
-      caption: document.querySelector('.advent-wreath__caption')?.textContent ?? '',
-      message: document.querySelector('[data-advent-message]')?.textContent ?? '',
-      litCount: document.querySelector('.advent-wreath')?.dataset.litCount,
+      label: document.querySelector('.hero__wreath .advent-wreath__svg')?.getAttribute('aria-label') ?? '',
+      litCount: document.querySelector('.hero__wreath .advent-wreath')?.dataset.litCount,
+      ceremonyOpen: document.querySelectorAll('.advent-ceremony').length,
     };
   });
 
-  const ok = result.lit === testCase.expected;
+  const ok = result.lit === testCase.expected && result.ceremonyOpen === 0;
+  if (!ok) failures += 1;
   console.log(
     `${ok ? '✓' : '✗'} ${testCase.name.padEnd(22)} velas encendidas: ${result.lit} (esperado ${testCase.expected})`,
   );
-  console.log(`    ${result.caption}`);
+  if (hint) console.log(`    ceremonia: ${hint}`);
+  console.log(`    ${result.label}`);
   if (errors.length) console.log(`    ERRORES: ${errors.join(' | ')}`);
 
   await page.close();
 }
 
+console.log(failures === 0 ? '\nTodo correcto.' : `\n${failures} comprobación(es) fallida(s).`);
 await browser.close();

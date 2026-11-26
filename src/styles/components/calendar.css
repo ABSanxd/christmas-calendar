@@ -43,16 +43,20 @@
   height: clamp(2rem, 4.1cqw, 2.9rem);
   padding: 0;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 35%, #33447a, #101a3c 78%);
-  border: 2px solid var(--color-gold);
+  /* Lente de cristal: casi transparente, para que la casilla tome el tono
+     que hay detrás y solo destaque el número. */
+  background: radial-gradient(circle at 50% 26%, rgba(26, 40, 88, 0.16), rgba(10, 17, 43, 0.26) 80%);
+  -webkit-backdrop-filter: blur(3px) saturate(1.2);
+  backdrop-filter: blur(3px) saturate(1.2);
+  border: 1.5px solid rgba(217, 199, 157, 0.5);
   color: var(--color-gold-light);
   font-family: var(--font-display);
   font-size: clamp(0.85rem, 1.9cqw, 1.25rem);
   font-weight: 600;
   line-height: 1;
   box-shadow:
-    0 4px 14px rgba(4, 8, 20, 0.7),
-    inset 0 0 12px rgba(217, 199, 157, 0.16);
+    0 3px 12px rgba(4, 8, 20, 0.35),
+    inset 0 0 12px rgba(217, 199, 157, 0.14);
   transition:
     transform var(--duration-base) var(--ease-out),
     box-shadow var(--duration-base) var(--ease-out),
@@ -72,6 +76,12 @@
 .calendar-day__number {
   position: relative;
   z-index: 1;
+  /* Sombra oscura para que el número se lea igual sobre el cielo o sobre
+     una fachada clara. */
+  text-shadow:
+    0 1px 2px rgba(6, 10, 26, 0.95),
+    0 0 7px rgba(6, 10, 26, 0.85),
+    0 0 14px rgba(6, 10, 26, 0.45);
 }
 
 .calendar-day__state {
@@ -90,6 +100,40 @@
   background: var(--color-gold-light);
   color: var(--color-ink);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+/* Casilla bloqueada: un candado discreto. */
+.calendar-day__state.is-locked {
+  background: rgba(10, 17, 43, 0.82);
+  border: 1px solid rgba(217, 199, 157, 0.3);
+  color: rgba(217, 199, 157, 0.72);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.calendar-day__state.is-locked svg {
+  width: 0.62rem;
+  height: 0.62rem;
+  display: block;
+}
+
+/* Casilla disponible: late para señalar que hay algo que abrir. */
+.calendar-day__state.is-available {
+  background: var(--color-gold-bright);
+  color: var(--color-ink);
+  animation: marker-available 1.9s ease-in-out infinite;
+}
+
+@keyframes marker-available {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 238, 194, 0.55);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px rgba(255, 238, 194, 0);
+    transform: scale(1.12);
+  }
 }
 
 .calendar-day__tip {
@@ -132,33 +176,23 @@
 }
 
 .calendar-day.is-locked {
-  border-color: rgba(217, 199, 157, 0.24);
-  color: rgba(217, 199, 157, 0.38);
-  background: rgba(13, 21, 49, 0.82);
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+  border-color: rgba(217, 199, 157, 0.3);
+  color: rgba(240, 220, 166, 0.75);
+  background: radial-gradient(circle at 50% 26%, rgba(26, 40, 88, 0.12), rgba(10, 17, 43, 0.2) 80%);
+  box-shadow:
+    0 3px 10px rgba(4, 8, 20, 0.3),
+    inset 0 0 10px rgba(0, 0, 0, 0.3);
   cursor: not-allowed;
 }
 
-.calendar-day.is-locked::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: repeating-linear-gradient(
-    45deg,
-    rgba(9, 14, 32, 0.35) 0 4px,
-    transparent 4px 8px
-  );
-}
-
 .calendar-day.is-opened {
-  background: radial-gradient(circle at 50% 30%, var(--color-violet), #2b2350 80%);
+  background: radial-gradient(circle at 50% 28%, rgba(120, 82, 141, 0.78), rgba(43, 35, 80, 0.7) 80%);
   border-color: var(--color-gold-light);
   color: var(--color-gold-bright);
 }
 
 .calendar-day.is-completed {
-  background: radial-gradient(circle at 50% 30%, var(--color-gaudete), #7c4f68 82%);
+  background: radial-gradient(circle at 50% 28%, rgba(221, 163, 184, 0.78), rgba(124, 79, 104, 0.68) 82%);
   border-color: var(--color-gaudete-light);
   box-shadow:
     0 6px 18px rgba(4, 8, 20, 0.7),
@@ -251,8 +285,31 @@
   position: absolute;
   top: 0.3rem;
   right: 0.45rem;
+  display: grid;
+  place-items: center;
+  width: 1rem;
+  height: 1rem;
+  border-radius: var(--radius-pill);
   font-size: 0.75rem;
   color: var(--color-gold-light);
+}
+
+.calendar-door__state.is-locked {
+  background: rgba(10, 17, 43, 0.8);
+  border: 1px solid rgba(217, 199, 157, 0.3);
+  color: rgba(217, 199, 157, 0.72);
+}
+
+.calendar-door__state.is-locked svg {
+  width: 0.6rem;
+  height: 0.6rem;
+  display: block;
+}
+
+.calendar-door__state.is-available {
+  background: var(--color-gold-bright);
+  color: var(--color-ink);
+  animation: marker-available 1.9s ease-in-out infinite;
 }
 
 .calendar-door:hover:not(.is-locked) {

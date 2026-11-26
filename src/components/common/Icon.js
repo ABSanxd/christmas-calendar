@@ -12,6 +12,7 @@ const ICONS = {
   check: `<path d="m4.5 12.5 5 5 10-11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`,
   spark: `<path d="M12 2.5l2.1 6.3 6.4 2.2-6.4 2.2L12 19.5l-2.1-6.3L3.5 11l6.4-2.2z" fill="currentColor"/>`,
   star: `<path d="M12 2.8l2.8 6.9 7.4.6-5.6 4.8 1.7 7.3L12 18.6l-6.3 3.8 1.7-7.3L1.8 10.3l7.4-.6z" fill="currentColor"/>`,
+  candle: `<rect x="9" y="11.5" width="6" height="8.5" rx="1.2" fill="currentColor"/><path d="M12 2.4c2 2.3 2.7 3.9 2.7 5.3a2.7 2.7 0 1 1-5.4 0c0-1.4.7-3 2.7-5.3z" fill="currentColor"/>`,
 };
 
 /**

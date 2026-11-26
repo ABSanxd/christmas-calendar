@@ -8,7 +8,7 @@
 
 import { createElement } from '../../utils/domUtils.js';
 import { renderBethlehemScene } from './scene/BethlehemScene.js';
-import { createCalendarDay, updateCalendarDay } from './CalendarDay.js';
+import { createCalendarDay, updateCalendarDay, applyDayStateBadge } from './CalendarDay.js';
 import { SCENE_SPOTS, toRelative } from '../../data/sceneLayout.js';
 import { ADVENT_DAYS } from '../../data/adventDays.js';
 import { getActivityType } from '../../data/activities.js';
@@ -119,9 +119,11 @@ export function createCalendar(options) {
       door.classList.toggle('is-completed', isCompleted(dayData.day));
       door.setAttribute('aria-disabled', locked ? 'true' : 'false');
       const stateIcon = door.querySelector('.calendar-door__state');
-      if (stateIcon) {
-        stateIcon.textContent = locked ? '·' : isCompleted(dayData.day) ? '✓' : isOpened(dayData.day) ? '✧' : '';
-      }
+      applyDayStateBadge(stateIcon, {
+        locked,
+        opened: isOpened(dayData.day),
+        completed: isCompleted(dayData.day),
+      });
     });
   }
 

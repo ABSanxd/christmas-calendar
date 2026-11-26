@@ -9,14 +9,16 @@
  * @param {HTMLElement} options.actions
  * @param {() => void} options.onToday
  * @param {() => void} options.onToggleSound
+ * @param {() => void} [options.onReflections]
  * @param {(detail: object) => void} [options.onProgress]
  * @returns {() => void} Función para quitar los escuchas.
  */
 export function bindCalendarEvents(options) {
-  const { actions, onToday, onToggleSound, onProgress } = options;
+  const { actions, onToday, onToggleSound, onReflections, onProgress } = options;
   const cleanups = [];
 
   function bind(selector, handler) {
+    if (!handler) return;
     const button = actions?.querySelector(selector);
     if (!button) return;
     button.addEventListener('click', handler);
@@ -25,6 +27,7 @@ export function bindCalendarEvents(options) {
 
   bind('[data-action="today"]', onToday);
   bind('[data-action="sound"]', onToggleSound);
+  bind('[data-action="reflections"]', onReflections);
 
   if (onProgress) {
     const listener = (event) => onProgress(event.detail);

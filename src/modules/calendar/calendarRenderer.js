@@ -42,7 +42,6 @@ function renderBrandMark() {
  * @param {(day: number) => boolean} options.isLocked
  * @param {(day: number) => boolean} options.isOpened
  * @param {(day: number) => boolean} options.isCompleted
- * @param {() => void} options.onReplayWreath
  * @returns {object} Referencias de la interfaz.
  */
 export function renderApplication(options) {
@@ -52,7 +51,6 @@ export function renderApplication(options) {
     isLocked,
     isOpened,
     isCompleted,
-    onReplayWreath,
   } = options;
 
   container.innerHTML = '';
@@ -76,7 +74,10 @@ export function renderApplication(options) {
   const actionButtons = [
     { action: 'today', icon: 'sun', label: 'Ir al día de hoy' },
     { action: 'sound', icon: 'music', label: 'Activar o desactivar el sonido' },
+    { action: 'reflections', icon: 'candle', label: 'Reflexiones de los domingos de Adviento' },
   ];
+
+  const actionElements = {};
 
   actionButtons.forEach(({ action, icon, label }) => {
     const button = createElement('button', {
@@ -88,6 +89,7 @@ export function renderApplication(options) {
     if (action === 'sound') button.setAttribute('aria-pressed', 'true');
     button.appendChild(createIcon(icon));
     actions.appendChild(button);
+    actionElements[action] = button;
   });
 
   headerWrap.appendChild(brand);
@@ -95,25 +97,36 @@ export function renderApplication(options) {
   header.appendChild(headerWrap);
   container.appendChild(header);
 
+  // --- Franja de progreso: justo debajo de la cabecera ---
+  const progress = createCalendarProgress();
+  const progressWrap = createElement('div', { class: 'page-wrap progress-strip-wrap' });
+  progressWrap.appendChild(progress.element);
+  container.appendChild(progressWrap);
+
   // --- Cuerpo ---
   const main = createElement('main', { class: 'app-main', id: 'contenido-principal' });
   const wrap = createElement('div', { class: 'page-wrap' });
 
-  // Saludo y fecha.
+  // Saludo y fecha. La corona de Adviento vive en la esquina superior
+  // derecha, al lado de la fecha, el título y la presentación.
   const hero = createElement('section', { class: 'hero' });
   hero.innerHTML = `
-    <p class="hero__date" data-current-date></p>
-    <h2 class="hero__title">Camina con nosotros hacia Belén</h2>
-    <p class="hero__text">
-      Cada día escondemos una sorpresa: una reflexión, una oración, un reto y
-      pequeños juegos para preparar el corazón. Ábrelas a medida que llega su
-      fecha y deja que la luz de Adviento entre en tu casa.
-    </p>`;
-  wrap.appendChild(hero);
+    <div class="hero__head">
+      <p class="hero__date" data-current-date></p>
+      <h2 class="hero__title">Camina con nosotros hacia Belén</h2>
+      <p class="hero__text">
+        Cada día escondemos una sorpresa: una reflexión, una oración, un reto y
+        pequeños juegos para preparar el corazón. Ábrelas a medida que llega su
+        fecha y deja que la luz de Adviento entre en tu casa.
+      </p>
+    </div>`;
 
-  // Progreso.
-  const progress = createCalendarProgress();
-  wrap.appendChild(progress.element);
+  const wreath = createAdventWreath({ litCount: 0, variant: 'corner' });
+  const wreathSlot = createElement('div', { class: 'hero__wreath' });
+  wreathSlot.appendChild(wreath);
+  hero.appendChild(wreathSlot);
+
+  wrap.appendChild(hero);
 
   // Calendario.
   const calendar = createCalendar({
@@ -123,25 +136,6 @@ export function renderApplication(options) {
     isCompleted,
   });
   wrap.appendChild(calendar.element);
-
-  // Corona de Adviento.
-  const wreathSection = createElement('section', { class: 'advent-section' });
-  const wreathTitle = createElement('h2', { class: 'advent-section__title' });
-  wreathTitle.textContent = 'La corona de Adviento';
-  const adventMessage = createElement('p', {
-    class: 'advent-section__message',
-    'data-advent-message': '',
-    role: 'status',
-  });
-  const wreath = createAdventWreath({
-    litCount: 0,
-    onReplay: onReplayWreath,
-  });
-
-  wreathSection.appendChild(wreathTitle);
-  wreathSection.appendChild(adventMessage);
-  wreathSection.appendChild(wreath);
-  wrap.appendChild(wreathSection);
 
   main.appendChild(wrap);
   container.appendChild(main);
@@ -161,8 +155,8 @@ export function renderApplication(options) {
     calendar,
     progress,
     wreath,
-    adventMessage,
     actions,
+    reflectionsButton: actionElements.reflections,
     currentDate: hero.querySelector('[data-current-date]'),
   };
 }

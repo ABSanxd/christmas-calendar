@@ -107,8 +107,11 @@ export function renderNativity() {
         <path d="M ${cx + 96} ${FLOOR - 100} L ${cx + 6} ${FLOOR - 192}" stroke="${SCENE_COLORS.goldDeep}" stroke-width="2" opacity="0.32"/>
       </g>
 
-      <!-- María, arrodillada a la izquierda (junto al Niño, dentro del claro) -->
-      ${drawMary({ x: cx - 62, y: FLOOR + 6, scale: 0.84 })}
+      <!-- María, arrodillada a la izquierda (junto al Niño, dentro del claro).
+           Su escala es algo menor que la de José, para que se lea más joven
+           que él; el suelo (FLOOR) no cambia, así que los pies siguen
+           apoyados en el mismo sitio. -->
+      ${drawMary({ x: cx - 62, y: FLOOR + 6, scale: 0.78 })}
 
       <!-- José, de pie a la derecha (junto al Niño, dentro del claro) -->
       ${drawJoseph({ x: cx + 60, y: FLOOR + 6, scale: 0.9, flip: true })}
@@ -116,32 +119,55 @@ export function renderNativity() {
       <!-- El Niño en el pesebre, al frente -->
       ${drawBabyJesus({ x: cx, y: FLOOR + 14, scale: 1 })}
 
-      <!-- Buey y asno junto al pesebre -->
+      <!-- Buey y asno junto al pesebre. Van un poco más bajos y más cerca de la
+           familia, en primer plano, sin tapar a María ni a José. Su cara sigue
+           el estilo de las ovejas: cabeza ovalada, trompa más oscura y dos
+           ojitos mirando de frente. -->
       <g id="scene-animals" data-layer="characters">
         <!-- Buey -->
-        <g transform="translate(${cx - 166} ${FLOOR - 6})">
+        <g transform="translate(${cx - 152} ${FLOOR + 42})">
           <rect x="-36" y="-18" width="6" height="18" rx="3" fill="${SCENE_COLORS.roseDeep}" opacity="0.85"/>
           <rect x="-8" y="-16" width="6" height="16" rx="3" fill="${SCENE_COLORS.roseDeep}" opacity="0.75"/>
           <ellipse cx="-20" cy="-26" rx="30" ry="19" fill="${SCENE_COLORS.roseDeep}"/>
           <path d="M 4 -34 Q 18 -38 22 -50" stroke="${SCENE_COLORS.roseDeep}" stroke-width="16" fill="none" stroke-linecap="round"/>
-          <ellipse cx="28" cy="-54" rx="16" ry="12" fill="${SCENE_COLORS.rose}"/>
-          <ellipse cx="40" cy="-50" rx="10" ry="7" fill="${SCENE_COLORS.roseDeep}" opacity="0.75"/>
-          <path d="M 18 -64 Q 12 -76 24 -74 Q 20 -68 24 -62 Z" fill="#e6dcc4"/>
-          <path d="M 32 -64 Q 36 -76 26 -76 Q 30 -68 26 -62 Z" fill="#e6dcc4"/>
-          <circle cx="30" cy="-57" r="2.2" fill="${SCENE_COLORS.ink}"/>
+          <!-- Cuernos, por detrás de la cabeza -->
+          <path d="M 13 -62 Q 6 -68 7 -77 Q 15 -80 23 -66 Z" fill="#e6dcc4"/>
+          <path d="M 41 -62 Q 48 -68 47 -77 Q 39 -80 31 -66 Z" fill="#e6dcc4"/>
+          <!-- Cabeza ovalada -->
+          <ellipse cx="27" cy="-54" rx="17" ry="14" fill="${SCENE_COLORS.rose}"/>
+          <!-- Trompa más oscura -->
+          <ellipse cx="36" cy="-45" rx="10" ry="8" fill="${SCENE_COLORS.roseDeep}"/>
+          <ellipse cx="39" cy="-42" rx="2.4" ry="1.8" fill="#efe6d8" opacity="0.85"/>
+          <!-- Ojitos mirando de frente, como los de las ovejas -->
+          <ellipse cx="20" cy="-58" rx="4.2" ry="5.2" fill="#ffffff"/>
+          <ellipse cx="30" cy="-58" rx="4.2" ry="5.2" fill="#ffffff"/>
+          <circle cx="20.6" cy="-56.8" r="2.3" fill="${SCENE_COLORS.ink}"/>
+          <circle cx="30.6" cy="-56.8" r="2.3" fill="${SCENE_COLORS.ink}"/>
+          <circle cx="19.2" cy="-58.6" r="0.9" fill="#ffffff"/>
+          <circle cx="29.2" cy="-58.6" r="0.9" fill="#ffffff"/>
         </g>
 
         <!-- Asno -->
-        <g transform="translate(${cx + 166} ${FLOOR - 6}) scale(-1 1)">
+        <g transform="translate(${cx + 152} ${FLOOR + 42}) scale(-1 1)">
           <rect x="-36" y="-18" width="6" height="18" rx="3" fill="#b7ae9c" opacity="0.9"/>
           <rect x="-8" y="-16" width="6" height="16" rx="3" fill="#b7ae9c" opacity="0.8"/>
           <ellipse cx="-20" cy="-26" rx="30" ry="19" fill="${SCENE_COLORS.ivoryDeep}"/>
           <path d="M 4 -34 Q 18 -38 22 -50" stroke="${SCENE_COLORS.ivoryDeep}" stroke-width="15" fill="none" stroke-linecap="round"/>
-          <ellipse cx="28" cy="-54" rx="15" ry="11" fill="#cfc6b4"/>
-          <ellipse cx="40" cy="-49" rx="9" ry="6.5" fill="#b7ae9c" opacity="0.85"/>
-          <path d="M 18 -64 Q 10 -84 20 -82 Q 16 -72 22 -62 Z" fill="#cfc6b4"/>
-          <path d="M 32 -64 Q 40 -84 30 -82 Q 34 -72 28 -62 Z" fill="#cfc6b4"/>
-          <circle cx="31" cy="-56" r="2" fill="${SCENE_COLORS.ink}"/>
+          <!-- Orejas largas y afiladas, por detrás de la cabeza -->
+          <path d="M 12 -56 Q 9 -76 16 -89 Q 22 -76 22 -62 Z" fill="#cfc6b4"/>
+          <path d="M 42 -56 Q 45 -76 38 -89 Q 32 -76 32 -62 Z" fill="#cfc6b4"/>
+          <!-- Cabeza ovalada -->
+          <ellipse cx="27" cy="-54" rx="16" ry="13" fill="#cfc6b4"/>
+          <!-- Trompa más oscura -->
+          <ellipse cx="36" cy="-45" rx="9.5" ry="7.5" fill="#a89d89"/>
+          <ellipse cx="39" cy="-42" rx="2.2" ry="1.6" fill="#efe6d8" opacity="0.85"/>
+          <!-- Ojitos mirando de frente, como los de las ovejas -->
+          <ellipse cx="20" cy="-58" rx="3.8" ry="4.8" fill="#ffffff"/>
+          <ellipse cx="29" cy="-58" rx="3.8" ry="4.8" fill="#ffffff"/>
+          <circle cx="20.5" cy="-56.9" r="2.1" fill="${SCENE_COLORS.ink}"/>
+          <circle cx="29.5" cy="-56.9" r="2.1" fill="${SCENE_COLORS.ink}"/>
+          <circle cx="19.4" cy="-58.5" r="0.8" fill="#ffffff"/>
+          <circle cx="28.4" cy="-58.5" r="0.8" fill="#ffffff"/>
         </g>
       </g>
 

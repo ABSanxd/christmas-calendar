@@ -39,6 +39,34 @@ async function dismissWelcome(targetPage) {
   }
 }
 
+/**
+ * Enciende la vela de la ceremonia si está abierta.
+ *
+ * El domingo de Adviento la corona salta al centro y espera a que el
+ * visitante encienda la vela y cierre la ceremonia. Mientras tanto, la página
+ * queda cubierta.
+ */
+async function completeCeremony(targetPage) {
+  const pending = targetPage.locator('.advent-ceremony [data-target="true"]');
+  if (!(await pending.count())) return false;
+
+  await pending.click({ force: true });
+
+  const continueButton = targetPage.locator('[data-ceremony-continue]');
+  await continueButton.waitFor({ state: 'visible', timeout: 15000 });
+  await continueButton.click();
+  await targetPage.waitForTimeout(1200);
+
+  // Al cerrar la ceremonia se abre la reflexión del domingo.
+  const closeReflection = targetPage.locator('.sunday-reflection__footer .button');
+  if (await closeReflection.count()) {
+    await closeReflection.click();
+    await targetPage.waitForTimeout(400);
+  }
+
+  return true;
+}
+
 async function visit(label, url, wait = 1400) {
   await page.goto(url, { waitUntil: 'networkidle' });
   await page.waitForTimeout(wait);
@@ -69,12 +97,15 @@ mobile.on('console', (message) => {
 await mobile.setViewportSize({ width: 390, height: 844 });
 await mobile.goto(`${BASE}?fecha=2026-12-13`, { waitUntil: 'networkidle' });
 await mobile.waitForTimeout(3200);
+if (SHOTS) await mobile.screenshot({ path: `${OUT}/05-movil-ceremonia.png`, fullPage: false });
+await completeCeremony(mobile);
 if (SHOTS) await mobile.screenshot({ path: `${OUT}/05-movil.png`, fullPage: false });
 console.log('✓ 05-movil');
 
 // 6. Interacción: abrir una casilla y completar una actividad.
 await page.goto(`${BASE}?fecha=2026-12-13`, { waitUntil: 'networkidle' });
 await page.waitForTimeout(4200);
+await completeCeremony(page);
 await dismissWelcome(page);
 const marker = page.locator('.calendar-day[data-day="5"]');
 await marker.click();
@@ -102,6 +133,7 @@ console.log(`  escena cerrada: ${!(await page.locator('.christmas-eve').count())
 // 9. Completar una actividad desde el modal.
 await page.goto(`${BASE}?fecha=2026-12-13`, { waitUntil: 'networkidle' });
 await page.waitForTimeout(4200);
+await completeCeremony(page);
 await dismissWelcome(page);
 await page.locator('.calendar-day[data-day="8"]').click();
 await page.waitForTimeout(800);

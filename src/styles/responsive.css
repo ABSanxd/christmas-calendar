@@ -11,8 +11,8 @@
     font-size: var(--text-xl);
   }
 
-  .advent-wreath__figure {
-    width: 100%;
+  .hero__wreath {
+    width: clamp(6.5rem, 15vw, 10rem);
   }
 }
 
@@ -66,11 +66,31 @@
     font-size: var(--text-sm);
   }
 
-  .progress-card {
-    padding: var(--space-3) var(--space-4);
+  /* La corona se mantiene en la esquina superior derecha, junto a la fecha. */
+  .hero__wreath {
+    width: clamp(4.5rem, 17vw, 7rem);
   }
 
-  .progress-card__title {
+  /* La franja de progreso se parte en dos líneas: la barrita arriba y el
+     recuento y el porcentaje abajo. */
+  .progress-strip {
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+  }
+
+  .progress-strip__track {
+    flex: 1 0 100%;
+  }
+
+  .progress-strip__detail {
+    margin-left: 0;
+  }
+
+  .advent-ceremony__wreath {
+    width: min(84vmin, 26rem);
+  }
+
+  .advent-ceremony__message {
     font-size: var(--text-base);
   }
 
@@ -104,14 +124,6 @@
 
   .calendar-door__type {
     font-size: 0.56rem;
-  }
-
-  .advent-section {
-    padding: var(--space-4) var(--space-2);
-  }
-
-  .advent-wreath__figure {
-    width: 100%;
   }
 
   .modal {
@@ -175,7 +187,6 @@
 /* --- Impresión --- */
 @media print {
   .app-header__actions,
-  .advent-wreath__replay,
   .calendar__mobile,
   .toast-root {
     display: none !important;

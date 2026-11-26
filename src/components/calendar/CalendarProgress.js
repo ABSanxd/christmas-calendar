@@ -1,30 +1,31 @@
 /**
  * Indicador de progreso del calendario.
+ *
+ * Es una franja fina que va justo debajo de la cabecera: la barrita, el
+ * recuento de casillas y actividades, y el porcentaje, todo en una sola
+ * línea y con un peso discreto.
  */
 
 import { createElement } from '../../utils/domUtils.js';
 import { CONFIG } from '../../data/configuration.js';
 
 /**
- * Crea la barra de progreso.
+ * Crea la franja de progreso.
  * @returns {{element: HTMLElement, update: (summary: {opened: number, completed: number, total: number}, percentage: number) => void}}
  */
 export function createCalendarProgress() {
-  const element = createElement('section', { class: 'progress-card' });
+  const element = createElement('div', { class: 'progress-strip' });
   element.innerHTML = `
-    <div class="progress-card__head">
-      <h2 class="progress-card__title">Tu camino de Adviento</h2>
-      <p class="progress-card__value" data-progress-value>0 %</p>
-    </div>
-    <div class="progress-card__track" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+    <div class="progress-strip__track" role="progressbar" aria-valuemin="0" aria-valuemax="100"
       aria-valuenow="0" aria-label="Progreso del calendario de Adviento">
-      <span class="progress-card__bar" data-progress-bar></span>
+      <span class="progress-strip__bar" data-progress-bar></span>
     </div>
-    <p class="progress-card__detail" data-progress-detail></p>`;
+    <p class="progress-strip__detail" data-progress-detail></p>
+    <p class="progress-strip__value" data-progress-value>0 %</p>`;
 
   const value = element.querySelector('[data-progress-value]');
   const bar = element.querySelector('[data-progress-bar]');
-  const track = element.querySelector('.progress-card__track');
+  const track = element.querySelector('.progress-strip__track');
   const detail = element.querySelector('[data-progress-detail]');
 
   function update(summary, percentage) {

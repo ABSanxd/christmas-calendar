@@ -2,34 +2,28 @@
    Corona de Adviento
    ========================================================================== */
 
-.advent-section {
-  margin-block: var(--space-7) var(--space-6);
-  padding: var(--space-5) var(--space-4);
-  text-align: center;
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius-xl);
-  background:
-    radial-gradient(circle at 50% 18%, rgba(120, 82, 141, 0.22), transparent 62%),
-    var(--surface-panel);
-  box-shadow: var(--shadow-soft);
+/* --- Corona compacta, en la esquina superior derecha del saludo --- */
+.hero__wreath {
+  grid-area: wreath;
+  flex: 0 0 auto;
+  width: clamp(7.5rem, 16vw, 12rem);
+  position: relative;
 }
 
-.advent-section__title {
-  font-size: var(--text-lg);
-  color: var(--color-gold-light);
-  letter-spacing: 0.06em;
-  margin-bottom: var(--space-2);
-}
-
-.advent-section__message {
-  min-height: 1.4rem;
-  max-width: 38rem;
-  margin: 0 auto var(--space-3);
-  color: var(--color-gold-light);
-  font-family: var(--font-display);
-  font-size: var(--text-md);
-  opacity: 0;
-  transition: opacity var(--duration-base) var(--ease-out);
+/* Un halo cálido detrás de la corona: la hace destacar sobre el fondo
+   oscuro sin necesidad de un marco. */
+.hero__wreath::before {
+  content: '';
+  position: absolute;
+  inset: -18% -12%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(120, 82, 141, 0.28),
+    rgba(240, 220, 166, 0.08) 55%,
+    transparent 72%
+  );
+  pointer-events: none;
 }
 
 .advent-wreath {
@@ -37,7 +31,8 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-2);
-  width: min(30rem, 100%);
+  width: 100%;
+  position: relative;
 }
 
 .advent-wreath__figure {
@@ -48,32 +43,7 @@
   width: 100%;
   height: auto;
   overflow: visible;
-}
-
-.advent-wreath__caption {
-  font-size: var(--text-sm);
-  color: var(--color-text-soft);
-  max-width: 26rem;
-}
-
-.advent-wreath__replay {
-  font-size: var(--text-xs);
-  letter-spacing: 0.04em;
-  color: var(--color-gold-soft);
-  border-bottom: 1px solid transparent;
-  transition: color var(--duration-fast) var(--ease-out);
-}
-
-.advent-wreath__replay:hover {
-  color: var(--color-gold-bright);
-  border-bottom-color: currentColor;
-}
-
-.wreath-center__label {
-  font-family: var(--font-display);
-  font-size: 15px;
-  letter-spacing: 0.28em;
-  fill: rgba(240, 220, 166, 0.7);
+  display: block;
 }
 
 /* --- Velas --- */
@@ -89,18 +59,274 @@
   filter: drop-shadow(0 0 calc(var(--candle-glow) * 14px) rgba(240, 220, 166, 0.55));
 }
 
-/* --- Angelito --- */
-.advent-angel {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 85;
-  width: 6.5rem;
-  pointer-events: none;
-  filter: drop-shadow(0 8px 18px rgba(4, 8, 20, 0.55));
+/* La vela que el usuario debe encender: además del latido que anima GSAP,
+   tiene un halo dorado detrás que la hace inconfundible. */
+.advent-candle--target {
+  cursor: pointer;
 }
 
-.advent-angel__svg {
+/* El anillo de foco por defecto del navegador dibuja un rectángulo blanco
+   sobre la vela; el halo dorado ya cumple esa función. */
+.advent-candle--target:focus,
+.advent-candle--target:focus-visible {
+  outline: none;
+}
+
+.advent-wreath__target-halo {
+  animation: advent-target-breathe 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes advent-target-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.94);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+/* ==========================================================================
+   Ceremonia del domingo: la corona salta al centro de la pantalla
+   ========================================================================== */
+.advent-ceremony {
+  position: fixed;
+  inset: 0;
+  z-index: 85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+/* Durante la ceremonia el puntero es el fósforo: nada debe cambiarlo. */
+.advent-ceremony,
+.advent-ceremony * {
+  cursor: inherit;
+}
+
+.advent-ceremony__backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(13, 21, 49, 0.6), rgba(4, 8, 20, 0.9) 70%);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.advent-ceremony__stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  width: min(92vw, 42rem);
+  text-align: center;
+}
+
+.advent-ceremony__wreath {
+  width: min(76vmin, 32rem);
+}
+
+.advent-ceremony__wreath .advent-wreath__svg {
   width: 100%;
-  height: auto;
+}
+
+.advent-ceremony__message {
+  max-width: 34rem;
+  color: var(--color-gold-light);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
+}
+
+.advent-ceremony__message.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.advent-ceremony__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-pill);
+  background: rgba(13, 21, 49, 0.7);
+  color: var(--color-gold-bright);
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+  animation: advent-hint-pulse 2.2s ease-in-out infinite;
+}
+
+.advent-ceremony__hint:hover {
+  background: rgba(38, 52, 93, 0.8);
+}
+
+.advent-ceremony__hint[hidden] {
+  display: none;
+}
+
+.advent-ceremony__spark {
+  color: var(--color-gold-light);
+}
+
+/* Botón para terminar la ceremonia: la cierra el visitante cuando ha leído el
+   mensaje del domingo. */
+.advent-ceremony__continue {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-pill);
+  background: rgba(198, 165, 104, 0.18);
+  color: var(--color-gold-bright);
+  font-size: var(--text-sm);
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.advent-ceremony__continue:hover {
+  background: rgba(198, 165, 104, 0.32);
+  transform: translateY(-1px);
+}
+
+.advent-ceremony__continue[hidden] {
+  display: none;
+}
+
+/* ==========================================================================
+   Reflexiones de los domingos de Adviento
+   ========================================================================== */
+.sunday-reflection__block {
+  margin-bottom: var(--space-5);
+}
+
+.sunday-reflection__block:last-of-type {
+  margin-bottom: var(--space-3);
+}
+
+.sunday-reflection__heading {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  color: var(--color-gold-light);
+  letter-spacing: 0.04em;
+}
+
+.sunday-reflection__gospel {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--border-gold);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: rgba(120, 82, 141, 0.14);
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+}
+
+.sunday-reflection__reference {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.sunday-reflection__paragraph {
+  margin: 0;
+  color: var(--color-text-soft);
+  line-height: var(--leading-relaxed);
+}
+
+.sunday-reflection__block--candle {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  background: rgba(240, 220, 166, 0.06);
+}
+
+.sunday-reflection__color {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-gold-soft);
+}
+
+.sunday-reflection__footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sunday-reflection__list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sunday-reflection__item {
+  display: grid;
+  gap: 0.15rem;
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  background: rgba(38, 52, 93, 0.4);
+  text-align: left;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
+}
+
+.sunday-reflection__item:hover {
+  border-color: var(--border-gold);
+  background: rgba(120, 82, 141, 0.28);
+}
+
+.sunday-reflection__item-name {
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.sunday-reflection__item-title {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  color: var(--color-text);
+}
+
+.sunday-reflection__item-reference {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+@keyframes advent-hint-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(240, 220, 166, 0.35);
+  }
+
+  50% {
+    box-shadow: 0 0 18px 2px rgba(240, 220, 166, 0.28);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .advent-wreath__target-halo,
+  .advent-ceremony__hint {
+    animation: none;
+  }
 }

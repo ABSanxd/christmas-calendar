@@ -49,6 +49,10 @@ export const CONFIG = {
     goldLight: '#f0dca6',
     goldBright: '#ffeec2',
     goldDeep: '#8d713f',
+    red: '#d9534f',
+    redDeep: '#a5342f',
+    yellow: '#f3c53f',
+    yellowDeep: '#c99a24',
   },
 
   /** Mensajes de los domingos de Adviento. */

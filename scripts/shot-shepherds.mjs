@@ -63,5 +63,17 @@ await shotRegion('pastor-2', 1180, 675, 90, 190);
 // La Natividad, para comparar con José y María.
 await shotRegion('natividad', 600, 400, 400, 330);
 
+// Los Reyes Magos y su caravana, ampliados.
+await shotRegion('magos', 90, 600, 430, 290);
+await shotRegion('caravana', 90, 580, 250, 220);
+await shotRegion('caravana-zoom', 170, 660, 120, 130);
+await shotRegion('rey-1', 250, 660, 110, 190);
+await shotRegion('corona', 250, 660, 90, 60);
+
+// Los pastores y el rebaño.
+await shotRegion('pastores', 1090, 640, 420, 260);
+await shotRegion('ovejas', 1230, 700, 260, 150);
+await shotRegion('oveja', 1230, 700, 110, 90);
+
 console.log('ok');
 await browser.close();

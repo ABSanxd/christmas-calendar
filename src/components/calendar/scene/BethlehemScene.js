@@ -70,9 +70,22 @@ export function renderSceneDefs() {
       </radialGradient>
 
       <linearGradient id="gate-recess" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#1b2549"/>
-        <stop offset="100%" stop-color="#0e1531"/>
+        <stop offset="0%" stop-color="#432e63"/>
+        <stop offset="100%" stop-color="#251a3d"/>
       </linearGradient>
+
+      <!-- Lente de cristal de las casillas: casi transparente, para que se
+           vea el dibujo de la ilustración por detrás del número. -->
+      <radialGradient id="glass-lens" cx="50%" cy="26%" r="74%">
+        <stop offset="0%" stop-color="#dbe9ff" stop-opacity="0.1"/>
+        <stop offset="62%" stop-color="#93aede" stop-opacity="0.08"/>
+        <stop offset="100%" stop-color="#22304f" stop-opacity="0.14"/>
+      </radialGradient>
+
+      <radialGradient id="glass-halo" cx="50%" cy="50%" r="50%">
+        <stop offset="52%" stop-color="#0b1228" stop-opacity="0.22"/>
+        <stop offset="100%" stop-color="#0b1228" stop-opacity="0"/>
+      </radialGradient>
 
       <filter id="scene-soften" x="-20%" y="-20%" width="140%" height="140%">
         <feGaussianBlur stdDeviation="9"/>

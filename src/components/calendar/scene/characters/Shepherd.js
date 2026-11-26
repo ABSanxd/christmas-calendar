@@ -64,20 +64,20 @@ export function drawShepherd(options) {
 
   const shepherd = `
     <!-- === MANTA SOBRE LA CABEZA (capa de detrás) === -->
-    <path d="M -31 -66
-             C -34 -96 -34 -118 -31 -138
-             C -34 -159 -16 -185 0 -185
-             C 16 -185 34 -159 31 -138
-             C 34 -118 34 -96 31 -66 Z"
+    <path d="M -33 -64
+             C -37 -95 -37 -118 -33 -138
+             C -36 -157 -16 -178 0 -178
+             C 16 -178 36 -157 33 -138
+             C 37 -118 37 -95 33 -64 Z"
           fill="${mantle}" stroke="${mantleDark}" stroke-width="1" stroke-opacity="0.35"/>
     <!-- Pliegues de la manta a los lados -->
-    <path d="M -25 -70 C -28 -98 -28 -118 -25 -136" stroke="${mantleDark}" stroke-width="2.2" fill="none" opacity="0.45" stroke-linecap="round"/>
-    <path d="M 25 -70 C 28 -98 28 -118 25 -136" stroke="${mantleDark}" stroke-width="2.2" fill="none" opacity="0.45" stroke-linecap="round"/>
+    <path d="M -26 -70 C -29 -98 -29 -118 -26 -136" stroke="${mantleDark}" stroke-width="2.2" fill="none" opacity="0.45" stroke-linecap="round"/>
+    <path d="M 26 -70 C 29 -98 29 -118 26 -136" stroke="${mantleDark}" stroke-width="2.2" fill="none" opacity="0.45" stroke-linecap="round"/>
     <!-- Dobladillo de la manta -->
-    <path d="M -31 -70 Q -16 -63 0 -63 Q 16 -63 31 -70" stroke="${mantleDark}" stroke-width="1.6" fill="none" opacity="0.4"/>
+    <path d="M -33 -68 Q -16 -61 0 -61 Q 16 -61 33 -68" stroke="${mantleDark}" stroke-width="1.6" fill="none" opacity="0.4"/>
     <!-- Luz en la frente de la manta -->
-    <path d="M -12 -152 C -8 -166 -3 -173 0 -173 C 3 -173 8 -166 12 -152
-             C 8 -160 4 -164 0 -164 C -4 -164 -8 -160 -12 -152 Z"
+    <path d="M -12 -145 C -8 -159 -3 -166 0 -166 C 3 -166 8 -159 12 -145
+             C 8 -153 4 -157 0 -157 C -4 -157 -8 -153 -12 -145 Z"
           fill="#ffffff" opacity="0.14"/>
 
     <!-- === CUELLO (queda bajo el escote de la túnica) === -->
@@ -175,14 +175,14 @@ export function drawShepherd(options) {
     <path d="M -13 -146 C -8 -152 -3 -154 2 -153" stroke="${hairLight}" stroke-width="1.6" fill="none" opacity="0.55" stroke-linecap="round"/>
 
     <!-- === BORDE DELANTERO DE LA MANTA (marca el hueco de la capucha) === -->
-    <path d="M -24 -130
-             C -25 -146 -15 -158 0 -158
-             C 15 -158 25 -146 24 -130
-             L 32 -142
-             C 35 -162 16 -185 0 -185
-             C -16 -185 -35 -162 -32 -142 Z"
+    <path d="M -25 -128
+             C -26 -144 -15 -156 0 -156
+             C 15 -156 26 -144 25 -128
+             L 33 -140
+             C 36 -158 16 -179 0 -179
+             C -16 -179 -36 -158 -33 -140 Z"
           fill="${mantle}"/>
-    <path d="M -24 -130 C -25 -146 -15 -158 0 -158 C 15 -158 25 -146 24 -130"
+    <path d="M -25 -128 C -26 -144 -15 -156 0 -156 C 15 -156 26 -144 25 -128"
           stroke="${mantleDark}" stroke-width="1.6" fill="none" opacity="0.55" stroke-linecap="round"/>
 
     <!-- === CAYADO (encima de todo, apoyado en el suelo) === -->
