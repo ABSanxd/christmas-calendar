@@ -18,11 +18,13 @@ import { getVerse } from '../../data/bibleVerses.js';
  * Crea la capa de Nochebuena.
  *
  * @param {object} options
+ * @param {boolean} [options.completed] Si el día ya está marcado como realizado.
+ * @param {() => void} [options.onComplete] Se invoca al marcar el día como realizado.
  * @param {() => void} [options.onClose]
  * @returns {HTMLElement}
  */
 export function createChristmasEveScene(options = {}) {
-  const { onClose } = options;
+  const { completed = false, onComplete, onClose } = options;
   const verse = getVerse('AmorDios');
 
   const overlay = createElement('div', {
@@ -57,7 +59,10 @@ export function createChristmasEveScene(options = {}) {
         </aside>
       </div>
       <div class="christmas-eve__actions">
-        <button type="button" class="button" data-eve-close>Cerrar</button>
+        <button type="button" class="button button--complete" data-eve-complete>
+          ${completed ? 'Actualizar' : 'Marcar como realizada'}
+        </button>
+        <button type="button" class="button button--ghost" data-eve-close>Cerrar</button>
       </div>
     </div>`;
 
@@ -68,6 +73,12 @@ export function createChristmasEveScene(options = {}) {
   photo?.addEventListener('load', () => {
     photo.hidden = false;
     hint?.remove();
+  });
+
+  const completeButton = overlay.querySelector('[data-eve-complete]');
+  completeButton?.addEventListener('click', () => {
+    completeButton.textContent = completed ? 'Actualizado' : '¡Realizado!';
+    onComplete?.();
   });
 
   const closeButton = overlay.querySelector('[data-eve-close]');

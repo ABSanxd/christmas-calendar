@@ -104,12 +104,25 @@ export function openChristmasEveExperience() {
   if (!overlayRoot) return;
 
   const overlay = createChristmasEveScene({
+    completed: checkActivityCompleted(24),
+    onComplete: () => completeChristmasEve(),
     onClose: () => overlay.remove(),
   });
   overlayRoot.appendChild(overlay);
 
   playChristmasEveScene(overlay);
   requestOpenDay(24);
+}
+
+/**
+ * Marca el día 24 como realizado y celebra.
+ */
+function completeChristmasEve() {
+  requestCompleteActivity(24);
+  playSound('sparkle');
+  celebrateCompletion(markerProvider?.(24) ?? document.body);
+  showToast('¡Nochebuena completada! El Adviento ha llegado a su fin.', { tone: 'success' });
+  markerProvider?.(24)?.classList.add('is-completed');
 }
 
 export default openDayActivity;

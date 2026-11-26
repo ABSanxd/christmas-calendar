@@ -67,8 +67,19 @@
   }
 
   /* La corona se mantiene en la esquina superior derecha, junto a la fecha. */
+  /* En el celular la corona baja debajo del texto y se agranda: al lado del
+     texto quedaba demasiado pequeña para verse. */
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'head'
+      'wreath';
+    gap: var(--space-3);
+  }
+
   .hero__wreath {
-    width: clamp(5rem, 19vw, 8rem);
+    width: min(11rem, 58vw);
+    margin-inline: auto;
   }
 
   /* La franja de progreso se parte en dos líneas: la barrita arriba y el
