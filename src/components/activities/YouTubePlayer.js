@@ -80,9 +80,7 @@ export function createYouTubePlayer(options = {}) {
   feedback.hidden = true;
 
   const credit = createElement('p', { class: 'music__video-credit' });
-  credit.textContent = author
-    ? `Vídeo: ${author} · YouTube. Si no tienes conexión, escucha la melodía con la campanita.`
-    : 'Vídeo: YouTube. Si no tienes conexión, escucha la melodía con la campanita.';
+  credit.textContent = author ? `Vídeo: ${author} · YouTube.` : 'Vídeo: YouTube.';
 
   let player = null;
 
@@ -110,7 +108,7 @@ export function createYouTubePlayer(options = {}) {
           onError: () => {
             setFeedback(
               feedback,
-              'No se pudo reproducir el video. Puedes escuchar la melodía con la campanita.',
+              'No se pudo reproducir el video. Revisa tu conexión a internet.',
               'error',
             );
           },
@@ -122,8 +120,8 @@ export function createYouTubePlayer(options = {}) {
       iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
       setFeedback(
         feedback,
-        'Puede que no tengas conexión. Si el video no carga, escucha la melodía con la campanita.',
-        'info',
+        'No se pudo cargar el video. Revisa tu conexión a internet.',
+        'error',
       );
     } finally {
       playButton.disabled = false;

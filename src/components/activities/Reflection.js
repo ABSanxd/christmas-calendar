@@ -51,6 +51,17 @@ export function createReflection(options) {
     element.appendChild(question);
   }
 
+  if (content.challenge) {
+    const challenge = createElement('aside', { class: 'activity__challenge' });
+    const label = createElement('strong', { class: 'activity__challenge-label' });
+    label.textContent = 'Mini-reto: ';
+    const text = createElement('span', { class: 'activity__challenge-text' });
+    text.textContent = content.challenge;
+    challenge.appendChild(label);
+    challenge.appendChild(text);
+    element.appendChild(challenge);
+  }
+
   if (content.closing) {
     const closing = createElement('p', { class: 'activity__closing' });
     closing.textContent = content.closing;

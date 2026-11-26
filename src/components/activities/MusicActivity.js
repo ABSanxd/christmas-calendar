@@ -48,6 +48,8 @@ export function createMusicActivity(options) {
 
   if (content.mode === 'compose') {
     element.appendChild(renderComposeMode(content, saved));
+  } else if (content.mode === 'video') {
+    element.appendChild(renderVideoMode(content));
   } else {
     element.appendChild(renderSingMode(content, saved));
   }
@@ -77,6 +79,40 @@ export function createMusicActivity(options) {
       return { heard: saved.heard ?? false };
     },
   };
+}
+
+/**
+ * Modo "video": solo el reproductor del villancico.
+ *
+ * Es el modo del día 7: la canción se ve y se escucha tal como la canta la
+ * comunidad, sin letra ni juego de ritmo.
+ *
+ * @param {object} content
+ * @returns {HTMLElement}
+ */
+function renderVideoMode(content) {
+  const fragment = document.createDocumentFragment();
+
+  if (content.title) {
+    const title = createElement('h3', { class: 'music__title' });
+    title.textContent = content.title;
+    fragment.appendChild(title);
+  }
+
+  if (content.subtitle) {
+    const subtitle = createElement('p', { class: 'music__subtitle' });
+    subtitle.textContent = content.subtitle;
+    fragment.appendChild(subtitle);
+  }
+
+  const { element: player } = createYouTubePlayer({
+    videoId: content.videoId,
+    title: content.videoTitle ?? content.title ?? 'Villancico en YouTube',
+    author: content.videoAuthor ?? '',
+  });
+  fragment.appendChild(player);
+
+  return fragment;
 }
 
 /**

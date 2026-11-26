@@ -184,56 +184,38 @@ export const ADVENT_DAYS = [
     requiresInteraction: true,
     completionEnabled: true,
     content: {
-      mode: 'sing',
+      mode: 'video',
       videoId: '1zNKFPGIFxU',
       videoTitle: 'Athenas · Noche de paz',
       videoAuthor: 'Athenas',
       title: 'Noche de paz',
-      subtitle: 'Canon tradicional · dominio público',
+      subtitle: 'Villancico de Athenas',
       intro:
         'Pulsa "Ver y escuchar el villancico" y deja que la música entre en casa. ' +
-        'Si no tienes conexión, puedes escucharla con la campanita y cantarla juntos.',
-      stanzas: [
-        [
-          'Noche de paz, noche de amor,',
-          'ya brilla la estrella del cielo;',
-          'en el campo suena el canto de los ángeles:',
-          '¡Gloria a Dios en las alturas!',
-        ],
-        [
-          'En el cielo brillan las estrellas,',
-          'la luna y el sol;',
-          'y en la tierra ya suena el canto de los ángeles:',
-          '¡Gloria a Dios en las alturas!',
-        ],
-      ],
-      closing:
-        'La música que nace en un pesebre sigue siendo canción de familia. Cántala hoy.',
+        'Cántenla juntos, con la letra en el corazón.',
     },
   },
   {
     id: 'day-08',
     day: 8,
     title: 'La estrella de Belén',
-    subtitle: 'Un acertijo para pensar',
-    type: 'riddle',
+    subtitle: 'Un reto para compartir',
+    type: 'challenge',
     icon: 'star',
     verseKey: 'Estrella',
     requiresInteraction: true,
     completionEnabled: true,
     content: {
-      question:
-        'No la hizo ningún carpintero y no se apagó con el viento. Brilla en el cielo, ' +
-        'guía a tres reyes y se apagó cuando el Niño ya estaba en la cuna. ¿Quién soy?',
-      answer: 'estrella',
-      acceptedAnswers: ['estrella', 'la estrella', 'estrella de belen', 'estrella de belén'],
-      hints: [
-        'No es un astro cualquiera: fue señal de una noticia.',
-        'C Numbers 24,17 la anuncia: "La estrella sale de Jacob".',
-        'Los Magos lafollowed como se sigue una luz.',
+      intro:
+        'La estrella no guiaba un camino, señalaba a una Persona. Hoy también puede ser ' +
+        'una señal: ponla donde la vea tu gente y deja que ella también hable.',
+      steps: [
+        'Hazte una foto o escribe un texto con la estrella de Belén y publícalo en tu estado de Instagram o de WhatsApp.',
+        'Comparte ese mismo estado en un grupo de tu familia o de tu comunidad, con una frase que explique lo que la estrella te recuerda.',
+        'Termina el día mirándola al anochecer y pensando en a quién quieres que esa luz alcance.',
       ],
-      success:
-        '¡Exacto! La estrella no guiaba un camino, señalaba a una Persona. Por eso la seguimos con el corazón.',
+      encouragement:
+        '¡Qué bonito! La estrella que guió a los Magos ahora ilumina también tu perfil, tu estado y tu grupo.',
     },
   },
   {
@@ -248,7 +230,7 @@ export const ADVENT_DAYS = [
     completionEnabled: true,
     content: {
       intro:
-        'La gratitud es una forma corta de-oración. Elige al menos tres cosas por las que ' +
+        'La gratitud es una forma corta de oración. Elige al menos tres cosas por las que ' +
         'quieres dar gracias a Dios hoy.',
       options: [
         'Por la salud de mi cuerpo',
@@ -256,7 +238,7 @@ export const ADVENT_DAYS = [
         'Por un techo y un pan',
         'Por una sonrisa que me regalaron',
         'Por la familia que tengo',
-        'Por algo que me costó effort',
+        'Por algo que me costó',
         'Por la luz que me guía',
         'Por lo que aún no ha llegado, pero ya espero',
       ],
@@ -305,12 +287,11 @@ export const ADVENT_DAYS = [
     completionEnabled: true,
     content: {
       intro:
-        'Los pastores estaban en la campina cuando oyeron el anuncio. Busca en la sopa de ' +
-        'letras las palabras de aquella noche.',
-      instruction: 'Toca las letras contiguas para encontrar cada palabra.',
+        'Los pastores estaban en el campo cuando oyeron el anuncio. Busca en la sopa de letras.',
+      instruction: 'Arrastra sobre las letras para encontrar cada palabra.',
       words: ['PASTORES', 'OVEJAS', 'BELEN', 'NOCHE', 'ANGEL', 'CENA'],
       closing:
-        'La noticia llegó primero a los sencillos. Dios siempre ha elegido hablar primero a quien está con el corazón limpio.',
+        'La noticia llegó primero a los sencillos. Dios siempre ha elegido hablar primero a quien está con el corazón dispuesto.',
     },
   },
   {
@@ -328,13 +309,13 @@ export const ADVENT_DAYS = [
         'La Sagrada Familia es el primer cuadro de Navidad: María, José y un Niño. ' +
         'Hoy, tu familia es ese cuadro.',
       steps: [
-        'Reunid a los que viven con vos (o llama a los que están lejos) y contad qué es lo mejor de este año.',
-        'Elegid a alguien de la familia a quien no hayáis dado atención estos días, y dadle una atención completa.',
-        'Terminad la noche con una oración de acción de gracias: cada uno agradece algo de los demás.',
+        'Elijan a los que viven con ustedes (o llamen a los que están lejos) y cuenten qué es lo mejor de este año.',
+        'Elijan a alguien de la familia a quien no le hayan dado atención estos días, y denle una atención completa.',
+        'Terminen la noche con una oración de acción de gracias: cada uno agradece algo de los demás.',
       ],
       duration: '20-30 minutos',
       encouragement:
-        '¡Lo habéis hecho! Una familia que se escucha es ya una familia que se parece a la de Belén.',
+        '¡Lo hicieron! Una familia que se escucha es ya una familia que se parece a la de Belén.',
     },
   },
   {
@@ -364,6 +345,9 @@ export const ADVENT_DAYS = [
           'La música y los cantos',
         ],
       },
+      challenge:
+        'Viste o ponte algo rosa, como señal de Gaudete, y publícalo en tu estado de WhatsApp. ' +
+        'Que la alegría se vea también en la calle.',
       closing: 'Hoy la vela de Gaudete se enciende: ¡alégrate, porque viene el Señor!',
     },
   },

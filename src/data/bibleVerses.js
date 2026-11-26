@@ -24,7 +24,7 @@ export const VERSES = {
   },
   Pastores: {
     reference: 'Lc 2,10-11',
-    text: 'No temas; porque os ha nacido hoy en la ciudad de David un Salvador, que es Cristo Señor.',
+    text: 'Pero el ángel les dijo: «No tengan miedo, pues yo vengo a comunicarles una buena noticia, que será motivo de mucha alegría para todo el pueblo. Hoy, en la ciudad de David, ha nacido para ustedes un Salvador, que es el Mesías y el Señor.»',
     theme: 'El anuncio a los pastores',
   },
   Nacimiento: {
@@ -44,7 +44,7 @@ export const VERSES = {
   },
   Estrella: {
     reference: 'Nm 24,17',
-    text: 'La estrella sale de Jacob, y el cetro se levanta de Israel.',
+    text: 'Lo veo; pero no por ahora, lo contemplo, pero no de cerca: un astro se levanta desde Jacob, un cetro se yergue en Israel. Le pega a Moab en las sienes, y en el cráneo a todos los hijos de Set.',
     theme: 'La estrella de Belén',
   },
   BuenHacer: {
@@ -54,7 +54,7 @@ export const VERSES = {
   },
   Perdón: {
     reference: 'Mt 6,14',
-    text: 'Si vosotros perdonáis a los hombres sus delitos, también vuestro Padre del cielo os perdonará los vuestros.',
+    text: 'Porque si ustedes perdonan a los hombres sus ofensas, también el Padre celestial les perdonará a ustedes.',
     theme: 'El perdón',
   },
   LuzMundo: {
@@ -119,12 +119,12 @@ export const VERSES = {
   },
   Mandamiento: {
     reference: 'Jn 13,34',
-    text: 'Os doy un nuevo mandamiento: que os améis los unos a los otros, como yo os he amado.',
+    text: 'Les doy un mandamiento nuevo: que se amen los unos a los otros. Ustedes deben amarse unos a otros como yo los he amado.',
     theme: 'El nuevo mandamiento',
   },
   Esperanza: {
     reference: 'Rm 15,13',
-    text: 'El Dios de la esperanza que esperanza y con gozo, y que la paz de Dios, que excede todo entendimiento, guarde vuestros corazones y vuestra intelección en Cristo Jesús.',
+    text: 'Que el Dios de toda esperanza los colme de gozo y paz en el camino de la fe y haga crecer en ustedes la esperanza por el poder del Espíritu Santo.',
     theme: 'La esperanza',
   },
   FeAmor: {

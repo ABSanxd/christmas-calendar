@@ -9,97 +9,113 @@ const context = await browser.newContext({ viewport: { width: 1440, height: 1000
 const page = await context.newPage();
 page.on('pageerror', (e) => console.log('[pageerror]', e.message));
 
-// --- 1. ¿Se puede desmarcar en todas las actividades? ---
-console.log('=== marcar y desmarcar ===');
-await page.goto(`${BASE}?fecha=2026-12-24`, { waitUntil: 'networkidle' });
-await page.waitForTimeout(2200);
-
-for (let day = 1; day <= 23; day += 1) {
-  await page.goto(`${BASE}?fecha=2026-12-24`, { waitUntil: 'networkidle' });
-  await page.waitForTimeout(1200);
+const openDay = async (fecha, day) => {
+  await page.goto(`${BASE}?fecha=${fecha}`, { waitUntil: 'networkidle' });
+  await page.waitForTimeout(2200);
+  if (await page.locator('.advent-ceremony [data-target="true"]').count()) {
+    await page.locator('.advent-ceremony [data-target="true"]').click({ force: true });
+    await page.locator('[data-ceremony-continue]').waitFor({ state: 'visible', timeout: 15000 });
+    await page.locator('[data-ceremony-continue]').click();
+    await page.waitForTimeout(1200);
+    await page.locator('.sunday-reflection__footer .button').click();
+    await page.waitForTimeout(400);
+  }
   await page.locator(`.calendar-day[data-day="${day}"]`).click();
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(600);
+};
 
-  const result = await page.evaluate(async () => {
-    const radio = document.querySelector('.option-list:not(.option-list--multiple) .option-list__input');
-    const checkbox = document.querySelector('.activity__step input');
-    const multi = document.querySelector('.option-list--multiple .option-list__input');
-    const control = radio ?? checkbox ?? multi;
-    if (!control) return { tipo: 'sin control', ok: null };
-
-    const esRadio = control.type === 'radio';
-    control.click();
-    await new Promise((r) => setTimeout(r, 120));
-    const marcados = document.querySelectorAll(
-      '.option-list__input:checked, .activity__step input:checked',
-    ).length;
-    control.click();
-    await new Promise((r) => setTimeout(r, 120));
-    const tras = document.querySelectorAll(
-      '.option-list__input:checked, .activity__step input:checked',
-    ).length;
-
-    return {
-      tipo: esRadio ? 'opción única' : 'casilla',
-      marcados,
-      tras,
-      ok: marcados === 1 && tras === 0,
-    };
-  });
-
-  console.log(
-    `  día ${String(day).padStart(2)}: ${result.tipo.padEnd(12)} ` +
-      (result.ok === null ? '(sin control que marcar)' : result.ok ? '✓ se desmarca' : '✗ NO se desmarca'),
-  );
-
-  await page.locator('.modal__close').click();
-  await page.waitForTimeout(200);
-}
-
-// --- 2. El reproductor de YouTube del día 7 ---
-console.log('\n=== día 7: villancico ===');
-await page.goto(`${BASE}?fecha=2026-12-07`, { waitUntil: 'networkidle' });
-await page.waitForTimeout(1800);
-await page.locator('.calendar-day[data-day="7"]').click();
-await page.waitForTimeout(600);
+// --- DÍA 11: sopa de letras con arrastre ---
+console.log('=== día 11: sopa de letras ===');
+await openDay('2026-12-11', 11);
 console.log('  versículo:', (await page.locator('.verse-block blockquote').textContent())?.trim());
-console.log('  botón de video:', await page.locator('.music__video-play').count());
-await page.locator('.music__video-play').click();
-await page.waitForTimeout(7000);
-console.log('  iframe:', await page.locator('.music__video-frame').count());
-console.log('  aviso:', (await page.locator('.music__video .activity__feedback').textContent())?.trim());
-await page.screenshot({ path: `${OUT}/dia-7-video.png` });
-await page.locator('.modal__close').click();
-await page.waitForTimeout(300);
-
-// --- 3. Día 5 y 6 ---
-await page.goto(`${BASE}?fecha=2026-12-05`, { waitUntil: 'networkidle' });
-await page.waitForTimeout(1600);
-await page.locator('.calendar-day[data-day="5"]').click();
-await page.waitForTimeout(500);
-const steps5 = await page.locator('.activity__step-label').allTextContents();
-console.log('\n=== día 5 ===');
-steps5.forEach((s, i) => console.log(`  reto ${i + 1}: ${s}`));
-await page.locator('.modal__close').click();
-await page.waitForTimeout(300);
-
-await page.goto(`${BASE}?fecha=2026-12-06`, { waitUntil: 'networkidle' });
-await page.waitForTimeout(2600);
-// Si hay ceremonia del domingo, se cierra primero.
-if (await page.locator('.advent-ceremony [data-target="true"]').count()) {
-  await page.locator('.advent-ceremony [data-target="true"]').click({ force: true });
-  await page.locator('[data-ceremony-continue]').waitFor({ state: 'visible', timeout: 15000 });
-  await page.locator('[data-ceremony-continue]').click();
-  await page.waitForTimeout(1200);
-  await page.locator('.sunday-reflection__footer .button').click();
-  await page.waitForTimeout(400);
-}
-await page.locator('.calendar-day[data-day="6"]').click();
-await page.waitForTimeout(500);
-console.log('\n=== día 6 ===');
-console.log('  versículo:', (await page.locator('.verse-block blockquote').textContent())?.trim());
+console.log('  intro:', (await page.locator('.activity__intro').textContent())?.trim());
+console.log('  instrucción:', (await page.locator('.activity__instruction').textContent())?.trim());
 console.log('  cierre:', (await page.locator('.activity__closing').textContent())?.trim());
-const opts6 = await page.locator('.option-list__text').allTextContents();
-opts6.forEach((o, i) => console.log(`  opción ${i + 1}: ${o}`));
+
+// Se localiza una palabra en la cuadrícula y se arrastra sobre ella.
+const grid = await page.evaluate(() =>
+  Array.from(document.querySelectorAll('.wordsearch__cell')).map((cell) => ({
+    row: Number(cell.dataset.row),
+    col: Number(cell.dataset.col),
+    letter: cell.textContent,
+  })),
+);
+
+const size = Math.max(...grid.map((c) => c.row)) + 1;
+const words = await page.locator('.wordsearch__word').allTextContents();
+const directions = [[0, 1], [1, 0], [1, 1], [1, -1], [0, -1], [-1, 0], [-1, -1], [-1, 1]];
+let found = null;
+
+for (const word of words) {
+  for (let row = 0; row < size && !found; row += 1) {
+    for (let col = 0; col < size && !found; col += 1) {
+      for (const [dr, dc] of directions) {
+        const cells = [];
+        let ok = true;
+        for (let i = 0; i < word.length; i += 1) {
+          const r = row + dr * i;
+          const c = col + dc * i;
+          const cell = grid.find((g) => g.row === r && g.col === c);
+          if (!cell || cell.letter !== word[i]) { ok = false; break; }
+          cells.push(cell);
+        }
+        if (ok && cells.length === word.length) { found = { word, cells }; break; }
+      }
+    }
+  }
+}
+
+console.log('  palabra elegida:', found?.word);
+const first = await page.locator(`.wordsearch__cell[data-row="${found.cells[0].row}"][data-col="${found.cells[0].col}"]`).boundingBox();
+const last = await page.locator(`.wordsearch__cell[data-row="${found.cells.at(-1).row}"][data-col="${found.cells.at(-1).col}"]`).boundingBox();
+
+await page.mouse.move(first.x + first.width / 2, first.y + first.height / 2);
+await page.mouse.down();
+await page.mouse.move(last.x + last.width / 2, last.y + last.height / 2, { steps: 12 });
+await page.mouse.up();
+await page.waitForTimeout(700);
+
+console.log('  aviso tras arrastrar:', (await page.locator('.activity--wordsearch .activity__feedback').textContent())?.trim());
+console.log('  palabras encontradas:', await page.locator('.wordsearch__word.is-found').count());
+await page.screenshot({ path: `${OUT}/dia-11-sopa.png` });
+await page.locator('.modal__close').click();
+await page.waitForTimeout(300);
+
+// --- DÍA 7: solo el video ---
+console.log('\n=== día 7: solo el video ===');
+await openDay('2026-12-07', 7);
+console.log('  letra:', await page.locator('.music__stanzas').count(), '(debe ser 0)');
+console.log('  botón campanita:', await page.locator('.music__play').count(), '(debe ser 0)');
+console.log('  juego de ritmo:', await page.locator('.rhythm').count(), '(debe ser 0)');
+console.log('  reproductor:', await page.locator('.music__video-play').count());
+await page.screenshot({ path: `${OUT}/dia-7-solo-video.png` });
+await page.locator('.modal__close').click();
+await page.waitForTimeout(300);
+
+// --- DÍA 8: reto ---
+console.log('\n=== día 8: reto ===');
+await openDay('2026-12-08', 8);
+console.log('  versículo:', (await page.locator('.verse-block blockquote').textContent())?.trim());
+console.log('  subtítulo:', (await page.locator('.modal__subtitle').textContent())?.trim());
+const steps8 = await page.locator('.activity__step-label').allTextContents();
+steps8.forEach((s, i) => console.log(`  reto ${i + 1}: ${s}`));
+await page.locator('.modal__close').click();
+await page.waitForTimeout(300);
+
+// --- DÍA 12 ---
+console.log('\n=== día 12 ===');
+await openDay('2026-12-12', 12);
+console.log('  versículo:', (await page.locator('.verse-block blockquote').textContent())?.trim());
+const steps12 = await page.locator('.activity__step-label').allTextContents();
+steps12.forEach((s, i) => console.log(`  reto ${i + 1}: ${s}`));
+await page.locator('.modal__close').click();
+await page.waitForTimeout(300);
+
+// --- DÍA 13 ---
+console.log('\n=== día 13 ===');
+await openDay('2026-12-13', 13);
+console.log('  versículo:', (await page.locator('.verse-block blockquote').textContent())?.trim());
+console.log('  mini-reto:', (await page.locator('.activity__challenge').textContent())?.trim());
+await page.screenshot({ path: `${OUT}/dia-13-minireto.png` });
 
 await browser.close();

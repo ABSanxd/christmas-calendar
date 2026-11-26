@@ -101,6 +101,13 @@ export function createWordSearch(options) {
   const found = new Set(saved.found ?? []);
   const selection = [];
 
+  // --- Arrastre para pintar las letras ---
+  // Se puede marcar la palabra arrastrando sobre la cuadrícula (lo natural
+  // en el celular) o tocando letra a letra (lo natural en el ordenador).
+  let dragStart = null;
+  let pointerCell = null;
+  let dragging = false;
+
   const board = createElement('div', {
     class: 'wordsearch__board',
     style: `--wordsearch-size:${size}`,
@@ -111,6 +118,64 @@ export function createWordSearch(options) {
   const wordList = createElement('ul', { class: 'wordsearch__words' });
   const feedback = createElement('p', { class: 'activity__feedback' });
   feedback.hidden = true;
+
+  /**
+   * Devuelve la celda que hay bajo un punto de la pantalla.
+   *
+   * @param {number} x
+   * @param {number} y
+   * @returns {{row: number, col: number}|null}
+   */
+  function cellFromPoint(x, y) {
+    const element = document.elementFromPoint(x, y);
+    const cell = element?.closest?.('.wordsearch__cell');
+    if (!cell) return null;
+    return { row: Number(cell.dataset.row), col: Number(cell.dataset.col) };
+  }
+
+  /**
+   * Calcula la línea recta entre dos celdas, en las ocho direcciones.
+   *
+   * @param {{row: number, col: number}} from
+   * @param {{row: number, col: number}} to
+   * @returns {{row: number, col: number}[]|null} `null` si no van en línea recta.
+   */
+  function lineBetween(from, to) {
+    const rowDelta = Math.sign(to.row - from.row);
+    const colDelta = Math.sign(to.col - from.col);
+    const rowDistance = Math.abs(to.row - from.row);
+    const colDistance = Math.abs(to.col - from.col);
+
+    // Solo se admiten las direcciones horizontal, vertical y diagonal.
+    if (rowDelta !== 0 && colDelta !== 0 && rowDistance !== colDistance) return null;
+
+    const cells = [];
+    let row = from.row;
+    let col = from.col;
+
+    for (let step = 0; step < 100; step += 1) {
+      cells.push({ row, col });
+      if (row === to.row && col === to.col) break;
+      row += rowDelta;
+      col += colDelta;
+    }
+
+    return cells;
+  }
+
+  /**
+   * Añade una celda a la selección (toque letra a letra).
+   * @param {{row: number, col: number}} cell
+   */
+  function addToSelection(cell) {
+    const last = selection[selection.length - 1];
+    const isAdjacent =
+      !last || (Math.abs(last.row - cell.row) <= 1 && Math.abs(last.col - cell.col) <= 1);
+    if (!isAdjacent) selection.length = 0;
+    selection.push(cell);
+    highlightCells(selection);
+    checkSelection();
+  }
 
   function renderWordList() {
     wordList.innerHTML = '';
@@ -170,20 +235,64 @@ export function createWordSearch(options) {
         role: 'gridcell',
       });
       cell.textContent = letter;
-
-      cell.addEventListener('click', () => {
-        const last = selection[selection.length - 1];
-        const isAdjacent =
-          !last ||
-          (Math.abs(last.row - rowIndex) <= 1 && Math.abs(last.col - colIndex) <= 1);
-        if (!isAdjacent) selection.length = 0;
-        selection.push({ row: rowIndex, col: colIndex });
-        highlightCells(selection);
-        checkSelection();
-      });
-
       board.appendChild(cell);
     });
+  });
+
+  // --- Ratón y dedo: se empieza a marcar al pulsar y se arrastra ---
+  board.addEventListener('pointerdown', (event) => {
+    const cell = event.target.closest('.wordsearch__cell');
+    if (!cell) return;
+    event.preventDefault();
+    dragStart = { row: Number(cell.dataset.row), col: Number(cell.dataset.col) };
+    pointerCell = dragStart;
+    dragging = false;
+    board.setPointerCapture?.(event.pointerId);
+  });
+
+  board.addEventListener('pointermove', (event) => {
+    if (!dragStart) return;
+    const cell = cellFromPoint(event.clientX, event.clientY);
+    if (!cell) return;
+    if (cell.row === pointerCell.row && cell.col === pointerCell.col) return;
+
+    pointerCell = cell;
+    const line = lineBetween(dragStart, cell);
+    if (!line) return;
+
+    dragging = true;
+    selection.length = 0;
+    selection.push(...line);
+    clearHighlight();
+    highlightCells(selection);
+  });
+
+  const finishSelection = (event) => {
+    if (!dragStart) return;
+    board.releasePointerCapture?.(event.pointerId);
+    const start = dragStart;
+    dragStart = null;
+
+    // Arrastrado: ya está marcada la línea, solo se comprueba.
+    if (dragging) {
+      checkSelection();
+      return;
+    }
+
+    // Toque simple: se sigue marcando letra a letra.
+    addToSelection(start);
+  };
+
+  board.addEventListener('pointerup', finishSelection);
+  board.addEventListener('pointercancel', finishSelection);
+
+  // Con el teclado se marca también letra a letra.
+  board.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    const cell = event.target.closest('.wordsearch__cell');
+    if (!cell) return;
+    event.preventDefault();
+    addToSelection({ row: Number(cell.dataset.row), col: Number(cell.dataset.col) });
   });
 
   element.appendChild(board);

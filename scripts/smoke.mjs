@@ -137,10 +137,10 @@ await completeCeremony(page);
 await dismissWelcome(page);
 await page.locator('.calendar-day[data-day="8"]').click();
 await page.waitForTimeout(800);
-const answer = page.locator('.riddle__input');
-await answer.fill('estrella');
-await page.locator('.riddle__form button[type="submit"]').click();
-await page.waitForTimeout(400);
+// El día 8 es un reto: basta con marcar uno de sus pasos.
+const step = page.locator('.activity__step input').first();
+await step.check();
+await page.waitForTimeout(200);
 const completeButton = page.locator('.button--complete');
 await completeButton.click();
 await page.waitForTimeout(900);
