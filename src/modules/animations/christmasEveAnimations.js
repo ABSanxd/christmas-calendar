@@ -18,21 +18,13 @@ export function playChristmasEveScene(overlay, options = {}) {
 
   const backdrop = overlay.querySelector('.christmas-eve__backdrop');
   const panel = overlay.querySelector('.christmas-eve__panel');
-  const stars = overlay.querySelectorAll('.eve-star');
-  const angelsGroup = overlay.querySelector('#eve-angels');
-  const angels = overlay.querySelectorAll('.eve-angel-fly');
-  const banner = overlay.querySelector('.eve-banner');
-  const babyGlow = overlay.querySelector('.eve-baby-glow');
-  const stable = overlay.querySelector('#eve-stable');
+  const photo = overlay.querySelector('.christmas-eve__photo-frame');
   const content = overlay.querySelector('.christmas-eve__content');
   const actions = overlay.querySelector('.christmas-eve__actions');
 
   if (instant) {
-    gsap.set([backdrop, panel, banner, content, actions], { opacity: 1 });
-    gsap.set(stars, { opacity: 0.8 });
-    gsap.set(angelsGroup, { opacity: 1 });
-    gsap.set(angels, { x: 0, y: 0 });
-    gsap.set(stable, { opacity: 1 });
+    gsap.set([backdrop, panel, content, actions], { opacity: 1 });
+    if (photo) gsap.set(photo, { opacity: 1, scale: 1 });
     return gsap.timeline();
   }
 
@@ -46,47 +38,14 @@ export function playChristmasEveScene(overlay, options = {}) {
       { opacity: 1, scale: 1, y: 0, duration: 0.9, ease: 'power3.out' },
       '<',
     )
-    // Las estrellas empiezan a brillar.
-    .to(
-      stars,
-      { opacity: 0.85, duration: 0.9, stagger: 0.012, ease: 'power1.inOut' },
-      '-=0.2',
-    )
-    // Los ángeles entran volando.
-    .fromTo(angelsGroup, { opacity: 0 }, { opacity: 1, duration: 0.4 }, '-=0.35')
+    // La imagen del nacimiento aparece con un leve acercamiento.
     .fromTo(
-      angels,
-      { y: -120, x: (index) => (index === 0 ? -140 : index === 2 ? 140 : 0) },
-      {
-        y: 0,
-        x: 0,
-        duration: 1.2,
-        stagger: 0.16,
-        ease: 'power2.out',
-      },
-      '<',
+      photo,
+      { opacity: 0, scale: 1.04 },
+      { opacity: 1, scale: 1, duration: 0.9, ease: 'power2.out' },
+      '-=0.4',
     )
-    // El cartel se despliega.
-    .fromTo(
-      banner,
-      { opacity: 0, scaleX: 0.1, transformOrigin: '50% 50%' },
-      { opacity: 1, scaleX: 1, duration: 0.75, ease: 'power3.out' },
-      '-=0.55',
-    )
-    // El pesebre se ilumina.
-    .fromTo(
-      stable,
-      { opacity: 0.2 },
-      { opacity: 1, duration: 0.9, ease: 'power2.inOut' },
-      '-=0.3',
-    )
-    .fromTo(
-      babyGlow,
-      { scale: 0.4, transformOrigin: '50% 50%' },
-      { scale: 1, duration: 1.1, ease: 'power2.out' },
-      '<0.2',
-    )
-    // El texto llega al final, pero los botones están disponibles desde el principio.
+    // El texto llega después, pero los botones están disponibles desde el principio.
     .fromTo(
       content,
       { opacity: 0, y: 26 },
