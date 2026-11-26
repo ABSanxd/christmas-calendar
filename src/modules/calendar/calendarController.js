@@ -31,8 +31,8 @@ import {
 } from '../activities/activityController.js';
 import { showToast } from '../../components/interface/Toast.js';
 import { toggleSound, isSoundEnabled, initAudioController } from '../audio/audioController.js';
+import { initBackgroundMusic, syncBackgroundMusic } from '../audio/backgroundMusic.js';
 import { animateSceneEntrance } from '../animations/calendarAnimations.js';
-import { CONFIG } from '../../data/configuration.js';
 
 /** Referencias de la interfaz ya renderizadas. */
 let ui = null;
@@ -58,29 +58,6 @@ function refreshCalendar() {
 }
 
 /**
- * Desplaza la vista hasta la casilla del día de hoy.
- */
-function goToToday() {
-  const { dateKey } = getToday();
-  const day = getDateKeyFromDay(1);
-  let target = 1;
-  for (let candidate = CONFIG.totalDays; candidate >= 1; candidate -= 1) {
-    if (dateKey >= getDateKeyFromDay(candidate)) {
-      target = candidate;
-      break;
-    }
-  }
-  void day;
-
-  const marker = ui?.calendar.getMarker(target);
-  if (marker) {
-    marker.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    marker.classList.add('is-highlighted');
-    window.setTimeout(() => marker.classList.remove('is-highlighted'), 1800);
-  }
-}
-
-/**
  * Refleja el estado del sonido en el botón de la cabecera.
  */
 function updateSoundButton() {
@@ -99,6 +76,7 @@ export function initCalendarController() {
   if (!container) return;
 
   initAudioController();
+  initBackgroundMusic();
 
   ui = renderApplication({
     container,
@@ -120,10 +98,10 @@ export function initCalendarController() {
 
   bindCalendarEvents({
     actions: ui.actions,
-    onToday: goToToday,
     onToggleSound: () => {
       toggleSound(!isSoundEnabled());
       updateSoundButton();
+      syncBackgroundMusic();
     },
     onReflections: () => openReflectionsList(),
     onProgress: refreshCalendar,

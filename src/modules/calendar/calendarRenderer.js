@@ -72,7 +72,6 @@ export function renderApplication(options) {
 
   const actions = createElement('nav', { class: 'app-header__actions', 'aria-label': 'Opciones' });
   const actionButtons = [
-    { action: 'today', icon: 'sun', label: 'Ir al día de hoy' },
     { action: 'sound', icon: 'music', label: 'Activar o desactivar el sonido' },
     { action: 'reflections', icon: 'candle', label: 'Reflexiones de los domingos de Adviento' },
   ];

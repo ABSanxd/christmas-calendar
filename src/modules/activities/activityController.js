@@ -19,6 +19,7 @@ import {
   checkActivityCompleted,
 } from '../progress/progressController.js';
 import { playSound } from '../audio/audioController.js';
+import { pauseBackgroundMusic, resumeBackgroundMusic } from '../audio/backgroundMusic.js';
 import { celebrateCompletion, animateDayDiscovery } from '../animations/calendarAnimations.js';
 import { playChristmasEveScene } from '../animations/christmasEveAnimations.js';
 
@@ -78,9 +79,17 @@ export function openDayActivity(dayNumber) {
     }
   }
 
+  // En los días musicales la música de fondo se apaga: el visitante va a
+  // escuchar la canción con detalle y no tiene que competir con el fondo.
+  const musical = day.type === 'music';
+  if (musical) pauseBackgroundMusic();
+
   const { modal } = createActivityModal({
     day,
     completed: checkActivityCompleted(dayNumber),
+    onClose: () => {
+      if (musical) resumeBackgroundMusic();
+    },
     onComplete: (data) => {
       if (!getActivityDefinition(day.type)) return;
       if (!validateActivityData(day.type, data).valid) return;

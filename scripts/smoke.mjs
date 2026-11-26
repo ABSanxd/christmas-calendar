@@ -24,10 +24,20 @@ const context = await browser.newContext({ viewport: { width: 1440, height: 1000
 const page = await context.newPage();
 
 const errors = [];
+/**
+ * Avisos que lanza el propio reproductor de YouTube (no son del proyecto):
+ * el API envía mensajes con su propio origen y crea un contexto de audio.
+ */
+const THIRD_PARTY = [
+  /powerPreference option is currently ignored/,
+  /target origin provided \('https:\/\/www\.youtube\.com'\)/,
+];
+
 page.on('console', (message) => {
-  if (message.type() === 'error' || message.type() === 'warning') {
-    errors.push(`[${message.type()}] ${message.text()}`);
-  }
+  if (message.type() !== 'error' && message.type() !== 'warning') return;
+  const text = message.text();
+  if (THIRD_PARTY.some((pattern) => pattern.test(text))) return;
+  errors.push(`[${message.type()}] ${text}`);
 });
 page.on('pageerror', (error) => errors.push(`[pageerror] ${error.message}`));
 

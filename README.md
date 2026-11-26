@@ -152,9 +152,13 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
   porcentaje.
 - Sonido con un solo botón en la cabecera, y un mensaje de Adviento en el pie
   sobre el progreso guardado.
+- **Música de fondo** con dos villancicos en bucle y muy bajito, que arranca
+  con la primera interacción del visitante y se apaga sola en los días
+  musicales (7 y 19) para no competir con la canción.
 - Reinicio del progreso con doble confirmación.
 - Funciona sin conexión (service worker) y se puede instalar como PWA.
-- Sin audio externo: todos los sonidos se sintetizan con la Web Audio API.
+- Los efectos de sonido se sintetizan con la Web Audio API (sin archivos
+  externos); la música de fondo es la única excepción, y viene de YouTube.
 - Respeta automáticamente la preferencia de **movimiento reducido** del sistema.
 - **Sin notificaciones**: GitHub Pages no puede avisar con el navegador cerrado,
   así que la función se retiró en lugar de prometer algo que no ocurre.
@@ -272,6 +276,9 @@ calendario-navideño/
 │   ├── check-sundays.mjs         Comprueba las velas de los cuatro domingos
 │   ├── check-reflections.mjs     Comprueba las reflexiones por domingo
 │   ├── check-days.mjs            Revisa los primeros días y sus actividades
+│   ├── check-days.mjs            Revisa los primeros días y sus actividades
+│   ├── check-mobile.mjs          Comprueba la vista en celular
+│   ├── check-music.mjs           Comprueba la música de fondo
 │   ├── export-og.mjs             Genera la imagen para redes sociales
 │   ├── smoke.mjs                 Prueba funcional en un navegador real
 │   ├── verify-advent.mjs         Capturas de la ceremonia de Adviento
@@ -299,7 +306,7 @@ calendario-navideño/
 │   │   ├── activities/           Registro, validación y controlador
 │   │   ├── advent/               Estado, plan, ceremonia y cursor de fósforo
 │   │   ├── animations/           GSAP: velas, ceremonia, casillas, Nochebuena
-│   │   ├── audio/                Síntesis y control del sonido
+│   │   ├── audio/                Síntesis, control del sonido y música de fondo
 │   │   ├── calendar/             Render, eventos y controlador del calendario
 │   │   └── progress/             Estado, persistencia y control del progreso
 │   ├── services/                 Acceso a servicios del navegador
@@ -377,6 +384,7 @@ calendario-navideño/
 | `animations/christmasEveAnimations.js` | Secuencia completa de Nochebuena. |
 | `audio/audioService.js` | Síntesis con la Web Audio API: campanillas, destellos y melodía. |
 | `audio/audioController.js` | Preferencias de sonido y catálogo de efectos. |
+| `audio/backgroundMusic.js` | Música de fondo: reproductor de YouTube en bucle, a volumen bajo y en pausa durante los días musicales. |
 
 ### `src/components/`
 
@@ -887,6 +895,12 @@ volver a verla, borra esa fecha del apartado y recarga la página (ver
 El sonido no se reproduce automáticamente: hace falta un primer clic o
 pulsación en la página (los navegadores lo exigen). Comprueba también que el
 icono de la cabecera no esté apagado y que el sistema no esté en silencio.
+
+**La música de fondo no suena.**
+Necesita lo mismo que el resto: un primer toque en la página. Si sigue sin
+sonar, revisa la conexión (viene de YouTube) y que el botón de sonido de la
+cabecera esté encendido. En los días 7 y 19 se apaga sola mientras se ve el
+vídeo.
 
 
 
