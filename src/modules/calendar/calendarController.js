@@ -59,6 +59,9 @@ function refreshCalendar() {
 
 /**
  * Refleja el estado del sonido en el botón de la cabecera.
+ *
+ * El texto del botón y el de su tooltip cambian con el estado: así el
+ * visitante sabe si lo que va a pasar es apagar o encender la música.
  */
 function updateSoundButton() {
   const button = ui?.actions?.querySelector('[data-action="sound"]');
@@ -66,6 +69,11 @@ function updateSoundButton() {
   const enabled = isSoundEnabled();
   button.setAttribute('aria-pressed', String(enabled));
   button.classList.toggle('is-muted', !enabled);
+
+  const label = enabled ? 'Apagar música' : 'Activar música';
+  button.setAttribute('aria-label', label);
+  const tip = button.querySelector('.icon-button__tip');
+  if (tip) tip.textContent = label;
 }
 
 /**

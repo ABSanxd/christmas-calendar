@@ -72,13 +72,23 @@ export function renderApplication(options) {
 
   const actions = createElement('nav', { class: 'app-header__actions', 'aria-label': 'Opciones' });
   const actionButtons = [
-    { action: 'sound', icon: 'music', label: 'Activar o desactivar el sonido' },
-    { action: 'reflections', icon: 'candle', label: 'Reflexiones de los domingos de Adviento' },
+    {
+      action: 'sound',
+      icon: 'music',
+      label: 'Apagar música',
+      tip: 'Apagar música',
+    },
+    {
+      action: 'reflections',
+      icon: 'candle',
+      label: 'Ver reflexiones de Adviento',
+      tip: 'Ver reflexiones de Adviento',
+    },
   ];
 
   const actionElements = {};
 
-  actionButtons.forEach(({ action, icon, label }) => {
+  actionButtons.forEach(({ action, icon, label, tip }) => {
     const button = createElement('button', {
       type: 'button',
       class: 'icon-button',
@@ -87,6 +97,17 @@ export function renderApplication(options) {
     });
     if (action === 'sound') button.setAttribute('aria-pressed', 'true');
     button.appendChild(createIcon(icon));
+
+    // El texto que explica qué hace el botón. Va oculto a los lectores de
+    // pantalla porque el botón ya tiene su `aria-label`.
+    const tooltip = createElement('span', {
+      class: 'icon-button__tip',
+      role: 'tooltip',
+      'aria-hidden': 'true',
+    });
+    tooltip.textContent = tip;
+    button.appendChild(tooltip);
+
     actions.appendChild(button);
     actionElements[action] = button;
   });

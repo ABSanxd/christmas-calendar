@@ -11,8 +11,13 @@
  * como data URI en cada momento.
  */
 
-/** Punto caliente: la cabeza del fósforo, donde está la llama. */
-const HOTSPOT = { x: 23, y: 12 };
+/**
+ * Punto caliente: la cabeza del fósforo, donde está la llama.
+ *
+ * El fósforo está **inclinado hacia la izquierda**: la cabeza queda en la
+ * parte alta izquierda y el palo baja hacia la derecha.
+ */
+const HOTSPOT = { x: 9, y: 12 };
 
 /**
  * Dibuja el fósforo.
@@ -22,16 +27,16 @@ const HOTSPOT = { x: 23, y: 12 };
  */
 function buildMatchSvg(lit) {
   const flame = lit
-    ? `<path d="M23 0 C 29 7 30 14 25 18 C 20 22 16 15 18.5 9.5 C 19.8 6.5 21.5 3.5 23 0 Z" fill="#ffd27a"/>
-       <path d="M23 6 C 25.4 9.4 25.4 13.4 23 15.6 C 20.8 17.4 20 13.4 21 10.4 Z" fill="#fff6d2"/>`
+    ? `<path d="M9 0 C 3 7 2 14 7 18 C 12 22 16 15 13.5 9.5 C 12.2 6.5 10.5 3.5 9 0 Z" fill="#ffd27a"/>
+       <path d="M9 6 C 6.6 9.4 6.6 13.4 9 15.6 C 11.2 17.4 12 13.4 11 10.4 Z" fill="#fff6d2"/>`
     : '';
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="48" viewBox="0 0 32 48">
     ${flame}
-    <path d="M9 45 L21 20" stroke="#c8a06a" stroke-width="5" stroke-linecap="round"/>
-    <path d="M9 45 L21 20" stroke="#8d6a3f" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>
-    <ellipse cx="23" cy="13" rx="7" ry="8" fill="#b8492f"/>
-    <ellipse cx="20.8" cy="10" rx="3" ry="3.4" fill="#d9684a" opacity="0.75"/>
+    <path d="M23 45 L11 20" stroke="#c8a06a" stroke-width="5" stroke-linecap="round"/>
+    <path d="M23 45 L11 20" stroke="#8d6a3f" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>
+    <ellipse cx="9" cy="13" rx="7" ry="8" fill="#b8492f"/>
+    <ellipse cx="11.2" cy="10" rx="3" ry="3.4" fill="#d9684a" opacity="0.75"/>
   </svg>`;
 }
 

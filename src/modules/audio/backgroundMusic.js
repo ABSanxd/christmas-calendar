@@ -7,8 +7,10 @@
  * va a escuchar la canción con detalle, y vuelven a sonar al cerrarlos.
  *
  * El reproductor es un iframe de YouTube escondido: no se ve, pero se oye.
- * El navegador no deja reproducir sonido sin una interacción previa, así que
- * la música arranca con el primer toque o la primera tecla del visitante.
+ * El reproductor nace con `autoplay` activado, de modo que la música empieza
+ * en cuanto la página carga en los navegadores que lo permiten. Donde el
+ * navegador exige una interacción previa, el primer toque o la primera tecla
+ * la pone en marcha sin que el visitante tenga que buscar ningún botón.
  */
 
 import { isAudioEnabled } from './audioService.js';
@@ -24,10 +26,12 @@ const VOLUME = 12;
 let apiPromise = null;
 let player = null;
 let container = null;
-/** El visitante ya ha interactuado con la página: ya se puede reproducir. */
-let interacted = false;
+/** El reproductor ya está listo para recibir órdenes. */
+let ready = false;
 /** Hay un día musical abierto: el fondo espera. */
 let waiting = false;
+/** El visitante ha apagado el sonido desde la cabecera. */
+let soundOn = true;
 
 /**
  * Carga el API de YouTube una sola vez.
@@ -59,6 +63,27 @@ function loadYouTubeApi() {
 }
 
 /**
+ * Dirección del reproductor con la reproducción automática activada.
+ * @returns {string}
+ */
+function buildEmbedUrl() {
+  const params = new URLSearchParams({
+    autoplay: '1',
+    enablejsapi: '1',
+    loop: '1',
+    playlist: TRACKS.join(','),
+    controls: '0',
+    disablekb: '1',
+    fs: '0',
+    modestbranding: '1',
+    playsinline: '1',
+    rel: '0',
+  });
+
+  return `https://www.youtube.com/embed/${TRACKS[0]}?${params.toString()}`;
+}
+
+/**
  * Crea el contenedor invisible del reproductor.
  *
  * El iframe se crea a mano (y no con el API) para poder darle directamente
@@ -77,8 +102,9 @@ function createContainer() {
     <iframe
       class="background-music__frame"
       title="Música de fondo del calendario"
-      src="https://www.youtube.com/embed/${TRACKS[0]}?enablejsapi=1&loop=1&playlist=${TRACKS.join(',')}&controls=0&disablekb=1&fs=0&modestbranding=1&playsinline=1"
+      src="${buildEmbedUrl()}"
       allow="autoplay; encrypted-media; picture-in-picture"
+      tabindex="-1"
       allowfullscreen></iframe>`;
 
   document.body.appendChild(container);
@@ -102,6 +128,7 @@ function preparePlayer(onReady) {
       player = new YT.Player(container.querySelector('iframe'), {
         videoId: TRACKS[0],
         playerVars: {
+          autoplay: 1,
           playlist: TRACKS.join(','),
           list: TRACKS.join(','),
           loop: 1,
@@ -110,12 +137,15 @@ function preparePlayer(onReady) {
           fs: 0,
           modestbranding: 1,
           playsinline: 1,
+          rel: 0,
         },
         events: {
           onReady: (event) => {
             event.target.setVolume(VOLUME);
+            ready = true;
             if (import.meta.env.DEV) window.__backgroundMusic = event.target;
             onReady?.();
+            applyState();
           },
         },
       });
@@ -127,15 +157,28 @@ function preparePlayer(onReady) {
 }
 
 /**
- * Arranca la música de fondo (tras la primera interacción del visitante).
+ * Traduce el estado actual a una orden para el reproductor.
+ *
+ * Suena cuando no hay ningún día musical abierto y el visitante no ha apagado
+ * el sonido; en cualquier otro caso, calla.
+ */
+function applyState() {
+  if (!player || !ready) return;
+
+  if (waiting || !soundOn) {
+    player.pauseVideo();
+    return;
+  }
+
+  player.setVolume(VOLUME);
+  player.playVideo();
+}
+
+/**
+ * Arranca la música de fondo.
  */
 export function startBackgroundMusic() {
-  interacted = true;
-  preparePlayer(() => {
-    if (!player || waiting || !isAudioEnabled()) return;
-    player.setVolume(VOLUME);
-    player.playVideo();
-  });
+  preparePlayer(() => applyState());
 }
 
 /**
@@ -143,11 +186,7 @@ export function startBackgroundMusic() {
  */
 export function pauseBackgroundMusic() {
   waiting = true;
-  try {
-    player?.pauseVideo();
-  } catch {
-    /* Todavía no hay reproductor: no hay nada que pausar. */
-  }
+  applyState();
 }
 
 /**
@@ -155,28 +194,27 @@ export function pauseBackgroundMusic() {
  */
 export function resumeBackgroundMusic() {
   waiting = false;
-  if (!player || !interacted || !isAudioEnabled()) return;
-  player.setVolume(VOLUME);
-  player.playVideo();
+  applyState();
 }
 
 /**
  * Sincroniza el fondo con el estado del sonido de la interfaz.
  */
 export function syncBackgroundMusic() {
-  if (!player) return;
-  if (waiting || !isAudioEnabled()) {
-    player.pauseVideo();
-    return;
-  }
-  if (interacted) player.playVideo();
+  soundOn = isAudioEnabled();
+  applyState();
 }
 
 /**
  * Prepara el fondo y lo arranca con la primera interacción.
+ *
+ * La música ya nace sonando por sí sola (`autoplay`); este paso solo está
+ * para los navegadores que no lo permiten hasta que el visitante toca algo.
  */
 export function initBackgroundMusic() {
+  soundOn = isAudioEnabled();
   preparePlayer();
+
   const start = () => startBackgroundMusic();
   document.addEventListener('pointerdown', start, { once: true });
   document.addEventListener('keydown', start, { once: true });

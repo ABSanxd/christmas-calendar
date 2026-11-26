@@ -2,25 +2,25 @@
 
 **24 días para preparar el corazón y recibir a Jesús.**
 
-Experiencia web interactiva de Adviento y Navidad para una comunidad católica:
-una aldea de Belén ilustrada, 24 puertas que se abren día a día, una corona de
-Adviento que se enciende cada domingo, actividades para solos o en familia y
-una celebración especial de Nochebuena.
+Soy **Boyi**, soy católica y amo la Navidad: amo el nacimiento de Jesús, porque
+amo a Jesús. De ahí nace este proyecto: una **experiencia web interactiva de
+Adviento y Navidad** para una comunidad cristiana — una aldea de Belén
+ilustrada, 24 puertas que se abren día a día, una corona de Adviento que se
+enciende cada domingo y actividades personales o en familia.
 
 Es una **aplicación web estática**: no hay backend, ni base de datos, ni
 registros de usuarios, ni servicios externos. Todo el progreso se guarda en el
-navegador del visitante.
+navegador del visitante. Es, en el fondo, **algo visual**: una pequeña Belén
+que se abre puerta a puerta, para vivir la espera de la Navidad.
 
----
-
-## 🌐 Versión publicada
-
-**https://absanxd.github.io/christmas-calendar/**
-
-Repositorio: https://github.com/ABSanxd/christmas-calendar
-
-Cada `git push` a `main` recompila y vuelve a publicar el sitio
-automáticamente mediante GitHub Actions.
+> ### ➡️ [Abre el calendario y empieza el Adviento](https://absanxd.github.io/christmas-calendar/)
+>
+> **https://absanxd.github.io/christmas-calendar/**
+>
+> Código: https://github.com/ABSanxd/christmas-calendar
+>
+> Cada `git push` a `main` recompila y vuelve a publicar el sitio
+> automáticamente mediante GitHub Actions.
 
 ---
 
@@ -30,24 +30,11 @@ automáticamente mediante GitHub Actions.
 2. [Objetivo](#2-objetivo)
 3. [Características principales](#3-características-principales)
 4. [Tecnologías utilizadas](#4-tecnologías-utilizadas)
-5. [Requisitos previos](#5-requisitos-previos)
-6. [Instalación](#6-instalación)
-7. [Ejecución en desarrollo](#7-ejecución-en-desarrollo)
-8. [Compilación para producción](#8-compilación-para-producción)
-9. [Estructura de carpetas](#9-estructura-de-carpetas)
-10. [Descripción de cada módulo](#10-descripción-de-cada-módulo)
-11. [Funcionamiento del desbloqueo por fechas](#11-funcionamiento-del-desbloqueo-por-fechas)
-12. [Funcionamiento del almacenamiento local](#12-funcionamiento-del-almacenamiento-local)
-13. [Funcionamiento de la corona de Adviento](#13-funcionamiento-de-la-corona-de-adviento)
-14. [Configuración de las animaciones](#14-configuración-de-las-animaciones)
-15. [Cómo agregar o modificar actividades](#15-cómo-agregar-o-modificar-actividades)
-16. [Cómo agregar nuevos versículos y reflexiones](#16-cómo-agregar-nuevos-versículos-y-reflexiones)
-17. [Configuración de las notificaciones](#17-configuración-de-las-notificaciones)
-18. [Limitaciones técnicas](#18-limitaciones-técnicas)
-19. [Despliegue en GitHub Pages](#19-despliegue-en-github-pages)
-20. [Cómo actualizar el proyecto](#20-cómo-actualizar-el-proyecto)
-21. [Solución de problemas frecuentes](#21-solución-de-problemas-frecuentes)
-22. [Verificación y pruebas](#22-verificación-y-pruebas)
+5. [Cómo ejecutarlo](#5-cómo-ejecutarlo)
+6. [Estructura de carpetas](#6-estructura-de-carpetas)
+7. [Cómo está hecho](#7-cómo-está-hecho)
+8. [Cómo personalizar el contenido](#8-cómo-personalizar-el-contenido)
+9. [Comprobaciones](#9-comprobaciones)
 
 ---
 
@@ -97,15 +84,16 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
 - Controles de hover, foco de teclado y estados de rechazo al intentar abrir
   una casilla bloqueada.
 - Las preguntas de una sola respuesta se pueden **deseleccionar** pulsando
-  otra vez la opción marcada, para poderarse rectificar antes de completar
-  el día. Un día ya completado se puede volver a abrir y **actualizar**.
+  otra vez la opción marcada, para poder rectificar antes de completar el día.
+  Un día ya completado se puede volver a abrir y **actualizar**.
 
 ### Corona de Adviento
 
 - Corona SVG permanente en la **esquina superior derecha**, junto a la fecha y
   al título, con cuatro velas: morada, morada, **rosa (Gaudete)** y morada.
 - El domingo de Adviento la corona **salta al centro de la pantalla**, el
-  fondo se oscurece y el puntero del mouse se convierte en un **fósforo**.
+  fondo se oscurece y el puntero del mouse se convierte en un **fósforo**
+  (inclinado hacia la izquierda, como el de verdad).
 - La vela pendiente late suavemente, con un halo dorado y el mensaje «✧ Toca
   para encender la *n* velita». **El usuario es quien la enciende**: en
   ordenador, acercando el fósforo y haciendo clic; en el teléfono, con un
@@ -116,8 +104,9 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
   domingo**: el Evangelio del día, una reflexión breve y el significado de la
   vela.
 - Las reflexiones se pueden volver a leer desde el botón de la cabecera (junto
-  al del sonido). Se habilitan por domingo: en el segundo domingo de Adviento
-  se leen la del primero y la del propio segundo.
+  al del sonido, ambos con un tooltip que explica qué hacen). Se habilitan por
+  domingo: en el segundo domingo de Adviento se leen la del primero y la del
+  propio segundo.
 - Si el visitante ya hizo la ceremonia, la corona se queda en su esquina con
   las velas correctas y no se repite.
 
@@ -150,18 +139,18 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
 - Indicador de progreso: una franja fina justo debajo de la cabecera con la
   barrita, el recuento de casillas descubiertas y actividades realizadas, y el
   porcentaje.
-- Sonido con un solo botón en la cabecera, y un mensaje de Adviento en el pie
+- Sonido con un solo botón en la cabecera (con un tooltip que dice si lo que
+  va a pasar es apagar o activar la música), y un mensaje de Adviento en el pie
   sobre el progreso guardado.
-- **Música de fondo** con dos villancicos en bucle y muy bajito, que arranca
-  con la primera interacción del visitante y se apaga sola en los días
-  musicales (7 y 19) para no competir con la canción.
+- **Música de fondo** con dos villancicos en bucle y muy bajito, que **arranca
+  sola en cuanto entra el visitante** y se apaga sola en los días musicales
+  (7 y 19) para no competir con la canción; al salir de ellos, vuelve a sonar.
 - Reinicio del progreso con doble confirmación.
 - Funciona sin conexión (service worker) y se puede instalar como PWA.
 - Los efectos de sonido se sintetizan con la Web Audio API (sin archivos
-  externos); la música de fondo es la única excepción, y viene de YouTube.
+  externos); los únicos contenidos que vienen de un tercero son la música de
+  fondo y el villancico del día 7, ambos de YouTube.
 - Respeta automáticamente la preferencia de **movimiento reducido** del sistema.
-- **Sin notificaciones**: GitHub Pages no puede avisar con el navegador cerrado,
-  así que la función se retiró en lugar de prometer algo que no ocurre.
 
 ## 4. Tecnologías utilizadas
 
@@ -176,7 +165,9 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
 No se usa React, ni backend, ni Firebase, ni bases de datos, ni autenticación,
 ni servicios que requieran registro de usuarios.
 
-## 5. Requisitos previos
+## 5. Cómo ejecutarlo
+
+### Requisitos previos
 
 - **Node.js 18 o superior** (probado con Node 20 y 24).
 - **npm 9 o superior** (viene con Node).
@@ -184,7 +175,7 @@ ni servicios que requieran registro de usuarios.
 
 > No hace falta servidor de aplicaciones: la versión compilada es estática.
 
-## 6. Instalación
+### Instalación
 
 ```bash
 npm install
@@ -192,7 +183,7 @@ npm install
 
 Esto instala Vite y GSAP en `node_modules/`.
 
-## 7. Ejecución en desarrollo
+### Desarrollo
 
 ```bash
 npm run dev
@@ -202,8 +193,8 @@ Abre `http://localhost:5173/`.
 
 ### Simular una fecha (solo desarrollo)
 
-Para probar cualquier día del Adviento sin esperar, añade el parámetro
-`fecha` a la URL:
+Para probar cualquier día del Adviento sin esperar, añade el parámetro `fecha`
+a la URL:
 
 ```
 http://localhost:5173/?fecha=2026-12-13        # tercer domingo (Gaudete)
@@ -236,27 +227,18 @@ localStorage.removeItem('calendario-navideno-state');
 location.reload();
 ```
 
-## 8. Compilación para producción
+### Compilar para producción
 
 ```bash
-npm run build
+npm run build     # compila en dist/
+npm run preview   # sirve dist/ en http://localhost:4173/
 ```
-
-Genera la carpeta `dist/` con todo el sitio estático.
-
-Para comprobar la compilación tal como se publicará:
-
-```bash
-npm run preview
-```
-
-Abre `http://localhost:4173/`.
 
 El comando `build` ejecuta antes `npm run check`, que valida que todas las
 claves de `CONFIG` y `SCENE_COLORS` usadas en el código existen (evita colores
 o fechas que se queden sin definir).
 
-## 9. Estructura de carpetas
+## 6. Estructura de carpetas
 
 ```text
 calendario-navideño/
@@ -264,26 +246,12 @@ calendario-navideño/
 │   └── workflows/deploy.yml      Despliegue automático en GitHub Pages
 ├── public/
 │   ├── assets/
-│   │   ├── audio/                (sin archivos: el audio se sintetiza)
-│   │   ├── fonts/                (sin archivos: tipografías del sistema)
-│   │   ├── images/
-│   │   │   └── og-calendario.jpg Imagen para redes sociales
+│   │   └── images/
+│   │       └── nacimiento.jpg     Foto opcional del día 24
 │   ├── favicon.svg
 │   ├── manifest.webmanifest      Datos de la PWA
 │   └── sw.js                     Service worker (caché sin conexión)
-├── scripts/
-│   ├── check-config.mjs          Valida CONFIG y SCENE_COLORS
-│   ├── check-sundays.mjs         Comprueba las velas de los cuatro domingos
-│   ├── check-reflections.mjs     Comprueba las reflexiones por domingo
-│   ├── check-days.mjs            Revisa los primeros días y sus actividades
-│   ├── check-days.mjs            Revisa los primeros días y sus actividades
-│   ├── check-mobile.mjs          Comprueba la vista en celular
-│   ├── check-music.mjs           Comprueba la música de fondo
-│   ├── export-og.mjs             Genera la imagen para redes sociales
-│   ├── smoke.mjs                 Prueba funcional en un navegador real
-│   ├── verify-advent.mjs         Capturas de la ceremonia de Adviento
-│   ├── shots.mjs                 Capturas de pantalla para revisión visual
-│   └── shot-shepherds.mjs        Recortes de los pastores para revisar el dibujo
+├── scripts/                      Comprobaciones y capturas (ver sección 9)
 ├── src/
 │   ├── components/               Elementos visuales reutilizables
 │   │   ├── activities/           Una pieza por tipo de actividad
@@ -294,27 +262,9 @@ calendario-navideño/
 │   │   ├── common/               Catálogo de iconos
 │   │   └── interface/            Modal, avisos y escena de Nochebuena
 │   ├── data/                     Contenido y configuración (editable sin tocar lógica)
-│   │   ├── activities.js         Metadatos de cada tipo de actividad
-│   │   ├── adventDates.js        Fechas de los domingos de Adviento
-│   │   ├── adventDays.js         Contenido de los 24 días
-│   │   ├── adventReflections.js  Reflexión, Evangelio y vela de cada domingo
-│   │   ├── bibleVerses.js        Versículos con su referencia
-│   │   ├── configuration.js      Fechas, paleta, mensajes y claves
-│   │   ├── prayers.js            Oraciones
-│   │   └── sceneLayout.js        Posición de las 24 casillas en la escena
 │   ├── modules/                  Lógica funcional de cada sección
-│   │   ├── activities/           Registro, validación y controlador
-│   │   ├── advent/               Estado, plan, ceremonia y cursor de fósforo
-│   │   ├── animations/           GSAP: velas, ceremonia, casillas, Nochebuena
-│   │   ├── audio/                Síntesis, control del sonido y música de fondo
-│   │   ├── calendar/             Render, eventos y controlador del calendario
-│   │   └── progress/             Estado, persistencia y control del progreso
 │   ├── services/                 Acceso a servicios del navegador
-│   │   ├── dateService.js        Fecha en America/Lima y simulación de desarrollo
-│   │   ├── deviceService.js      Capacidades del navegador y dispositivo
-│   │   └── storageService.js     Acceso seguro a localStorage
 │   ├── styles/                   CSS organizado
-│   │   └── components/           Una hoja por bloque visual
 │   ├── utils/                    Funciones auxiliares puras
 │   ├── app.js                    Arranque de la aplicación
 │   └── main.js                   Punto de entrada y service worker
@@ -329,16 +279,14 @@ calendario-navideño/
 
 - `components/common/` contiene solo `Icon.js`: los botones se resuelven con
   HTML semántico y clases CSS compartidas, y no se crean componentes que solo
-  reexporten código.
+  reexportan código.
 - `modules/advent/adventDates.js` no duplica `data/adventDates.js`: el módulo
   combina los datos con el estado de la visita y devuelve el «plan del día».
 - Las ilustraciones viven como **componentes SVG en código** (para poder
   animarlas con GSAP) y se recolocan personaje a personaje. No hay copias
   estáticas en `public/` que se puedan quedar desactualizadas.
 
-## 10. Descripción de cada módulo
-
-### `src/data/`
+### `src/data/` — el contenido editable
 
 | Archivo | Contenido |
 | --- | --- |
@@ -350,15 +298,15 @@ calendario-navideño/
 | `prayers.js` | Oraciones breves de Adviento y Navidad. |
 | `sceneLayout.js` | Posición en el `viewBox` de las 24 casillas y su estilo. |
 
-### `src/services/`
+### `src/services/` — el acceso al navegador
 
 | Archivo | Responsabilidad |
 | --- | --- |
-| `dateService.js` | Obtiene la fecha de hoy en `America/Lima` con `Intl.DateTimeFormat`, compara claves `YYYY-MM-DD` y expone la simulación de desarrollo. |
+| `dateService.js` | Obtiene la fecha de hoy en `America/Lima` y expone la simulación de desarrollo. |
 | `storageService.js` | Lectura y escritura segura de `localStorage`, con control de cuota y de modo privado. |
 | `deviceService.js` | Capacidades: movimiento reducido, tipo de dispositivo, vibración. |
 
-### `src/modules/`
+### `src/modules/` — la lógica
 
 | Archivo | Responsabilidad |
 | --- | --- |
@@ -386,7 +334,7 @@ calendario-navideño/
 | `audio/audioController.js` | Preferencias de sonido y catálogo de efectos. |
 | `audio/backgroundMusic.js` | Música de fondo: reproductor de YouTube en bucle, a volumen bajo y en pausa durante los días musicales. |
 
-### `src/components/`
+### `src/components/` — la interfaz
 
 | Archivo | Responsabilidad |
 | --- | --- |
@@ -394,7 +342,7 @@ calendario-navideño/
 | `calendar/CalendarDay.js` | Una casilla: botón real, foco, estados y tooltip. |
 | `calendar/CalendarProgress.js` | Barra de progreso. |
 | `calendar/scene/*` | Capas de la ilustración: `SkyLayer`, `VillageLayer`, `NativityLayer`, `AngelsLayer`, `CharactersLayer`, `DayDoors` y `shapes.js` (formas reutilizables). |
-| `calendar/scene/characters/*` | Cada personaje es un componente independiente: `Angel`, `Mary`, `Joseph`, `BabyJesus`, `Magus`, `Camel`, `Shepherd`, `Sheep` y `Tree`. Se dibujan con el origen en su base, de modo que se pueden colocar y escalarlo con libertad. Los **pastores** siguen el mismo sistema de proporciones que María y José (cabeza ancha, ojos con brillo, túnica con pliegues, banda clara en el bajo y filete dorado), pero son **jóvenes y sin barba**, llevan la **manta echada sobre la cabeza** y un **cinturón con hebilla dorada**. El segundo pastor es el mismo dibujo en espejo con otra paleta. Los **Reyes Magos** van **de pie, en grupo** (verde, amarillo y rojo), con corona y barba, y llevan su regalo en las dos manos: un **cofre con oro**, una **copa de incienso** y una **copa de mirra**. Sus **camellos** van en fila, uno detrás de otro, con la **carga sobre la joroba**. |
+| `calendar/scene/characters/*` | Cada personaje es un componente independiente: `Angel`, `Mary`, `Joseph`, `BabyJesus`, `Magus`, `Camel`, `Shepherd`, `Sheep` y `Tree`. Se dibujan con el origen en su base, de modo que se pueden colocar y escalarlo con libertad. |
 | `advent/AdventWreath.js` | La corona completa, con sus variantes (esquina y ceremonia) y la vela pendiente resaltada. |
 | `advent/AdventCandle.js` | Una vela, con la llama como elemento animable independiente. |
 | `advent/AdventCeremony.js` | La capa de la ceremonia: corona grande, mensaje y vela que hay que encender. |
@@ -405,7 +353,9 @@ calendario-navideño/
 | `interface/ChristmasEveScene.js` | Escena especial del 24 de diciembre. |
 | `common/Icon.js` | Catálogo de iconos SVG. |
 
-## 11. Funcionamiento del desbloqueo por fechas
+## 7. Cómo está hecho
+
+### El desbloqueo por fechas
 
 La fecha de referencia **no es la del dispositivo**: se calcula siempre en la
 zona `America/Lima`, de modo que todos los miembros de la comunidad ven el
@@ -419,8 +369,6 @@ new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Lima', ... })
 
 y la devuelve como clave `YYYY-MM-DD`. Como ese formato mantiene el orden
 alfabético, las comparaciones son directas.
-
-Reglas implementadas:
 
 | Fecha de hoy | Casillas disponibles |
 | --- | --- |
@@ -447,7 +395,7 @@ Los tres estados visuales de una casilla:
 | Completada | Relleno rosa y marca `✓` | Se puede volver a consultar. |
 | Bloqueada | Apagada, rayada, sin marca | No deja abrir; muestra «Todavía no es tiempo de descubrir esta sorpresa». |
 
-## 12. Funcionamiento del almacenamiento local
+### El almacenamiento local
 
 Todo se guarda en **una sola clave** de `localStorage`:
 
@@ -486,19 +434,15 @@ Estructura versionada:
   corruptos o preferencias con tipos inesperados.
 - `storageService.js` captura los errores de lectura y escritura (cuota
   agotada, modo privado) para que la aplicación siga funcionando.
-- No hay botón de reinicio: el progreso es un recuerdo del Adviento y nunca
-  se borra por accidente. Para reutilizar el calendario en otro año basta con
-  cambiar `CONFIG.storageKey`.
 
-### Limitaciones que conviene conocer
+Dos cosas que conviene saber:
 
 - **El progreso no se sincroniza entre dispositivos ni entre navegadores.** Es
   una cuenta por navegador y por dispositivo, no una cuenta personal.
 - **Si borras los datos del navegador** (historial, cookies y datos de sitios),
-  el progreso se reinicia.
-- No hay copia de seguridad automática ni exportación del progreso.
+  el progreso se reinicia. No hay copia de seguridad automática ni exportación.
 
-## 13. Funcionamiento de la corona de Adviento
+### La corona de Adviento
 
 La corona vive en la **esquina superior derecha** del saludo (junto a la fecha
 y al título), en versión compacta, y comparte ilustración con la versión
@@ -533,9 +477,8 @@ velas encendidas de golpe, sin tener que ver las ceremonias perdidas.
 ### La ceremonia del domingo
 
 La rutina es **la misma para los cuatro domingos**: solo cambia cuál es la
-vela pendiente (la primera el 29 de noviembre, la segunda el 6 de diciembre,
-la tercera el 13 —la de Gaudete— y la cuarta el 20). Al empezar, las velas de
-los domingos anteriores ya aparecen encendidas.
+vela pendiente. Al empezar, las velas de los domingos anteriores ya aparecen
+encendidas.
 
 Se ejecuta en `modules/advent/adventCeremony.js`:
 
@@ -561,11 +504,9 @@ del mensaje, de modo que la ceremonia nunca deja el calendario bloqueado.
 ### La reflexión de cada domingo
 
 El contenido vive en `src/data/adventReflections.js`. Cada domingo tiene tres
-partes:
-
-1. **El Evangelio**: el texto litúrgico del día, con su referencia.
-2. **La reflexión**: una lectura breve del pasaje.
-3. **La vela**: qué significa la vela que se enciende ese domingo.
+partes: el **Evangelio** (el texto litúrgico del día, con su referencia), la
+**reflexión** (una lectura breve del pasaje) y la **vela** (qué significa la
+vela que se enciende ese domingo).
 
 | Domingo | Evangelio | Vela |
 | --- | --- | --- |
@@ -574,7 +515,7 @@ partes:
 | 3.º (13 dic) | Jn 1,6-8.19-28 | La vela del amor (rosa, Gaudete) |
 | 4.º (20 dic) | Lc 1,26-38 | La vela de la alegría: el gran día se acerca |
 
-## 14. Configuración de las animaciones
+### Las animaciones
 
 La ceremonia se apoya en un único sistema reutilizable para los cuatro
 domingos:
@@ -586,24 +527,13 @@ await runLightingCeremony({
 });
 ```
 
-Secuencia:
-
-1. La corona grande aparece en el centro mientras el fondo se oscurece.
-2. Las velas de los domingos anteriores quedan encendidas; la nueva, apagada
-   y latiendo.
-3. El usuario enciende la vela pendiente: la llama crece desde cero
-   (`back.out`), quedan chispas alrededor y aparece el mensaje del domingo.
-4. La corona regresa a su esquina con la vela ya encendida.
-
 La escena de Nochebuena (`christmasEveAnimations.js`) sigue el mismo criterio:
 noches que se aclaran, estrellas que brillan, ángeles que despliegan el cartel,
 el pesebre que se ilumina y el texto que llega al final.
 
-### Movimiento reducido
-
-El proyecto **respeta automáticamente** la preferencia de movimiento reducido
-del sistema operativo (`prefers-reduced-motion`), sin necesidad de tocar nada
-en la aplicación:
+**Movimiento reducido.** El proyecto **respeta automáticamente** la preferencia
+de movimiento reducido del sistema operativo (`prefers-reduced-motion`), sin
+necesidad de tocar nada en la aplicación:
 
 - En Windows: **Configuración → Accesibilidad → Efectos visuales → animaciones**.
 - En iOS/macOS: **Ajustes → Accesibilidad → Mostrar → Reducir movimiento**.
@@ -614,9 +544,7 @@ directamente** (sin el viaje al centro ni el regreso) y una regla CSS global
 anula animaciones y transiciones. El resto de la experiencia —incluido el
 fósforo y el mensaje para tocar la vela— se mantiene igual.
 
-Para el resto de los visitantes, las animaciones se muestran tal cual.
-
-## 15. Cómo agregar o modificar actividades
+## 8. Cómo personalizar el contenido
 
 ### Modificar el contenido de un día
 
@@ -670,14 +598,11 @@ Todo el contenido está en `src/data/adventDays.js`. Para cambiar el día 7:
 **El calendario, el modal y el controlador no necesitan ningún cambio**: el
 registro es el único punto de extensión.
 
-### Tipos disponibles
+Tipos disponibles: `reflection`, `purpose`, `prayer`, `challenge`,
+`challengeFamily`, `quiz`, `trivia`, `riddle`, `scramble`, `wordsearch`,
+`music`.
 
-`reflection`, `purpose`, `prayer`, `challenge`, `challengeFamily`, `quiz`,
-`trivia`, `riddle`, `scramble`, `wordsearch`, `music`.
-
-## 16. Cómo agregar nuevos versículos y reflexiones
-
-### Versículos
+### Añadir versículos
 
 En `src/data/bibleVerses.js`:
 
@@ -727,326 +652,26 @@ export const CONFIG = {
 ```
 
 Los domingos de Adviento están en `src/data/adventDates.js` y las posiciones
-de las casillas en `src/data/sceneLayout.js`.
-
-## 17. Notificaciones: por qué no las hay
-
-**El proyecto no incluye notificaciones, y es una decisión deliberada.**
-
-La Notification API del navegador solo puede mostrar avisos **mientras una
-página está abierta**. GitHub Pages es un hosting estático: no hay servidor
-que pueda programar un aviso ni enviar nada con el navegador cerrado.
-
-Eso significa que un "recordatorio diario" solo funcionaría si la persona
-tuviera el calendario abierto... justo cuando no lo necesita. Es decir: la
-función no cumpliría su propósito.
-
-Por eso, en lugar de incluir una función que no puede avisar, **se retiró
-completamente**:
-
-- No hay botón de recordatorios en la cabecera.
-- No hay ninguna opción de notificaciones en la interfaz.
-- No queda código de notificaciones en el proyecto.
-
-Si en el futuro el calendario se publicara en un alojamiento con backend
-(por ejemplo, una función serverless), el aviso "hay una casilla nueva" se
-podría implementar de verdad.
-
-## 18. Limitaciones técnicas
-
-- **Sin backend.** No hay sincronización, ni cuentas, ni estadísticas globales.
-  El progreso es local del navegador.
-- **Sin notificaciones**, porque no se pueden enviar con el navegador
-  cerrado (ver el apartado 17).
-- **Sin audio protegido.** Todos los efectos se sintetizan en el navegador, de
-  modo que no hay grabaciones de terceros ni problemas de licencia. La
-  melodía de *Noche de paz* (canon de dominio público) se reproduce sintetizada
-  y con la letra a la vista.
-- **Una única excepción: el villancico del día 7** se puede escuchar en YouTube
-  (Athenas, «Noche de paz»), con el reproductor incrustado. Es el único punto
-  del proyecto que carga algo de un tercero: si no hay conexión, el
-  reproductor avisa y queda la melodía sintetizada, que funciona sin internet.
-- **Fuentes del sistema.** No hay tipografías descargadas: el proyecto no
-  depende de la red para verse bien.
-- **Service worker.** Solo se registra en producción. Si publicas una versión
-  nueva, el service worker puede servir durante un rato la versión anterior;
-  la actualización se produce al recargar.
-- **Navegadores antiguos.** Se necesita soporte de ES Modules, `Intl`,
-  `aspect-ratio`, `container-type` y `backdrop-filter`. En navegadores sin
-  `container-type` las casillas usan el tamaño mínimo.
-- **Sin soporte sin JavaScript.** El calendario necesita JavaScript para
-  abrir las casillas, guardar el progreso y animar la corona; hay un aviso
-  `noscript` para quien lo desactive.
-
-## 19. Despliegue en GitHub Pages
-
-### 1. Crear el repositorio
-
-```bash
-git init
-git add .
-git commit -m "feat: calendario de adviento 2026"
-git branch -M main
-git remote add origin https://github.com/TU_USUARIO/calendario-navideño.git
-git push -u origin main
-```
-
-En GitHub, crea el repositorio con el nombre **`calendario-navideño`** y
-opción de repositorio público (GitHub Pages es gratis en repositorios
-públicos; en los privados hay que consultar el plan).
-
-### 2. Publicar
-
-El archivo `.github/workflows/deploy.yml` ya está preparado:
-
-1. `npm ci` y `npm run build`.
-2. Sube `dist/` como artefacto de Pages.
-3. Publica en GitHub Pages.
-
-En **Settings → Pages**, elige **Source: GitHub Actions**. Cada `push` a
-`main` despliega automáticamente.
-
-### 3. Verificar la URL
-
-Quedará disponible en:
-
-```text
-https://TU_USUARIO.github.io/calendario-navideño/
-```
-
-### Rutas y subcarpetas
-
-`vite.config.js` usa `base: './'`, de modo que **todas las rutas son
-relativas** y el proyecto funciona igual en la raíz de un dominio que dentro
-de una subruta de GitHub Pages, sin tocar la configuración.
-
-El service worker se registra con `import.meta.env.BASE_URL`, por lo que
-también funciona en la subruta.
-
-### Alternativa manual
-
-Si prefieres publicar sin GitHub Actions:
-
-```bash
-npm run build
-```
-
-y sube el contenido de `dist/` a la rama `gh-pages` (o a `main` en la
-configuración clásica), siempre desde la **carpeta `dist/`**.
-
-## 20. Cómo actualizar el proyecto
-
-1. Edita los archivos (sobre todo `src/data/`).
-2. Comprueba que la configuración es coherente:
-
-   ```bash
-   npm run check
-   ```
-
-3. Compila:
-
-   ```bash
-   npm run build
-   ```
-
-4. Sube los cambios:
-
-   ```bash
-   git add .
-   git commit -m "docs: actualiza el contenido del día 12"
-   git push
-   ```
-
-5. GitHub Actions publica la versión nueva automáticamente.
-
-### Actualizar el contenido de un día (caso habitual)
-
-Edita `src/data/adventDays.js`, ejecuta `npm run build` y sube el cambio. No
-hay que tocar ningún componente.
-
-### Cambiar el diseño de la ilustración
-
-- Las formas reutilizables están en `src/components/calendar/scene/shapes.js`.
-- Cada capa es un archivo independiente en `src/components/calendar/scene/`.
-- Cada personaje se puede ajustar por separado en
-  `src/components/calendar/scene/characters/`: cambia su dibujo sin tocar el
-  resto de la escena.
-- Si cambias la composición, revisa las posiciones de las casillas en
-  `src/data/sceneLayout.js`.
-
-## 21. Solución de problemas frecuentes
-
-**No se abre ninguna casilla.**
-Comprueba la fecha del sistema. El calendario sigue la zona `America/Lima`,
-que puede ir uno o dos días por delante o por detrás de tu reloj local. En
-desarrollo, prueba con `?fecha=2026-12-13`.
-
-**Las casillas salen diminutas en el móvil.**
-Por debajo de 720 px se oculta la capa de casillas de la ilustración y se
-muestra la retícula de puertas. Si ves las casillas pequeñas, comprueba que
-la ventana no está en modo escritorio con un ancho de móvil.
-
-**La ceremonia del domingo no vuelve a aparecer.**
-Cada domingo se recuerda en `localStorage` (`seenSundayAnimations`). Para
-volver a verla, borra esa fecha del apartado y recarga la página (ver
-«Simular una fecha»).
-
-**No suena nada.**
-El sonido no se reproduce automáticamente: hace falta un primer clic o
-pulsación en la página (los navegadores lo exigen). Comprueba también que el
-icono de la cabecera no esté apagado y que el sistema no esté en silencio.
-
-**La música de fondo no suena.**
-Necesita lo mismo que el resto: un primer toque en la página. Si sigue sin
-sonar, revisa la conexión (viene de YouTube) y que el botón de sonido de la
-cabecera esté encendido. En los días 7 y 19 se apaga sola mientras se ve el
-vídeo.
-
-
-
-**He borrado los datos del navegador y he perdido el progreso.**
-No hay forma de recuperarlo: el progreso solo vivía en ese navegador. Se
-puede evitar en el futuro no borrando los datos de este sitio.
-
-**La compilación falla con `Cannot find module` o similar.**
-Ejecuta `npm install` de nuevo y comprueba que estás en la carpeta del
-proyecto (donde está `package.json`).
-
-**La página en GitHub Pages no carga los recursos.**
-Comprueba que `base` siga siendo `'./'` en `vite.config.js` y que no haya
-rutas absolutas (`/assets/...`) añadidas a mano.
-
-**Las animaciones se ven entrecortadas o son muy largas.**
-El proyecto respeta ya la preferencia de movimiento reducido de tu sistema
-operativo. Actívala en **Configuración → Accesibilidad → Efectos visuales →
-animaciones** (Windows) o en el apartado equivalente de iOS o Android.
-
-**Quiero cambiar el número de días o las fechas.**
-Todo está en `src/data/configuration.js` (fechas y `totalDays`) y en
-`src/data/adventDates.js` (domingos). Después, `npm run check` y
+de las casillas en `src/data/sceneLayout.js`. Después, `npm run check` y
 `npm run build`.
 
-**El service worker sirve una versión antigua.**
-Recarga la página dos veces o vacía la caché del sitio. Al publicar una
-versión nueva, cambia `CACHE_NAME` en `public/sw.js` para forzar la
-actualización.
-
-## 22. Verificación y pruebas
-
-### Comprobación automática de configuración
+## 9. Comprobaciones
 
 ```bash
-npm run check
+npm run check             # Valida que CONFIG y SCENE_COLORS están completos
+npm run check:production  # Revisa la compilación en un navegador real
+npm run check:sundays     # Recorre los cuatro domingos y enciende las velas
+npm run smoke             # Prueba funcional completa (necesita `npm run preview`)
 ```
 
-Verifica que todas las claves de `CONFIG` y `SCENE_COLORS` usadas en el
-código existen. Es la red de seguridad para los colores y las fechas.
+En `scripts/` hay además utilidades de revisión visual:
 
-### Prueba funcional en un navegador real
-
-Requiere `playwright-core` (ya está en las dependencias de desarrollo) y un
-Chrome o Edge instalado en el sistema:
-
-```bash
-npm run dev
-npm run smoke
-```
-
-La prueba recorre la aplicación y comprueba:
-
-- La pantalla de bienvenida de la primera visita.
-- La entrada directa al calendario, sin pantallas intermedias.
-- El estado del calendario antes del Adviento y en un domingo de Gaudete.
-- La versión de móvil (390 × 844).
-- La apertura de una casilla y la aparición del modal.
-- La escena de Nochebuena y su cierre.
-- La resolución de un acertijo y el marcado de la actividad como realizada.
-- La persistencia del progreso en `localStorage`.
-- La ausencia del panel de Ajustes (el sonido se controla desde la cabecera).
-- **Que no haya ningún error ni aviso en la consola.**
-
-### Capturas para revisión visual
-
-```bash
-node scripts/shots.mjs
-```
-
-Guarda en la carpeta temporal del sistema la escena, la corona, la versión
-móvil y los ángulos de los dos ángeles de la ilustración.
-
-### Comprobación de los cuatro domingos
-
-```bash
-npm run dev
-npm run check:sundays
-```
-
-Recorre el 29 de noviembre, el 6, el 13 y el 20 de diciembre, además del 24
-y de un día anterior al Adviento. En cada domingo **enciende la vela como lo
-haría el visitante** y comprueba que la corona de la esquina queda con
-exactamente 1, 2, 3 y 4 velas encendidas.
-
-### Comprobación de la ceremonia de Adviento
-
-```bash
-npm run dev
-node scripts/verify-advent.mjs
-```
-
-Abre los cuatro domingos, comprueba que la ceremonia aparece con la vela
-correcta pendiente y que el puntero se convierte en fósforo, enciende la vela,
-comprueba que la corona vuelve a su esquina con la llama encendida y deja
-capturas de cada paso en la carpeta temporal del sistema.
-
-### Comprobación de las reflexiones de los domingos
-
-```bash
-npm run dev
-node scripts/check-reflections.mjs
-```
-
-Recorre las fechas clave y comprueba que el botón de la cabecera aparece a
-partir del primer domingo y que va habilitando una reflexión cada semana.
-
-### Comprobación de la compilación de producción
-
-```bash
-npm run build
-npm run preview
-npm run check:production
-```
-
-Verifica que en la versión compilada están las 24 casillas, las 24 puertas de
-móvil, las 4 velas, la escena y el service worker registrado, y que no hay
-ningún error en consola.
-
-### Qué se ha verificado en este proyecto
-
-- [x] Sin errores de JavaScript en consola.
-- [x] Compilación de producción correcta.
-- [x] Rutas y recursos cargan correctamente.
-- [x] `localStorage` guarda, recupera y reinicia el progreso.
-- [x] Días bloqueados, días disponibles y reapertura de casillas descubiertas.
-- [x] Los cuatro domingos de Adviento y los cuatro estados de las velas.
-- [x] La ceremonia de encendido: la corona salta al centro, el puntero se
-      convierte en fósforo, el usuario enciende la vela y la corona regresa a
-      su esquina.
-- [x] La experiencia del 24 de diciembre.
-- [x] Diseño en celular (390 px) y escritorio (1440 px) sin desbordamientos.
-- [x] El audio no se reproduce automáticamente.
-- [x] Las notificaciones no se solicitan sin contexto.
-- [x] La simulación de fecha funciona en desarrollo y **no** existe en
-      producción.
-
----
-
-## Licencia y créditos
-
-- Código: [MIT](LICENSE).
-- Textos bíblicos: Biblia de Jerusalén (Reinaldo), edición de la Real Academia
-  Española.
-- *Noche de paz*: canon tradicional de dominio público.
-- Ilustraciones: originales de este proyecto, dibujadas en SVG.
-- Sin recursos de terceros: no hay imágenes, audios ni tipografías externas.
-  La única excepción es el villancico del día 7, que se reproduce desde
-  YouTube y tiene alternativa sin conexión.
+| Script | Para qué sirve |
+| --- | --- |
+| `check-reflections.mjs` | Comprueba que las reflexiones se habilitan domingo a domingo. |
+| `check-days.mjs` | Revisa los primeros días y sus actividades. |
+| `check-mobile.mjs` | Comprueba la vista en celular. |
+| `check-music.mjs` | Sigue el estado de la música de fondo (pausa y reanudación). |
+| `verify-advent.mjs` | Capturas de la ceremonia de Adviento, paso a paso. |
+| `shots.mjs` | Capturas de pantalla para revisión visual. |
+| `shot-shepherds.mjs` | Recortes de los pastores para revisar el dibujo. |

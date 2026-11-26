@@ -12,6 +12,7 @@
 }
 
 .icon-button {
+  position: relative;
   display: grid;
   place-items: center;
   width: 2.4rem;
@@ -31,6 +32,38 @@
   width: 1.2rem;
   height: 1.2rem;
   display: block;
+}
+
+/* --- Tooltip del botón: explica qué hace --- */
+.icon-button__tip {
+  position: absolute;
+  top: calc(100% + 0.55rem);
+  right: 0;
+  z-index: 6;
+  padding: 0.32rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background: #0b1128;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 6px 18px rgba(4, 8, 20, 0.6);
+  color: var(--color-text-soft);
+  font-size: var(--text-xs);
+  line-height: 1.2;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-0.25rem);
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out),
+    visibility var(--duration-fast) var(--ease-out);
+}
+
+.icon-button:hover .icon-button__tip,
+.icon-button:focus-visible .icon-button__tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 /* El botón de las reflexiones se oculta cuando todavía no hay ninguna. */
