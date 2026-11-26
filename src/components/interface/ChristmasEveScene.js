@@ -135,7 +135,11 @@ export function createChristmasEveScene(options = {}) {
   overlay.innerHTML = `
     <div class="christmas-eve__backdrop"></div>
     <div class="christmas-eve__panel">
-      <div class="christmas-eve__visual">${renderSceneSvg()}</div>
+      <div class="christmas-eve__visual">
+        <img class="christmas-eve__photo" src="assets/images/nacimiento.png"
+          alt="El Niño Jesús en el pesebre" hidden>
+        <div class="christmas-eve__scene">${renderSceneSvg()}</div>
+      </div>
       <div class="christmas-eve__content">
         <p class="christmas-eve__eyebrow">24 de diciembre</p>
         <h2 class="christmas-eve__title">Nochebuena</h2>
@@ -147,10 +151,19 @@ export function createChristmasEveScene(options = {}) {
         <p class="christmas-eve__prayer">${CONFIG.christmasEvePrayer}</p>
       </div>
       <div class="christmas-eve__actions">
-        <button type="button" class="button button--ghost" data-eve-replay>Volver a contemplar</button>
         <button type="button" class="button" data-eve-close>Cerrar</button>
       </div>
     </div>`;
+
+  // Si la comunidad quiere su propia imagen del nacimiento, se deja el archivo
+  // en `public/assets/images/nacimiento.png`: cuando está, sustituye a la
+  // ilustración. Mientras no exista, el hueco queda reservado y oculto.
+  const photo = overlay.querySelector('.christmas-eve__photo');
+  const scene = overlay.querySelector('.christmas-eve__scene');
+  photo?.addEventListener('load', () => {
+    photo.hidden = false;
+    scene?.remove();
+  });
 
   const closeButton = overlay.querySelector('[data-eve-close]');
   closeButton?.addEventListener('click', () => onClose?.());

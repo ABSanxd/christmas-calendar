@@ -126,6 +126,9 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
 - El día 24 tiene una experiencia propia: noche de Belén, estrellas que
   brillan, tres ángeles que despliegan el cartel «Nochebuena», el pesebre que
   se ilumina y un versículo con la oración final.
+- La comunidad puede sustituir la ilustración por su propia imagen del
+  nacimiento: basta con dejar el archivo en
+  `public/assets/images/nacimiento.png` y el modal lo muestra en su lugar.
 
 ### Actividades interactivas
 
@@ -139,7 +142,7 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
 | `riddle` | Acertijo con pistas progresivas. |
 | `wordsearch` | Sopa de letras generada al azar: se marca arrastrando las letras (como en el celular) o tocándolas una a una. Las palabras encontradas quedan con su color. |
 | `quiz` / `trivia` | Preguntas con explicación por respuesta. |
-| `music` | Villancico con melodía y juego de ritmo, o acróstico para componer uno. El villancico del día 7 se puede además ver y escuchar en YouTube. |
+| `music` | Villancico: los días 7 y 19 lo reproducen desde YouTube (Athenas). La actividad admite además melodía sintetizada y acróstico. |
 | `purpose` | Compromisos espirituales marcables. |
 
 ### Comodidades

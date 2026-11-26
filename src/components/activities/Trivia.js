@@ -134,6 +134,19 @@ export function createTrivia(options) {
       }</p>`;
     stage.appendChild(summary);
 
+    // Se puede volver a empezar el cuestionario, para repetirlo o mejorarlo.
+    const retry = createElement('button', {
+      type: 'button',
+      class: 'button button--ghost trivia__retry',
+    });
+    retry.textContent = 'Volver a intentar';
+    retry.addEventListener('click', () => {
+      currentIndex = 0;
+      answers.clear();
+      renderQuestion();
+    });
+    stage.appendChild(retry);
+
     if (content.closing) {
       const closing = createElement('p', { class: 'activity__closing' });
       closing.textContent = content.closing;

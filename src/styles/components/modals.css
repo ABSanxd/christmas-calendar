@@ -156,6 +156,18 @@ body.is-modal-open {
   border: 1px solid var(--border-soft);
 }
 
+/* La imagen del nacimiento de la comunidad sustituye a la ilustración
+   cuando está en `public/images/nacimiento.png`. */
+.christmas-eve__photo {
+  display: none;
+  width: 100%;
+  height: auto;
+}
+
+.christmas-eve__photo:not([hidden]) {
+  display: block;
+}
+
 .christmas-eve__svg {
   width: 100%;
   height: auto;

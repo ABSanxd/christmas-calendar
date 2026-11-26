@@ -475,7 +475,7 @@ export const ADVENT_DAYS = [
       paragraphs: [
         'El perdón no es un lujo espiritual: es una necesidad. Un rencor guardado ocupa el ' +
           'espacio donde debería vivir el amor.',
-        'Jesús no solo perdonó desde la cruz; antes lo había practiced en lo cotidiano. Nadie ' +
+        'Jesús no solo perdonó desde la cruz; antes lo había practicado en lo cotidiano. Nadie ' +
           'ama como quien no sabe perdonar.',
       ],
       question: {
@@ -484,7 +484,7 @@ export const ADVENT_DAYS = [
           'A alguien que me hirió',
           'A mí mismo por un error mío',
           'A una situación que no cambió',
-          'A quien no me hará nunca justice',
+          'A quien no me hará nunca justicia',
         ],
       },
       closing: 'Perdonar no es olvidar: es decidir que el amor tiene la última palabra.',
@@ -501,21 +501,15 @@ export const ADVENT_DAYS = [
     requiresInteraction: true,
     completionEnabled: true,
     content: {
-      mode: 'compose',
-      title: 'Tu villancico',
-      subtitle: 'Acróstico N · A · V · I · D',
+      mode: 'video',
+      videoId: 'NDg4Fwc-Qv0',
+      videoTitle: 'Athenas · La Primera Navidad',
+      videoAuthor: 'Athenas',
+      title: 'La Primera Navidad',
+      subtitle: 'Villancico de Athenas',
       intro:
-        'Un villancico es un canto de Adviento que habla de Jesús. Escribe cuatro frases que ' +
-        'comiencen, en este orden, con las sílabas NA, VID y las letras del nombre. ' +
-        'Después podrás cantarlas con la melodía de Noche de paz.',
-      acrostic: [
-        { syllable: 'NA', hint: 'puedes empezar con "Nada…" o "Nace…"' },
-        { syllable: 'VID', hint: 'puedes empezar con "Vida…" o "Vive…"' },
-        { syllable: 'I', hint: 'una letra sola: "Ilumina…" o "Invita…"' },
-        { syllable: 'D', hint: 'una letra sola: "Dulce…" o "Deja…"' },
-      ],
-      closing:
-        'Los villancicos más antiguos nacieron en las casas, no en los libros. El tuyo ya existe.',
+        'Pulsa "Ver y escuchar el villancico" y deja que la música entre en casa. ' +
+        'Cántenla juntos, con la letra en el corazón.',
     },
   },
   {
@@ -531,7 +525,7 @@ export const ADVENT_DAYS = [
     completionEnabled: true,
     content: {
       paragraphs: [
-        'El cuarto domingo de Adviento es el más silencioso y el más intimate. ' +
+        'El cuarto domingo de Adviento es el más silencioso y el más íntimo. ' +
           'La luz de las cuatro velas ya está completa: solo falta un paso más.',
         'María estaba encinta; José buscaba un lugar; los ángeles ya habían cantado. ' +
           'Todo estaba listo antes de que llegara la luz del mundo.',
@@ -539,7 +533,7 @@ export const ADVENT_DAYS = [
       question: {
         prompt: '¿Qué necesitas resolver antes de que llegue la Navidad?',
         options: [
-          'Una riña en casa',
+          'Una discusión en casa',
           'Una deuda o cuenta pendiente',
           'Una decisión importante',
           'Un perdón que sigue pendiente',
@@ -580,23 +574,21 @@ export const ADVENT_DAYS = [
     id: 'day-22',
     day: 22,
     title: 'La esperanza',
-    subtitle: 'Actividad para hacer en casa',
-    type: 'challengeFamily',
+    subtitle: 'Un reto para compartir',
+    type: 'challenge',
     icon: 'family',
     verseKey: 'Esperanza',
     requiresInteraction: true,
     completionEnabled: true,
     content: {
       intro:
-        'La esperanza no espera sentada: se construye entre dos o más personas. ' +
-        'Esta actividad se hace mejor acompañado.',
+        'La esperanza no espera sentada: se hace presente. Y hay una manera muy ' +
+        'hermosa de anunciarla: mostrando el pesebre de tu casa.',
       steps: [
-        'Escribid en un papel grande una palabra que describa vuestra Navidad y colocadla en un lugar visible.',
-        'Cada noche, al cerrar el día, cada persona añade algo por lo que dar gracias.',
-        'El último día, leed en familia lo que habéis escrito: será el regalo más bonito del Adviento.',
+        'Haz una foto de tu pesebre esperando al Niño Jesús y publícala en tu estado de Instagram o de WhatsApp.',
       ],
-      duration: '15 minutos cada noche',
-      encouragement: 'La esperanza compartida multiplica su luz. Ya se ve la Navidad.',
+      encouragement:
+        '¡Qué bonito! Tu pesebre ya está esperando. Ahora falta que la esperanza se vea también fuera de casa.',
     },
   },
   {

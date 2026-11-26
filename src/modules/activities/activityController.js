@@ -108,9 +108,6 @@ export function openChristmasEveExperience() {
   });
   overlayRoot.appendChild(overlay);
 
-  const replay = overlay.querySelector('[data-eve-replay]');
-  replay?.addEventListener('click', () => playChristmasEveScene(overlay));
-
   playChristmasEveScene(overlay);
   requestOpenDay(24);
 }

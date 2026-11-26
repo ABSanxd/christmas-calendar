@@ -99,7 +99,7 @@ export const VERSES = {
   },
   Misericordia: {
     reference: 'Ef 4,32',
-    text: 'Sedo unos con otros, benevolentes, misericordiosos, perdonándoos los unos a los otros, como también Dios en Cristo os perdonó a vosotros.',
+    text: 'Más bien sean buenos y comprensivos unos con otros, perdonándose mutuamente, como Dios los perdonó en Cristo.',
     theme: 'Misericordia entre nosotros',
   },
   Hospitalidad: {
@@ -129,7 +129,7 @@ export const VERSES = {
   },
   FeAmor: {
     reference: '1 Cor 13,13',
-    text: 'Ahora permanecen la fe, la esperanza y el amor, estos tres. Y el mayor de ellos es el amor.',
+    text: 'Ahora, pues, son válidas la fe, la esperanza y el amor; las tres, pero la mayor de estas tres es el amor.',
     theme: 'Fe, esperanza y amor',
   },
   Saludo: {
@@ -174,7 +174,7 @@ export const VERSES = {
   },
   Seguid: {
     reference: 'Jn 12,46',
-    text: 'Yo soy la luz del mundo; el que me sigue no andará en las tinieblas, sino que tendrá la luz de la vida.',
+    text: 'Yo, la luz, he venido al mundo para que todo el que crea en mí no siga en las tinieblas.',
     theme: 'Seguir la luz',
   },
 };
