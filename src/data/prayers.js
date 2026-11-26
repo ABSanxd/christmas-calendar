@@ -20,7 +20,7 @@ export const PRAYERS = {
     id: 'manana',
     title: 'Un minuto con Dios',
     text:
-      'Buenos días, Señor. Antes de comenzar el día te pido una cosa sencilla: ' +
+      'Gracias, Señor, por este día. Antes de comenzar te pido una cosa sencilla: ' +
       'que tu amor esté en mis palabras, en mi trabajo y en mi casa. ' +
       'Que no haya un solo momento de este día en el que no pueda pensar en ti. ' +
       'Camina conmigo. Amén.',

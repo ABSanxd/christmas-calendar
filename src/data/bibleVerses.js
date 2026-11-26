@@ -9,7 +9,7 @@
 export const VERSES = {
   emmanuel: {
     reference: 'Is 7,14',
-    text: 'Mirad, la virgen concibe y da a luz un hijo, y le pondrás por nombre Emanuel.',
+    text: 'El Señor, pues, les dará esta señal: La joven está embarazada y da a luz un varón a quien le pone el nombre de Emmanuel, es decir: Dios-con-nosotros.',
     theme: 'El signo de Dios',
   },
   Verbo: {
@@ -59,12 +59,12 @@ export const VERSES = {
   },
   LuzMundo: {
     reference: 'Mt 5,16',
-    text: 'Que brille así vuestra luz ante los hombres, para que vean vuestras buenas obras y glorifiquen a vuestro Padre, que está en los cielos.',
+    text: 'Hagan, pues, que brille su luz ante los hombres; que vean estas buenas obras, y por ello den gloria al Padre de ustedes que está en los Cielos.',
     theme: 'Buenos ejemplos',
   },
   Amor: {
     reference: 'Jn 15,13',
-    text: 'Nadie tiene mayor amor que el que da su vida por otros.',
+    text: 'No hay amor más grande que dar la vida por sus amigos',
     theme: 'El amor que se da',
   },
   Generosidad: {
@@ -134,7 +134,7 @@ export const VERSES = {
   },
   Saludo: {
     reference: 'Lc 1,28',
-    text: 'Salve, gracia plenísima, el Señor es contigo.',
+    text: 'Llegó el ángel hasta ella y le dijo: «Alégrate, llena de gracia, el Señor está contigo.»',
     theme: 'El saludo a María',
   },
   Promise: {

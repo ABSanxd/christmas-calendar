@@ -69,7 +69,7 @@ export const ADVENT_DAYS = [
     completionEnabled: true,
     content: {
       prayerKey: 'manana',
-      hint: 'Puedes leerla en voz alta. Si estás acompañado,Leanla juntos.',
+      hint: 'Lee en voz alta, si estás acompañado, leanla juntos',
     },
   },
   {
@@ -106,12 +106,16 @@ export const ADVENT_DAYS = [
     requiresInteraction: true,
     completionEnabled: true,
     content: {
+      hideVerse: true,
       intro:
-        'Los ángeles anunciaron a los pastores un cántico que todavía se canta esta noche.',
-      instruction: 'Toca las palabras en el orden correcto para reconstruir el mensaje.',
+        'Los ángeles anunciaron a los pastores un cántico que todavía se canta esta noche. ' +
+        'Hoy no te lo damos: búscalo en tu Biblia.',
+      instruction:
+        'Abre tu Biblia en Lucas 2, 14 y lee el cántico de los ángeles. Después toca las ' +
+        'palabras en el orden correcto para reconstruir el mensaje.',
       words: ['GLORIA', 'A', 'DIOS', 'EN', 'LAS', 'ALTURAS'],
       solution: 'GLORIA A DIOS EN LAS ALTURAS',
-      hint: 'Es el primer cántico que los ángeles cantaron en Belén.',
+      hint: 'Es el primer cántico que los ángeles cantaron en Belén (Lucas 2, 14).',
     },
   },
   {
@@ -126,12 +130,12 @@ export const ADVENT_DAYS = [
     completionEnabled: true,
     content: {
       intro:
-        'La alegría que se comparte se multiplica. Esta noche, reúne a tu familia (o a tu grupo)' +
-        ' y haced juntos un gesto de Adviento.',
+        'La alegría que se comparte se multiplica. Esta noche, reunan a su familia ' +
+        '(o a su grupo) y hagan juntos un gesto de preparación.',
       steps: [
-        'Reunid la familia y decidid juntos a quién pueden ayudar esta semana.',
-        'Preparad una caja de víveres, ropa o útiles y dejadla a la puerta de una casa necesitada.',
-        'Al final del día, contad en voz alta lo que habéis hecho y lo que habéis recibido.',
+        'Entreguen una caja de víveres, ropa o útiles en la puerta de una casa que lo necesite.',
+        'Compartan una comida con una familia sola, con un enfermo o con alguien que no tiene con quién celebrar.',
+        'Regalen algo que para ustedes es fácil: su tiempo, una novella, un lugar en su mesa.',
       ],
       duration: '30-45 minutos',
       encouragement:

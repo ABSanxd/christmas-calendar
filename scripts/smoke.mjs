@@ -144,7 +144,8 @@ await page.waitForTimeout(400);
 const completeButton = page.locator('.button--complete');
 await completeButton.click();
 await page.waitForTimeout(900);
-console.log(`  actividad completada: ${await completeButton.isDisabled()}`);
+const completeLabel = (await completeButton.textContent())?.trim() ?? '';
+console.log(`  actividad completada: ${completeLabel === '¡Realizado!'}`);
 if (SHOTS) await page.screenshot({ path: `${OUT}/08-completada.png` });
 
 // 10. El progreso se guarda en localStorage.

@@ -45,8 +45,9 @@ export function createActivityModal(options) {
     type: 'button',
     class: 'button button--complete',
   });
-  completeButton.textContent = completed ? 'Completada' : 'Marcar como realizada';
-  if (completed) completeButton.disabled = true;
+  // Un día ya realizado se puede volver a abrir y actualizar: si más tarde se
+  // completa otro de sus retos, se vuelve a marcar y el día queda al día.
+  completeButton.textContent = completed ? 'Actualizar' : 'Marcar como realizada';
 
   const closeButton = createElement('button', {
     type: 'button',
@@ -83,15 +84,14 @@ export function createActivityModal(options) {
       completeButton.textContent = 'Aún falta un poquito';
       completeButton.classList.add('is-rejected');
       window.setTimeout(() => {
-        completeButton.textContent = completed ? 'Completada' : 'Marcar como realizada';
+        completeButton.textContent = completed ? 'Actualizar' : 'Marcar como realizada';
         completeButton.classList.remove('is-rejected');
       }, 1400);
       return;
     }
 
     const data = activity?.getData?.() ?? {};
-    completeButton.disabled = true;
-    completeButton.textContent = '¡Realizado!';
+    completeButton.textContent = completed ? 'Actualizado' : '¡Realizado!';
     activity?.onComplete?.();
     onComplete?.(data);
   });

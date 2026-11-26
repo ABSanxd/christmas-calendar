@@ -66,6 +66,10 @@ export function stepsBlock(steps = []) {
 /**
  * Lista de opciones marcables.
  *
+ * En el modo de opción única se puede **deseleccionar**: pulsar otra vez la
+ * opción ya marcada la deja sin elegir. Un botón de radio por sí solo no
+ * permite eso, así que aquí se controla a mano.
+ *
  * @param {string[]} options
  * @param {object} [config]
  * @param {boolean} [config.multiple]
@@ -96,12 +100,44 @@ export function optionList(options = [], config = {}) {
     element.appendChild(label);
   });
 
+  /**
+   * Lee las opciones marcadas.
+   * @returns {string[]}
+   */
+  const readSelected = () =>
+    Array.from(element.querySelectorAll('input:checked')).map((input) => input.value);
+
   if (onChange) {
+    // Estado anterior de la opción que se está pulsando: sirve para saber si
+    // venía ya marcada (y entonces hay que deseleccionarla).
+    let wasChecked = false;
+
+    element.addEventListener('pointerdown', (event) => {
+      const input = event.target.closest('.option-list__input');
+      wasChecked = Boolean(input?.checked);
+    });
+
+    element.addEventListener('click', (event) => {
+      const input = event.target.closest('.option-list__input');
+      if (!input) return;
+      if (!multiple && wasChecked) input.checked = false;
+      wasChecked = false;
+      onChange(readSelected());
+    });
+
     element.addEventListener('change', () => {
-      const selected = Array.from(element.querySelectorAll('input:checked')).map(
-        (input) => input.value,
-      );
-      onChange(selected);
+      onChange(readSelected());
+    });
+
+    // Con el teclado también se puede quitar la selección.
+    element.addEventListener('keydown', (event) => {
+      if (multiple) return;
+      if (event.key !== ' ' && event.key !== 'Enter') return;
+      const input = event.target.closest('.option-list__input');
+      if (!input || !input.checked) return;
+      event.preventDefault();
+      input.checked = false;
+      onChange(readSelected());
     });
   }
 

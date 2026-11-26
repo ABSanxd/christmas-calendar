@@ -37,7 +37,9 @@ export function createScramble(options) {
   const { content, verseKey, saved = {} } = options;
   const element = createElement('div', { class: 'activity activity--scramble' });
 
-  const verse = verseBlock(verseKey);
+  // Algunas actividades piden que el visitante busque el texto por su cuenta
+  // en la Biblia: en ese caso no se muestra el versículo.
+  const verse = content.hideVerse ? null : verseBlock(verseKey);
   if (verse) element.appendChild(verse);
 
   const intro = introBlock(content.intro);

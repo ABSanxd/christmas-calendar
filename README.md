@@ -265,6 +265,7 @@ calendario-navideño/
 │   ├── check-config.mjs          Valida CONFIG y SCENE_COLORS
 │   ├── check-sundays.mjs         Comprueba las velas de los cuatro domingos
 │   ├── check-reflections.mjs     Comprueba las reflexiones por domingo
+│   ├── check-days.mjs            Revisa los primeros días y sus actividades
 │   ├── export-og.mjs             Genera la imagen para redes sociales
 │   ├── smoke.mjs                 Prueba funcional en un navegador real
 │   ├── verify-advent.mjs         Capturas de la ceremonia de Adviento
