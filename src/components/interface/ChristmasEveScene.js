@@ -6,7 +6,7 @@
  * oración final.
  *
  * La imagen es opcional: mientras no exista el archivo
- * `public/assets/images/nacimiento.png`, el hueco queda reservado con un
+ * `public/assets/images/nacimiento.jpg`, el hueco queda reservado con un
  * aviso discreto.
  */
 
@@ -37,7 +37,7 @@ export function createChristmasEveScene(options = {}) {
     <div class="christmas-eve__panel">
       <div class="christmas-eve__visual">
         <div class="christmas-eve__photo-frame">
-          <img class="christmas-eve__photo" src="assets/images/nacimiento.png"
+          <img class="christmas-eve__photo" src="assets/images/nacimiento.jpg"
             alt="El Niño Jesús en el pesebre" hidden>
           <p class="christmas-eve__photo-hint">Aquí irá la imagen del nacimiento</p>
         </div>
@@ -58,7 +58,7 @@ export function createChristmasEveScene(options = {}) {
     </div>`;
 
   // Cuando la comunidad deja su imagen del nacimiento en
-  // `public/assets/images/nacimiento.png`, esta sustituye al aviso.
+  // `public/assets/images/nacimiento.jpg`, esta sustituye al aviso.
   const photo = overlay.querySelector('.christmas-eve__photo');
   const hint = overlay.querySelector('.christmas-eve__photo-hint');
   photo?.addEventListener('load', () => {

@@ -128,7 +128,7 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
   se ilumina y un versículo con la oración final.
 - La comunidad puede sustituir la ilustración por su propia imagen del
   nacimiento: basta con dejar el archivo en
-  `public/assets/images/nacimiento.png` y el modal lo muestra en su lugar.
+  `public/assets/images/nacimiento.jpg` y el modal lo muestra en su lugar.
 
 ### Actividades interactivas
 
