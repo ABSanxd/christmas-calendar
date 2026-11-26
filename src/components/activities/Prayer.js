@@ -63,13 +63,9 @@ export function createPrayer(options) {
     field.addEventListener('input', () => {
       intention = field.value.trim();
     });
-    const hint = createElement('p', { class: 'prayer__privacy' });
-    hint.textContent =
-      'Tu intención se guarda solo en este navegador y nunca se envía a ningún servidor.';
 
     section.appendChild(label);
     section.appendChild(field);
-    section.appendChild(hint);
     element.appendChild(section);
   }
 

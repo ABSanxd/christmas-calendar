@@ -366,10 +366,7 @@ export const ADVENT_DAYS = [
         'Hoy la palabra es "medida buena". Dios mide lo que damos con la misma generosidad ' +
         'con que nos ha dado.',
       steps: [
-        'Elige a una persona que lo necesite y dale algo que necesitas de verdad: tiempo, ' +
-          'atención, una herramienta, un favor.',
-        'Pon en un sobre lo que ibas a comprar y ofrécelo esta semana a quien lo necesite más.',
-        'Reza por esa persona durante un minuto. Compartir y orar es una misma cosa.',
+        'Regala hoy a alguien un objeto que tengas y no uses: una herramienta, un libro, una ropa, un alimento. Solo hace falta mirar a tu alrededor y ver a quién le hace falta.',
       ],
       encouragement:
         '¡Qué generoso! Dios recoge en su libro cada dádiva, aunque nadie la vea.',
@@ -387,19 +384,19 @@ export const ADVENT_DAYS = [
     completionEnabled: true,
     content: {
       intro:
-        'Tres sabios dejaron su tierra para ver al Niño. Para llegar a Belén necesitaron ' +
-        'preguntar, trusting y seguir una luz.',
+        'Los sabios dejaron su tierra para ver al Niño. Para llegar a Belén necesitaron ' +
+        'preguntar, confiar y seguir una luz.',
       question:
         'Los Reyes Magos ofrecieron tres regalos al Niño Jesús. ¿Cuál de estos NO fue uno de ellos?',
       options: [
         { label: 'Oro', correct: false, feedback: 'El oro era para reconocer a un rey.' },
         { label: 'Incienso', correct: false, feedback: 'El incienso era para reconocer a Dios.' },
-        { label: 'Myrrha', correct: false, feedback: 'La myrrha era para reconocer a un mortal.' },
+        { label: 'Mirra', correct: false, feedback: 'La mirra era para reconocer a un mortal.' },
         {
           label: 'Un manto de lana',
           correct: true,
           feedback:
-            'Los Magos ofrecieron oro, incienso y myrrha. El manto vino después, cuando huían a Egipto.',
+            'Los Magos ofrecieron oro, incienso y mirra. El manto vino después, cuando huían a Egipto.',
         },
       ],
       closing:
@@ -446,7 +443,7 @@ export const ADVENT_DAYS = [
           q: '¿Quién fue el primero en anunciarlo?',
           options: ['Los Reyes Magos', 'Los pastores', 'Herodes'],
           correct: 1,
-          explain: 'Los ángeles anunciaron el nacimiento primero a los pastores de la campina (Lc 2,8-16).',
+          explain: 'Los ángeles anunciaron el nacimiento primero a los pastores del campo (Lc 2,8-16).',
         },
         {
           q: '¿Cómo se llamaba el marido de María?',

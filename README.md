@@ -96,6 +96,9 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
   legible, sin sacrificar la identidad visual.
 - Controles de hover, foco de teclado y estados de rechazo al intentar abrir
   una casilla bloqueada.
+- Las preguntas de una sola respuesta se pueden **deseleccionar** pulsando
+  otra vez la opción marcada, para poderarse rectificar antes de completar
+  el día. Un día ya completado se puede volver a abrir y **actualizar**.
 
 ### Corona de Adviento
 
@@ -134,7 +137,7 @@ estrella, arena y marfil, con morados y el rosa de Gaudete como acentos.
 | `challengeFamily` | Reto para hacer en familia o grupo. |
 | `scramble` | Reconstruir un mensaje bíblico reordenando palabras. |
 | `riddle` | Acertijo con pistas progresivas. |
-| `wordsearch` | Sopa de letras generada al azar. |
+| `wordsearch` | Sopa de letras generada al azar: se marca arrastrando las letras (como en el celular) o tocándolas una a una. Las palabras encontradas quedan con su color. |
 | `quiz` / `trivia` | Preguntas con explicación por respuesta. |
 | `music` | Villancico con melodía y juego de ritmo, o acróstico para componer uno. El villancico del día 7 se puede además ver y escuchar en YouTube. |
 | `purpose` | Compromisos espirituales marcables. |

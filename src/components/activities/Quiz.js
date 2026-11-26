@@ -3,7 +3,7 @@
  */
 
 import { createElement } from '../../utils/domUtils.js';
-import { verseBlock, introBlock, setFeedback } from './activityParts.js';
+import { verseBlock, introBlock, setFeedback, enableDeselect } from './activityParts.js';
 
 /**
  * Crea la actividad de trivia.
@@ -50,6 +50,7 @@ export function createQuiz(options) {
     list.appendChild(label);
 
     input.addEventListener('change', () => {
+      if (!input.checked) return;
       if (answered) return;
       answered = true;
       const isCorrect = Boolean(option.correct);
@@ -66,6 +67,14 @@ export function createQuiz(options) {
         isCorrect ? 'success' : 'error',
       );
     });
+  });
+
+  // La opción marcada se puede volver a pulsar para deseleccionarla.
+  enableDeselect(list, () => {
+    answered = false;
+    list.querySelectorAll('.quiz__option').forEach((option) => delete option.dataset.result);
+    feedback.hidden = true;
+    feedback.textContent = '';
   });
 
   element.appendChild(list);

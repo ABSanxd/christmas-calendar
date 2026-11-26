@@ -172,6 +172,35 @@ export function preselectOption(list, value) {
 }
 
 /**
+ * Permite deseleccionar una opción de una sola respuesta.
+ *
+ * Un botón de radio no se desmarca solo: hay que hacerlo a mano. Cada opción
+ * marcada guarda en `data-selected` que lo está, para que al volver a pulsarla
+ * se pueda quitar.
+ *
+ * @param {HTMLElement} list Contenedor de las opciones.
+ * @param {(input: HTMLInputElement) => void} [onDeselect] Aviso al deseleccionar.
+ */
+export function enableDeselect(list, onDeselect) {
+  if (!list) return;
+
+  list.addEventListener('change', (event) => {
+    const input = event.target.closest('input[type="radio"]');
+    if (!input) return;
+    if (input.checked) input.dataset.selected = 'true';
+    else delete input.dataset.selected;
+  });
+
+  list.addEventListener('click', (event) => {
+    const input = event.target.closest('input[type="radio"]');
+    if (!input || input.dataset.selected !== 'true') return;
+    input.checked = false;
+    delete input.dataset.selected;
+    onDeselect?.(input);
+  });
+}
+
+/**
  * Campo de texto libre (opcional, se guarda solo en este navegador).
  * @param {object} config
  * @param {string} config.placeholder

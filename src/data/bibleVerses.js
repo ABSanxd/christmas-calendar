@@ -29,7 +29,7 @@ export const VERSES = {
   },
   Nacimiento: {
     reference: 'Lc 2,7',
-    text: 'Y dio a luz a su hijo primogénito, y lo involvedió en pañales, y lo acostó en un pesebre, porque no había sitio para ellos en la posada.',
+    text: 'y dio a luz a su hijo primogénito. Lo envolvió en pañales y lo acostó en un pesebre, pues no había lugar para ellos en la sala principal de la casa.',
     theme: 'El niño en el pesebre',
   },
   Magnificat: {
@@ -69,12 +69,12 @@ export const VERSES = {
   },
   Generosidad: {
     reference: 'Lc 6,38',
-    text: 'Dad, y se os dará; echa, y se os echará buena medida en el regazo, apretada, sacudida, rebosando.',
+    text: '«Den, y se les dará; se les echará en su delantal una medida colmada, apretada y rebosante. Porque con la medida que ustedes midan, serán medidos ustedes.»',
     theme: 'La generosidad',
   },
   Amar: {
     reference: '1 Jn 4,19',
-    text: 'Si Dios nos ama, nosotros debemos amarnos los unos a los otros.',
+    text: 'Amemos, pues, ya que él nos amó primero.',
     theme: 'El amor mutuo',
   },
   Alivio: {

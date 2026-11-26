@@ -3,7 +3,7 @@
  */
 
 import { createElement } from '../../utils/domUtils.js';
-import { verseBlock, introBlock } from './activityParts.js';
+import { verseBlock, introBlock, enableDeselect } from './activityParts.js';
 
 /**
  * Crea el juego de preguntas.
@@ -52,6 +52,20 @@ export function createTrivia(options) {
     const explain = createElement('p', { class: 'activity__feedback' });
     explain.hidden = true;
 
+    // El botón de "Siguiente" se crea una sola vez por pregunta: si se
+    // creara al responder, se irían acumulando varios en la misma ronda.
+    const next = createElement('button', {
+      type: 'button',
+      class: 'button button--ghost',
+    });
+    next.hidden = true;
+    next.textContent =
+      currentIndex < questions.length - 1 ? 'Siguiente pregunta' : 'Ver resultado';
+    next.addEventListener('click', () => {
+      currentIndex += 1;
+      renderQuestion();
+    });
+
     question.options.forEach((label, optionIndex) => {
       const optionLabel = createElement('label', { class: 'quiz__option' });
       const input = createElement('input', {
@@ -67,6 +81,7 @@ export function createTrivia(options) {
       list.appendChild(optionLabel);
 
       input.addEventListener('change', () => {
+        if (!input.checked) return;
         const isCorrect = optionIndex === question.correct;
         optionLabel.dataset.result = isCorrect ? 'correct' : 'incorrect';
         if (!isCorrect) {
@@ -77,23 +92,21 @@ export function createTrivia(options) {
         explain.textContent = question.explain;
         explain.dataset.tone = isCorrect ? 'success' : 'info';
         explain.hidden = false;
-
-        const next = createElement('button', {
-          type: 'button',
-          class: 'button button--ghost',
-        });
-        next.textContent =
-          currentIndex < questions.length - 1 ? 'Siguiente pregunta' : 'Ver resultado';
-        next.addEventListener('click', () => {
-          currentIndex += 1;
-          renderQuestion();
-        });
-        stage.appendChild(next);
+        next.hidden = false;
       });
+    });
+
+    // La opción marcada se puede volver a pulsar para deseleccionarla.
+    enableDeselect(list, () => {
+      answers.delete(String(currentIndex));
+      list.querySelectorAll('.quiz__option').forEach((option) => delete option.dataset.result);
+      explain.hidden = true;
+      next.hidden = true;
     });
 
     stage.appendChild(list);
     stage.appendChild(explain);
+    stage.appendChild(next);
 
     const previous = answers.get(String(currentIndex));
     if (previous !== undefined) {

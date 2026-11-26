@@ -198,6 +198,17 @@ export function createWordSearch(options) {
     board.querySelectorAll('.is-selected').forEach((cell) => cell.classList.remove('is-selected'));
   }
 
+  /**
+   * Marca las letras de una palabra ya encontrada: se quedan en la cuadrícula
+   * con su color, para que se vea que están tachadas.
+   * @param {{row: number, col: number}[]} cells
+   */
+  function markFound(cells) {
+    cells.forEach(({ row, col }) => {
+      board.querySelector(`[data-row="${row}"][data-col="${col}"]`)?.classList.add('is-found');
+    });
+  }
+
   function checkSelection() {
     if (selection.length < 2) return;
     const letters = selection.map((cell) => grid[cell.row][cell.col]).join('');
@@ -211,6 +222,8 @@ export function createWordSearch(options) {
 
     if (match) {
       found.add(match.word);
+      // La palabra queda marcada en la cuadrícula con su color.
+      markFound(match.cells);
       highlightCells(match.cells);
       setFeedback(
         feedback,
