@@ -8,7 +8,7 @@
 import { renderApplication, updateCurrentDate } from './calendarRenderer.js';
 import { bindCalendarEvents } from './calendarEvents.js';
 import { getDateKeyFromDay } from '../../data/adventDates.js';
-import { getToday, isDateSimulationActive } from '../../services/dateService.js';
+import { getToday, isDateSimulationActive, isPreviewBuild } from '../../services/dateService.js';
 import {
   isDayOpened,
   isActivityCompleted,
@@ -130,7 +130,12 @@ export function initCalendarController() {
   });
 
   if (isDateSimulationActive()) {
-    showToast('Modo simulación de fecha activo (solo en desarrollo).', { tone: 'info' });
+    showToast(
+      isPreviewBuild()
+        ? 'Vista de prueba: puedes abrir cualquier día con ?fecha=AAAA-MM-DD.'
+        : 'Modo simulación de fecha activo (solo en desarrollo).',
+      { tone: 'info' },
+    );
   }
 }
 

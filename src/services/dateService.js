@@ -84,8 +84,10 @@ export function compareDateKeys(a, b) {
 /**
  * Devuelve la fecha de hoy respetando la simulación de desarrollo.
  *
- * En producción (`import.meta.env.DEV === false`) la simulación se ignora por
- * completo: el bloque se elimina al compilar.
+ * En el calendario publicado la simulación se ignora por completo: el bloque
+ * se elimina al compilar. Solo la vista de prueba (build con `npm run
+ * build:demo`) la conserva, para que se pueda recorrer el Adviento antes de
+ * tiempo.
  *
  * @returns {{dateKey: string, minutes: number, simulated: boolean}}
  */
@@ -109,7 +111,30 @@ export function getToday() {
 }
 
 /**
- * Lee la simulación de fecha habilitada únicamente en desarrollo.
+ * Indica si esta compilación es la **vista de prueba**.
+ *
+ * La vista de prueba es la misma aplicación, pero con la simulación de fecha
+ * activada, para poder abrir cualquier día antes de que llegue.
+ *
+ * @returns {boolean}
+ */
+export function isPreviewBuild() {
+  return import.meta.env.VITE_ALLOW_DATE_SIMULATION === 'true';
+}
+
+/**
+ * Indica si se permite simular la fecha en esta compilación.
+ *
+ * En desarrollo siempre es que sí. En producción solo en la vista de prueba.
+ *
+ * @returns {boolean}
+ */
+export function isDateSimulationSupported() {
+  return import.meta.env.DEV || isPreviewBuild();
+}
+
+/**
+ * Lee la simulación de fecha, si esta compilación la permite.
  *
  * Permite probar cualquier día del Adviento sin esperar al día real:
  *   `?fecha=2026-12-13`  o  `?fecha=2026-12-13T18:30`
@@ -117,7 +142,7 @@ export function getToday() {
  * @returns {{parts: {year: number, month: number, day: number}, minutes: number} | null}
  */
 export function getDevSimulation() {
-  if (!import.meta.env.DEV) return null;
+  if (!isDateSimulationSupported()) return null;
 
   const params = new URLSearchParams(window.location.search);
   const raw = params.get('fecha') || params.get('devDate');

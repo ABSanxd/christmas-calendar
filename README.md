@@ -238,6 +238,12 @@ El comando `build` ejecuta antes `npm run check`, que valida que todas las
 claves de `CONFIG` y `SCENE_COLORS` usadas en el código existen (evita colores
 o fechas que se queden sin definir).
 
+Existe además `npm run build:demo`: compila la **vista de prueba**, que es la
+misma aplicación pero con la simulación de fecha activada, para poder abrir
+cualquier día con `?fecha=AAAA-MM-DD` antes de que llegue el Adviento. El
+calendario publicado se compila siempre con `npm run build`, que **elimina**
+ese bloque de la compilación.
+
 ## 6. Estructura de carpetas
 
 ```text

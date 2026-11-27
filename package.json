@@ -16,6 +16,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run check && vite build",
+    "build:demo": "npm run check && vite build --mode demo",
     "preview": "vite preview",
     "check": "node scripts/check-config.mjs",
     "check:production": "node scripts/check-production.mjs",

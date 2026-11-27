@@ -8,7 +8,7 @@
 export const CONFIG = {
   /** Identificador principal del proyecto. */
   name: 'Calendario de Adviento 2026',
-  tagline: '24 días para preparar el corazón',
+  tagline: '24 días para preparar el corazón | Comunidad de Alianza Magnificat',
 
   /** Zona horaria de referencia. El calendario nunca usa la zona del dispositivo. */
   timezone: 'America/Lima',

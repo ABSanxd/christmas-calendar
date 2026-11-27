@@ -164,7 +164,7 @@ export function renderApplication(options) {
   const footer = createElement('footer', { class: 'app-footer' });
   footer.innerHTML = `
     <div class="page-wrap">
-      <p>Calendario de Adviento 2026 · Comunidad Magnificat</p>
+      <p>Calendario de Adviento 2026 · Comunidad de Alianza Magnificat</p>
     </div>`;
   container.appendChild(footer);
 
